@@ -17,11 +17,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        //Instead of using the menu and enabling enter the path each time, I made it enter automatically.
         EncryptionAlgorithm.encryption();
         System.out.println("---------------");
         DecryptionAlgorithm.decryption();
-//        encryptionDecryption
-        System.out.println();
-
     }
 }

@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class generalMethods {
+    /**
+     * creat file at the given path
+     * @param path
+     */
     public static void creatFile(String path){
         try {
             File myObj = new File(path);
@@ -20,6 +24,11 @@ public class generalMethods {
         }
     }
 
+    /**
+     * write the given message to the file at the given path
+     * @param path
+     * @param message
+     */
     public static void writeToFile(String path, String message){
         try {
             FileWriter myWriter = new FileWriter(path);
@@ -31,6 +40,11 @@ public class generalMethods {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @return string of the text to the given file combine and separated by \n
+     */
     public static String readFile(String path){
         StringBuilder txt = new StringBuilder();
         try {
@@ -47,6 +61,12 @@ public class generalMethods {
         return txt.toString();
     }
 
+    /**
+     * take the full path and enter only to the name some suffix
+     * @param path
+     * @param suffix
+     * @return
+     */
     public static String addSuffixFileName(String path, String suffix){
         String new_path = path.substring(path.lastIndexOf("\\")+1, path.indexOf("."));
         new_path = path.substring(0, path.lastIndexOf("\\")+1) + new_path + "_" + suffix;
