@@ -7,6 +7,16 @@ public class DecryptionAlgorithm {
     public DecryptionAlgorithm() {
     }
 
+    public static char decryptChar(char c, int n, int start, int end){
+        if((int) c >= start && end >= (int) c){
+            if((int) c - n < start)
+                return (char) ((int) c - n + 25);
+            else
+                return (char) ((int) c - n);
+        }
+        return c;
+    }
+
     public static void decryption(){
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the path to the encryption source file");
@@ -19,14 +29,14 @@ public class DecryptionAlgorithm {
 
         String txt = readFile(encryption_path);
         String key = readFile(key_path).charAt(0)+"";
+        int n = Integer.parseInt(key);
 
         StringBuilder str = new StringBuilder();
         for (int i=0; i<txt.length(); i++){
-            char c = txt.charAt(i);
-            str.append(c);
-            if(Character.isLetter(c) && i+1<txt.length() && key.equals(txt.charAt(i+1)+"")){
-                i++;
-            }
+            char charToAdd = txt.charAt(i);
+            charToAdd = decryptChar(charToAdd, n, 65, 90);
+            charToAdd = decryptChar(charToAdd, n, 97, 122);
+            str.append(charToAdd);
         }
         String originalPath = encryption_path.substring(0, encryption_path.indexOf("_")) + encryption_path.substring(encryption_path.indexOf("."));
         String decrypted_path = addSuffixFileName(originalPath, "decrypted");

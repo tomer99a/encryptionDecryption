@@ -21,6 +21,7 @@ public class Main {
         System.out.println("---------------");
         DecryptionAlgorithm.decryption();
 //        encryptionDecryption
+        System.out.println();
 
     }
 }

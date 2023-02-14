@@ -7,6 +7,16 @@ public class EncryptionAlgorithm {
     public EncryptionAlgorithm() {
     }
 
+    public static char encryptChar(char c, int n, int start, int end){
+        if((int) c >= start && end >= (int) c){
+            if((int) c + n >= end)
+                return (char) ((int) c + n - 25);
+            else
+                return (char) ((int) c + n);
+        }
+        return c;
+    }
+
 
     public static void encryption(){
         System.out.println("Please enter the path to the input source file");
@@ -18,13 +28,12 @@ public class EncryptionAlgorithm {
         int n = (int) (Math.random()*10); // get random number 1 to 10;
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < txt.length(); i++) {
-            str.append(txt.charAt(i));
-            if(Character.isLetter(txt.charAt(i))){
-                str.append(n);
-            }
+            char charToAdd = txt.charAt(i);
+            charToAdd = encryptChar(charToAdd, n, 65, 90);
+            charToAdd = encryptChar(charToAdd, n, 97, 122);
+            str.append(charToAdd);
         }
         String encrypted_path = addSuffixFileName(path, "encrypted");
-
         String key_path = path.substring(0, path.lastIndexOf("\\")+1) + "key.txt";
 
         creatFile(key_path);
