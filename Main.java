@@ -1,4 +1,4 @@
-package com.company;
+package encryptionDecryption;
 
 import java.util.Scanner;
 

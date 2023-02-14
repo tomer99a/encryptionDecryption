@@ -1,6 +1,6 @@
-package com.company;
+package encryptionDecryption;
 
-import static com.company.generalMethods.*;
+import static encryptionDecryption.generalMethods.*;
 
 
 public class EncryptionAlgorithm {
@@ -10,8 +10,8 @@ public class EncryptionAlgorithm {
 
     public static void encryption(){
         System.out.println("Please enter the path to the input source file");
-        System.out.println("C:\\Users\\Tomer\\Desktop\\encryptor\\src\\com\\company\\input text.txt");
-        String path = "C:\\Users\\Tomer\\Desktop\\encryptor\\src\\com\\company\\input text.txt";
+        System.out.println("C:\\Users\\Tomer\\Desktop\\encryptionDecryption\\src\\encryptionDecryption\\input text.txt");
+        String path = "C:\\Users\\Tomer\\Desktop\\encryptionDecryption\\src\\encryptionDecryption\\input text.txt";
 
         String txt = readFile(path);
 

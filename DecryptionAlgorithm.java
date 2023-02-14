@@ -1,7 +1,7 @@
-package com.company;
+package encryptionDecryption;
 
+import static encryptionDecryption.generalMethods.*;
 import java.util.Scanner;
-import static com.company.generalMethods.*;
 
 public class DecryptionAlgorithm {
     public DecryptionAlgorithm() {
@@ -11,11 +11,11 @@ public class DecryptionAlgorithm {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the path to the encryption source file");
 //        String encryption_path = myScanner.nextLine();  // Read user input
-        String encryption_path = "C:\\Users\\Tomer\\Desktop\\encryptor\\src\\com\\company\\input text_encrypted.txt";
+        String encryption_path = "C:\\Users\\Tomer\\Desktop\\encryptionDecryption\\src\\encryptionDecryption\\input text_encrypted.txt";
 
         System.out.println("Please enter the path to the key file");
 //        String key_path = myScanner.nextLine();  // Read user input
-        String key_path = "C:\\Users\\Tomer\\Desktop\\encryptor\\src\\com\\company\\key.txt";
+        String key_path = "C:\\Users\\Tomer\\Desktop\\encryptionDecryption\\src\\encryptionDecryption\\key.txt";
 
         String txt = readFile(encryption_path);
         String key = readFile(key_path).charAt(0)+"";
