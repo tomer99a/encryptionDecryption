@@ -19,8 +19,7 @@ public class IOMethods {
             if (!myObj.createNewFile())
                 System.out.println("File already exists.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.printf("failed to creat %s file", path);
         }
     }
 
@@ -35,15 +34,14 @@ public class IOMethods {
             myWriter.write(message);
             myWriter.close();
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.printf("failed to write to %s file", path);
         }
     }
 
     /**
      *
      * @param path
-     * @return string of the text to the given file combine and separated by \n
+     * @return string of the text to the given file combine and separated by \n char
      */
     public static String readFile(String path){
         StringBuilder txt = new StringBuilder();
@@ -55,8 +53,7 @@ public class IOMethods {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.printf("failed to read %s file", path);
         }
         return txt.toString();
     }

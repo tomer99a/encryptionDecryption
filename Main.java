@@ -28,10 +28,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new EncryptionAlgorithm().encryption();
-        System.out.println("------------");
-        new DecryptionAlgorithm().decryption();
-//        menu();
+        menu();
 
     }
 }
