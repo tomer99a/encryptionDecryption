@@ -25,21 +25,11 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
 
     public void mainAct(){
         final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
-//        String txt = readFile(originalPath);
-//        StringBuilder str = new StringBuilder();
-//        for (int i = 0; i < txt.length(); i++) {
-//            char charToAdd = txt.charAt(i);
-//            charToAdd = handleCher(charToAdd, key,'A', 'Z');
-//            charToAdd = handleCher(charToAdd, key,'a', 'z');
-//            str.append(charToAdd);
-//        }
-
         creatFile(keyPath);
         creatFile(encryptedPath);
 
         writeToFile(keyPath, Integer.toString(key));
         scanAndSubmitFile(originalPath, encryptedPath, this, key);
-//        writeToFile(encryptedPath, str.toString());
 
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
     }

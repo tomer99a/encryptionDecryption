@@ -30,18 +30,9 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
     }
 
     public void mainAct(){
-
-        String txt = readFile(encryptionPath);
         final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
-
-        StringBuilder str = new StringBuilder();
-        for (int i=0; i<txt.length(); i++){
-            char charToAdd = txt.charAt(i);
-            charToAdd = handleCher(charToAdd, key, 'A', 'Z');
-            charToAdd = handleCher(charToAdd, key,'a', 'z');
-            str.append(charToAdd);
-        }
-        writeToFile(decryptedPath, str.toString());
+        creatFile(decryptedPath);
+        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
         System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 

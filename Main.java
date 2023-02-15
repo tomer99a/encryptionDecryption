@@ -6,7 +6,6 @@ import encryptionDecryption.encryption.EncryptionAlgorithm;
 import java.util.Scanner;
 
 public class Main {
-
     public static void menu(){
         String errorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
