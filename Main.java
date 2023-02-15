@@ -25,15 +25,15 @@ public class Main {
                 continue;
             }
             switch (ans) {
-                case 1 -> new EncryptionAlgorithm().encryption();
-                case 2 -> new DecryptionAlgorithm().decryption();
+                case 1 -> new EncryptionAlgorithm().act();
+                case 2 -> new DecryptionAlgorithm().act();
                 case 3 -> doneLoop = true;
                 default -> System.err.println(errorMessage);
             }
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         menu();
     }
 }

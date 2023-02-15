@@ -1,12 +1,50 @@
 package encryptionDecryption.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import encryptionDecryption.encryption.EncryptionAlgorithm;
+import encryptionDecryption.interfaces.encryptsDecrypt;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class IOMethods {
+    public static void scanAndSubmitFile(String inputPath, String outputPath, encryptsDecrypt encryptsDecrypt, int key){
+        try (Scanner sc = new Scanner(new FileInputStream(inputPath), StandardCharsets.UTF_8)) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                StringBuilder str = new StringBuilder();
+                for (int i = 0; i < line.length(); i++) {
+                    char charToAdd = line.charAt(i);
+                    charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'A', 'Z');
+                    charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'a', 'z');
+                    str.append(charToAdd);
+                }
+                str.append("\n");
+                writeLine(outputPath, str.toString());
+            }
+//             note that Scanner suppresses exceptions
+            if (sc.ioException() != null) {
+                throw sc.ioException();
+            }
+        } catch (IOException e) {
+            System.err.println("failed to scan file");
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeLine(String path, String line) throws IOException {
+        Writer output = null;
+        try{
+            output = new BufferedWriter(new FileWriter(path, true));
+            output.append(line);
+        } catch (IOException e) {
+            System.err.println("failed to write to file " + path);
+        } finally {
+            assert output != null;
+            output.close();
+        }
+    }
+
     /**
      * creat file at the given path
      * @param path

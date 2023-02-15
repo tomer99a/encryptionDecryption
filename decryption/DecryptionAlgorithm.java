@@ -1,19 +1,21 @@
 package encryptionDecryption.decryption;
 
+import encryptionDecryption.interfaces.encryptsDecrypt;
+
 import static encryptionDecryption.utils.GeneralMethods.*;
 import static encryptionDecryption.utils.IOMethods.*;
 
-public class DecryptionAlgorithm {
+public class DecryptionAlgorithm implements encryptsDecrypt {
     private String encryptionPath;
     private String keyPath;
     private String decryptedPath;
 
-    public void decryption(){
+    public void act(){
         getPaths();
-        decrypt();
+        mainAct();
     }
 
-    private void getPaths(){
+    public void getPaths(){
 //        Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the path to the encryption source file");
 //        encryptionPath = myScanner.nextLine();  // Read user input
@@ -27,7 +29,7 @@ public class DecryptionAlgorithm {
         decryptedPath = addSuffixFileName(originalPath, "decrypted");
     }
 
-    private void decrypt(){
+    public void mainAct(){
 
         String txt = readFile(encryptionPath);
         final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
@@ -35,8 +37,8 @@ public class DecryptionAlgorithm {
         StringBuilder str = new StringBuilder();
         for (int i=0; i<txt.length(); i++){
             char charToAdd = txt.charAt(i);
-            charToAdd = decryptChar(charToAdd, key, 'A', 'Z');
-            charToAdd = decryptChar(charToAdd, key,'a', 'z');
+            charToAdd = handleCher(charToAdd, key, 'A', 'Z');
+            charToAdd = handleCher(charToAdd, key,'a', 'z');
             str.append(charToAdd);
         }
         writeToFile(decryptedPath, str.toString());
@@ -51,7 +53,7 @@ public class DecryptionAlgorithm {
      * @param end end of the ASCII sequence
      * @return the decryption char that you're looking for
      */
-    private char decryptChar(char c, int key, int start, int end){
+    public char handleCher(char c, int key, int start, int end){
         if((int) c >= start && end >= (int) c)
             if((int) c - key < start)
                 return (char) ((int) c - key + end - start);
