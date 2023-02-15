@@ -6,20 +6,13 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+import static encryptionDecryption.utils.GeneralMethods.scanLines;
+
 public class IOMethods {
     public static void scanAndSubmitFile(String inputPath, String outputPath, encryptsDecrypt encryptsDecrypt, int key){
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), StandardCharsets.UTF_8)) {
             while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                StringBuilder str = new StringBuilder();
-                for (int i = 0; i < line.length(); i++) {
-                    char charToAdd = line.charAt(i);
-                    charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'A', 'Z');
-                    charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'a', 'z');
-                    str.append(charToAdd);
-                }
-                str.append("\n");
-                writeLine(outputPath, str.toString());
+                writeLine(outputPath, scanLines(sc.nextLine(), encryptsDecrypt, key));
             }
 //             note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
