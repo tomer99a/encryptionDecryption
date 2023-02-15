@@ -24,7 +24,7 @@ public class EncryptionAlgorithm {
     private void encrypt(){
         String txt = readFile(originalPath);
 
-        int key = (int) (Math.random()*10); // get random number 1 to 10;
+        final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < txt.length(); i++) {
             char charToAdd = txt.charAt(i);

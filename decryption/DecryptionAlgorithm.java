@@ -16,7 +16,7 @@ public class DecryptionAlgorithm {
     private void getPaths(){
 //        Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the path to the encryption source file");
-//        String encryptionPath = myScanner.nextLine();  // Read user input
+//        encryptionPath = myScanner.nextLine();  // Read user input
         encryptionPath = "src\\encryptionDecryption\\data\\input text_encrypted.txt";
 
         System.out.println("Please enter the path to the key file");
@@ -30,7 +30,7 @@ public class DecryptionAlgorithm {
     private void decrypt(){
 
         String txt = readFile(encryptionPath);
-        int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
+        final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
 
         StringBuilder str = new StringBuilder();
         for (int i=0; i<txt.length(); i++){
