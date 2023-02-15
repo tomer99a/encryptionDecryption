@@ -2,6 +2,7 @@ package encryptionDecryption.decryption;
 
 import encryptionDecryption.interfaces.encryptsDecrypt;
 
+import java.io.File;
 import java.util.Scanner;
 
 import static encryptionDecryption.utils.GeneralMethods.*;
@@ -25,10 +26,20 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
         System.out.println("Please enter the path to the encryption source file");
         encryptionPath = myScanner.nextLine();  // Read user input
 //        encryptionPath = "src\\encryptionDecryption\\data\\input text_encrypted.txt";
+        while(!new File(encryptionPath).exists()) {
+            System.err.println("The given path is incorrect");
+            System.out.println("Please enter the path to the encryption source file");
+            encryptionPath = myScanner.nextLine();
+        }
 
         System.out.println("Please enter the path to the key file");
         keyPath = myScanner.nextLine();  // Read user input
 //        keyPath = "src\\encryptionDecryption\\data\\key.txt";
+        while(!new File(keyPath).exists()) {
+            System.err.println("The given path is incorrect");
+            System.out.println("Please enter the path to the key file");
+            keyPath = myScanner.nextLine();
+        }
 
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
         decryptedPath = addSuffixFileName(originalPath, "decrypted");
