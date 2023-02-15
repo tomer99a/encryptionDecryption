@@ -11,14 +11,14 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
     protected String decryptedPath;
 
     public void act(){
-        getPaths();
+        setPath();
         final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
         creatFile(decryptedPath);
         scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
         System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 
-    public void getPaths(){
+    public void setPath(){
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Please enter the path to the encryption source file");
         encryptionPath = myScanner.nextLine();  // Read user input

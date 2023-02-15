@@ -11,7 +11,7 @@ public abstract class encryptionDecryptionAbstract implements EncryptionAlgorith
     protected String keyPath;
 
     public void act(){
-        getPaths();
+        setPath();
         final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
         creatFile(keyPath);
         creatFile(encryptedPath);
@@ -20,7 +20,7 @@ public abstract class encryptionDecryptionAbstract implements EncryptionAlgorith
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
     }
 
-    public void getPaths(){
+    public void setPath(){
         System.out.println("Please enter the path to the input source file");
         Scanner myScanner = new Scanner(System.in);
         originalPath = myScanner.nextLine();
