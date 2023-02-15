@@ -1,7 +1,7 @@
 package encryptionDecryption;
 
-import encryptionDecryption.decryption.DecryptionAlgorithm;
-import encryptionDecryption.encryption.EncryptionAlgorithm;
+import encryptionDecryption.decryption.ShiftUpDecryption;
+import encryptionDecryption.encryption.ShiftUpEncryption;
 
 import java.util.Scanner;
 
@@ -24,8 +24,8 @@ public class Main {
                 continue;
             }
             switch (ans) {
-                case 1 -> new EncryptionAlgorithm().act();
-                case 2 -> new DecryptionAlgorithm().act();
+                case 1 -> new ShiftUpEncryption().act();
+                case 2 -> new ShiftUpDecryption().act();
                 case 3 -> doneLoop = true;
                 default -> System.err.println(errorMessage);
             }

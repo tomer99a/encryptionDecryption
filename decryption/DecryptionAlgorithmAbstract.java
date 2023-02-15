@@ -1,16 +1,14 @@
 package encryptionDecryption.decryption;
 
-import encryptionDecryption.interfaces.encryptsDecrypt;
-
 import java.util.Scanner;
 
-import static encryptionDecryption.utils.GeneralMethods.*;
+import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
 import static encryptionDecryption.utils.IOMethods.*;
 
-public class DecryptionAlgorithm implements encryptsDecrypt {
-    private String encryptionPath;
-    private String keyPath;
-    private String decryptedPath;
+public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithmInterface{
+    protected String encryptionPath;
+    protected String keyPath;
+    protected String decryptedPath;
 
     public void act(){
         getPaths();
@@ -32,22 +30,5 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
 
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
         decryptedPath = addSuffixFileName(originalPath, "decrypted");
-    }
-
-    /**
-     *
-     * @param c char to encrypt
-     * @param key key to use for encrypt
-     * @param start start of the ASCII sequence
-     * @param end end of the ASCII sequence
-     * @return the decryption char that you're looking for
-     */
-    public char handleCher(char c, int key, int start, int end){
-        if((int) c >= start && end >= (int) c)
-            if((int) c - key < start)
-                return (char) ((int) c - key + end - start);
-            else
-                return (char) ((int) c - key);
-        return c;
     }
 }
