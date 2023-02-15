@@ -1,4 +1,4 @@
-package utils;
+package encryptionDecryption.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class generalMethods {
+public class IOMethods {
     /**
      * creat file at the given path
      * @param path
@@ -59,18 +59,5 @@ public class generalMethods {
             e.printStackTrace();
         }
         return txt.toString();
-    }
-
-    /**
-     * take the full path and enter only to the name some suffix
-     * @param path
-     * @param suffix
-     * @return
-     */
-    public static String addSuffixFileName(String path, String suffix){
-        String newPath = path.substring(path.lastIndexOf("\\")+1, path.indexOf("."));
-        newPath = path.substring(0, path.lastIndexOf("\\")+1) + newPath + "_" + suffix;
-        newPath += path.substring(path.indexOf("."));
-        return newPath;
     }
 }
