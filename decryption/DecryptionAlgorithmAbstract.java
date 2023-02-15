@@ -6,9 +6,19 @@ import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
 import static encryptionDecryption.utils.IOMethods.*;
 
 public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithmInterface{
+    protected String decryptionMethod;
+
     protected String encryptionPath;
     protected String keyPath;
     protected String decryptedPath;
+
+    public DecryptionAlgorithmAbstract(String decryptionMethod) {
+        this.decryptionMethod = decryptionMethod;
+    }
+
+    public String getDecryptionMethod() {
+        return decryptionMethod;
+    }
 
     public void act(){
         setPath();

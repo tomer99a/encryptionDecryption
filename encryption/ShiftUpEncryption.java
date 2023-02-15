@@ -1,6 +1,10 @@
 package encryptionDecryption.encryption;
 
 public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
+    public ShiftUpEncryption() {
+        super("ShiftUp");
+    }
+
     /**
      * @param c char to encrypt
      * @param key key to use for encrypt
