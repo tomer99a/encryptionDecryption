@@ -1,6 +1,6 @@
 package encryptionDecryption.decryption;
 
-import encryptionDecryption.interfaces.encryptsDecrypt;
+import encryptionDecryption.general.encryptsDecrypt;
 
 public interface DecryptionAlgorithmInterface extends encryptsDecrypt {
 }

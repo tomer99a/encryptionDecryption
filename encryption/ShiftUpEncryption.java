@@ -1,6 +1,6 @@
 package encryptionDecryption.encryption;
 
-public class ShiftUpEncryption extends encryptionDecryptionAbstract{
+public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     /**
      * @param c char to encrypt
      * @param key key to use for encrypt

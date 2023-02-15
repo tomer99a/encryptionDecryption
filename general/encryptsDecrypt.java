@@ -1,4 +1,4 @@
-package encryptionDecryption.interfaces;
+package encryptionDecryption.general;
 
 public interface encryptsDecrypt {
     void act();

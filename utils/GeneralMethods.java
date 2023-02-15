@@ -1,6 +1,6 @@
 package encryptionDecryption.utils;
 
-import encryptionDecryption.interfaces.encryptsDecrypt;
+import encryptionDecryption.general.encryptsDecrypt;
 
 public class GeneralMethods {
     /**

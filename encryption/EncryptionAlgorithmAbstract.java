@@ -5,7 +5,7 @@ import java.util.Scanner;
 import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
 import static encryptionDecryption.utils.IOMethods.*;
 
-public abstract class encryptionDecryptionAbstract implements EncryptionAlgorithmInterface{
+public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String originalPath;
     protected String encryptedPath;
     protected String keyPath;
@@ -23,8 +23,8 @@ public abstract class encryptionDecryptionAbstract implements EncryptionAlgorith
     public void setPath(){
         System.out.println("Please enter the path to the input source file");
         Scanner myScanner = new Scanner(System.in);
-        originalPath = myScanner.nextLine();
-//        originalPath = "src\\encryptionDecryption\\data\\input text.txt";
+//        originalPath = myScanner.nextLine();
+        originalPath = "src\\encryptionDecryption\\data\\input text.txt";
 
         encryptedPath = addSuffixFileName(originalPath, "encrypted");
         keyPath = originalPath.substring(0, originalPath.lastIndexOf("\\")+1) + "key.txt";
