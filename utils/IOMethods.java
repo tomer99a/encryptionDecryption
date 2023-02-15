@@ -17,9 +17,9 @@ public class IOMethods {
             if(myObj.exists())
                 myObj.delete();
             if (!myObj.createNewFile())
-                System.out.println("File already exists.");
+                System.err.println("File already exists.");
         } catch (IOException e) {
-            System.out.printf("failed to creat %s file", path);
+            System.err.printf("failed to creat %s file", path);
         }
     }
 
@@ -34,7 +34,7 @@ public class IOMethods {
             myWriter.write(message);
             myWriter.close();
         } catch (IOException e) {
-            System.out.printf("failed to write to %s file", path);
+            System.err.printf("failed to write to %s file", path);
         }
     }
 
@@ -53,7 +53,7 @@ public class IOMethods {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.printf("failed to read %s file", path);
+            System.err.printf("failed to read %s file", path);
         }
         return txt.toString();
     }
