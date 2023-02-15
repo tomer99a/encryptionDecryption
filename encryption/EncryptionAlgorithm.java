@@ -12,7 +12,12 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
 
     public void act(){
         getPaths();
-        mainAct();
+        final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
+        creatFile(keyPath);
+        creatFile(encryptedPath);
+        scanAndSubmitFile(originalPath, encryptedPath, this, key);
+        writeToFile(keyPath, Integer.toString(key));
+        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
     }
 
     public void getPaths(){
@@ -21,17 +26,6 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
 
         encryptedPath = addSuffixFileName(originalPath, "encrypted");
         keyPath = originalPath.substring(0, originalPath.lastIndexOf("\\")+1) + "key.txt";
-    }
-
-    public void mainAct(){
-        final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
-        creatFile(keyPath);
-        creatFile(encryptedPath);
-
-        writeToFile(keyPath, Integer.toString(key));
-        scanAndSubmitFile(originalPath, encryptedPath, this, key);
-
-        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
     }
 
     /**
@@ -50,5 +44,4 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
         }
         return c;
     }
-
 }

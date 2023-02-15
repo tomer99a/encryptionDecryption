@@ -1,6 +1,5 @@
 package encryptionDecryption.utils;
 
-import encryptionDecryption.encryption.EncryptionAlgorithm;
 import encryptionDecryption.interfaces.encryptsDecrypt;
 
 import java.io.*;
@@ -47,30 +46,30 @@ public class IOMethods {
 
     /**
      * creat file at the given path
-     * @param path
+     * @param path file path and name
      */
     public static void creatFile(String path){
         try {
             File myObj = new File(path);
             if(myObj.exists())
-                myObj.delete();
+                if(!myObj.delete())
+                    throw new IOException("unable to delete existing file");
             if (!myObj.createNewFile())
-                System.err.println("File already exists.");
+                throw new IOException("failed to creat %s file " + path);
+
         } catch (IOException e) {
-            System.err.printf("failed to creat %s file", path);
+            System.err.print(e.getMessage());
         }
     }
 
     /**
      * write the given message to the file at the given path
-     * @param path
-     * @param message
+     * @param path file path and name
+     * @param message message to write into path
      */
     public static void writeToFile(String path, String message){
-        try {
-            FileWriter myWriter = new FileWriter(path);
+        try (FileWriter myWriter = new FileWriter(path)) {
             myWriter.write(message);
-            myWriter.close();
         } catch (IOException e) {
             System.err.printf("failed to write to %s file", path);
         }
@@ -78,18 +77,15 @@ public class IOMethods {
 
     /**
      *
-     * @param path
+     * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
     public static String readFile(String path){
         StringBuilder txt = new StringBuilder();
-        try {
-            File myObj = new File(path);
-            Scanner myReader = new Scanner(myObj);
+        try (Scanner myReader = new Scanner(new File(path))) {
             while (myReader.hasNextLine()) {
                 txt.append(myReader.nextLine()).append("\n");
             }
-            myReader.close();
         } catch (FileNotFoundException e) {
             System.err.printf("failed to read %s file", path);
         }

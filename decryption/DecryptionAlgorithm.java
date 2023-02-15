@@ -12,7 +12,10 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
 
     public void act(){
         getPaths();
-        mainAct();
+        final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
+        creatFile(decryptedPath);
+        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
+        System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 
     public void getPaths(){
@@ -27,13 +30,6 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
 
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
         decryptedPath = addSuffixFileName(originalPath, "decrypted");
-    }
-
-    public void mainAct(){
-        final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
-        creatFile(decryptedPath);
-        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
-        System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 
     /**
