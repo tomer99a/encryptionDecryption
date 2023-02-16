@@ -15,7 +15,7 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
         String keyPath = pathFromUser("key", "");
 
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
-        String decryptedPath = addSuffixFileName(originalPath, "decrypted");
+        String decryptedPath = addSuffixFileName(new File(originalPath), "decrypted");
 
         int key = 0; //TODO: should I init the key to 0?
         try{

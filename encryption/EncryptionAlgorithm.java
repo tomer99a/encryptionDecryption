@@ -11,8 +11,10 @@ import static encryptionDecryption.utils.IOMethods.*;
 public class EncryptionAlgorithm implements encryptsDecrypt {
     public void act(){
         String originalPath = pathFromUser("input", "");
-        String encryptedPath = addSuffixFileName(originalPath, "encrypted");
-        String keyPath = originalPath.substring(0, originalPath.lastIndexOf("\\") + 1) + "key.txt";
+        File file = new File(originalPath);
+
+        String encryptedPath = addSuffixFileName(file, "encrypted");
+        String keyPath = file.getParent() + "\\key.txt";
 
         final int key = 10 + (int) (Math.random()*100); // get random number 10 to 110;
         creatFile(keyPath);
