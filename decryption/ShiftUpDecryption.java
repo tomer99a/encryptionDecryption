@@ -16,7 +16,7 @@ public class ShiftUpDecryption extends DecryptionAlgorithmAbstract{
     public char handleCher(char c, int key, int start, int end){
         if((int) c >= start && end >= (int) c)
             if((int) c - key < start)
-                return (char) ((int) c - key + end - start);
+                return (char) ((int) c - key + end - start + 1);
             else
                 return (char) ((int) c - key);
         return c;

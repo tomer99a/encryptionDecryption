@@ -21,7 +21,7 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     @Override
     public char handleCher(char c, int key, int start, int end){
         if((int) c >= start && end >= (int) c){
-            if((int) c + key >= end)
+            if((int) c + key > end)
                 return (char) ((int) c + key - end + start - 1);
             else
                 return (char) ((int) c + key);
