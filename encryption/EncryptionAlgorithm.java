@@ -17,8 +17,8 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
         String keyPath = file.getParent() + "\\key.txt";
 
         final int key = 10 + (int) (Math.random()*100); // get random number 10 to 110;
-        creatFile(keyPath);
-        creatFile(encryptedPath);
+        createFile(keyPath);
+        createFile(encryptedPath);
         scanAndSubmitFile(originalPath, encryptedPath, this, key);
         writeToFile(keyPath, Integer.toString(key));
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);

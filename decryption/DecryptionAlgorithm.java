@@ -26,7 +26,7 @@ public class DecryptionAlgorithm implements encryptsDecrypt {
         } catch (NumberFormatException e) {
             System.err.println("The key file doesn't contain number");
         }
-        creatFile(decryptedPath);
+        createFile(decryptedPath);
         scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
         System.out.println("Location of the decrypted file is - " + decryptedPath);
     }

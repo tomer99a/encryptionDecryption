@@ -20,7 +20,6 @@ public class IOMethods {
             }
         } catch (IOException e) {
             System.err.println("failed to scan file");
-            e.printStackTrace();
         }
     }
 
@@ -41,7 +40,7 @@ public class IOMethods {
      * creat file at the given path
      * @param path file path and name
      */
-    public static void creatFile(String path){
+    public static void createFile(String path){
         try {
             File myObj = new File(path);
             if(myObj.exists())
