@@ -9,13 +9,12 @@ import static encryptionDecryption.utils.GeneralMethods.*;
 import static encryptionDecryption.utils.IOMethods.*;
 
 public class EncryptionAlgorithm implements encryptsDecrypt {
-    private String originalPath;
-    private String encryptedPath;
-    private String keyPath;
-
     public void act(){
-        getPaths();
-        final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
+        String originalPath = pathFromUser("input", "");
+        String encryptedPath = addSuffixFileName(originalPath, "encrypted");
+        String keyPath = originalPath.substring(0, originalPath.lastIndexOf("\\") + 1) + "key.txt";
+
+        final int key = 10 + (int) (Math.random()*100); // get random number 10 to 110;
         creatFile(keyPath);
         creatFile(encryptedPath);
         scanAndSubmitFile(originalPath, encryptedPath, this, key);
@@ -23,23 +22,8 @@ public class EncryptionAlgorithm implements encryptsDecrypt {
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
     }
 
-    public void getPaths(){
-        System.out.println("Please enter the path to the input source file");
-        Scanner myScanner = new Scanner(System.in);
-
-        originalPath = myScanner.nextLine();
-//        originalPath = "src\\encryptionDecryption\\data\\input text.txt";
-        while(!new File(originalPath).exists()) {
-            System.err.println("The given path is incorrect");
-            System.out.println("Please enter the path to the input source file");
-            originalPath = myScanner.nextLine();
-        }
-
-        encryptedPath = addSuffixFileName(originalPath, "encrypted");
-        keyPath = originalPath.substring(0, originalPath.lastIndexOf("\\")+1) + "key.txt";
-    }
-
     /**
+     * encrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
      * @param start start of the ASCII sequence

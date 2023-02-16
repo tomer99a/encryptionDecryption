@@ -1,6 +1,7 @@
 package encryptionDecryption.decryption;
 
 import encryptionDecryption.interfaces.encryptsDecrypt;
+import encryptionDecryption.utils.GeneralMethods.*;
 
 import java.io.File;
 import java.util.Scanner;
@@ -9,44 +10,29 @@ import static encryptionDecryption.utils.GeneralMethods.*;
 import static encryptionDecryption.utils.IOMethods.*;
 
 public class DecryptionAlgorithm implements encryptsDecrypt {
-    private String encryptionPath;
-    private String keyPath;
-    private String decryptedPath;
-
     public void act(){
-        getPaths();
-        final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
+        String encryptionPath = pathFromUser("encryption", "_encrypted");
+        String keyPath = pathFromUser("key", "");
+
+        String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
+        String decryptedPath = addSuffixFileName(originalPath, "decrypted");
+
+        int key = 0; //TODO: should I init the key to 0?
+        try{
+            String keyStr = readFile(keyPath);
+            if(keyStr.charAt(keyStr.length()-1) == '\n')
+                keyStr = keyStr.substring(0, keyStr.length()-1);
+            key = Integer.parseInt(keyStr);
+        } catch (NumberFormatException e) {
+            System.err.println("The key file doesn't contain number");
+        }
         creatFile(decryptedPath);
         scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
         System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 
-    public void getPaths(){
-        Scanner myScanner = new Scanner(System.in);
-        System.out.println("Please enter the path to the encryption source file");
-        encryptionPath = myScanner.nextLine();  // Read user input
-//        encryptionPath = "src\\encryptionDecryption\\data\\input text_encrypted.txt";
-        while(!new File(encryptionPath).exists()) {
-            System.err.println("The given path is incorrect");
-            System.out.println("Please enter the path to the encryption source file");
-            encryptionPath = myScanner.nextLine();
-        }
-
-        System.out.println("Please enter the path to the key file");
-        keyPath = myScanner.nextLine();  // Read user input
-//        keyPath = "src\\encryptionDecryption\\data\\key.txt";
-        while(!new File(keyPath).exists()) {
-            System.err.println("The given path is incorrect");
-            System.out.println("Please enter the path to the key file");
-            keyPath = myScanner.nextLine();
-        }
-
-        String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
-        decryptedPath = addSuffixFileName(originalPath, "decrypted");
-    }
-
     /**
-     *
+     * decrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
      * @param start start of the ASCII sequence
