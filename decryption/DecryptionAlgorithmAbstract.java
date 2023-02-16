@@ -25,14 +25,16 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
         String decryptedPath = addSuffixFileName(new File(originalPath), "decrypted");
 
-        int key = 0; //TODO: should I init the key to 0?
+        int key;
         try{
             String keyStr = readFile(keyPath);
-            if(keyStr.charAt(keyStr.length()-1) == '\n')
-                keyStr = keyStr.substring(0, keyStr.length()-1);
+            if(keyStr.indexOf('\n') != -1)
+                keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
+
             key = Integer.parseInt(keyStr);
         } catch (NumberFormatException e) {
             System.err.println("The key file doesn't contain number");
+            return;
         }
         createFile(decryptedPath);
         scanAndSubmitFile(encryptionPath, decryptedPath, this, key);

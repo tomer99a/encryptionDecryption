@@ -24,15 +24,10 @@ public class IOMethods {
     }
 
     public static void writeLine(String path, String line) throws IOException {
-        Writer output = null;
-        try{
-            output = new BufferedWriter(new FileWriter(path, true));
+        try (Writer output = new BufferedWriter(new FileWriter(path, true))) {
             output.append(line);
         } catch (IOException e) {
             System.err.println("failed to write to file " + path);
-        } finally {
-            assert output != null;
-            output.close();
         }
     }
 
