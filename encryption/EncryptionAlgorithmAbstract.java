@@ -7,6 +7,7 @@ import static encryptionDecryption.utils.IOMethods.*;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String encryptionMethod;
+    protected int key;
 
     protected String originalPath;
     protected String encryptedPath;
@@ -14,6 +15,7 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {
         this.encryptionMethod = encryptionMethod;
+        generateKey();
     }
 
     public String getEncryptionMethod() {
@@ -22,7 +24,6 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
 
     public void act(){
         setPath();
-        final int key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
         creatFile(keyPath);
         creatFile(encryptedPath);
         scanAndSubmitFile(originalPath, encryptedPath, this, key);

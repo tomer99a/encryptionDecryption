@@ -1,12 +1,14 @@
 package encryptionDecryption.encryption;
 
-public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
-    public ShiftUpEncryption() {
-        super("ShiftUp");
+import encryptionDecryption.utils.PrimeNumberGenerator;
+
+public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
+    public ShiftMultiplyEncryption() {
+        super("ShiftMultiply");
     }
 
     public void generateKey(){
-        this.key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
+        this.key = PrimeNumberGenerator.generatPrimeNumber();
     }
 
     /**
@@ -19,10 +21,11 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     @Override
     public char handleCher(char c, int key, int start, int end){
         if((int) c >= start && end >= (int) c){
-            if((int) c + key >= end)
-                return (char) ((int) c + key - end + start - 1);
-            else
-                return (char) ((int) c + key);
+            int ascii = (int) c - start + 1;
+            ascii *= key;
+            ascii = ascii % (end - start);
+            ascii += start + 1;
+            return (char) ascii;
         }
         return c;
     }
