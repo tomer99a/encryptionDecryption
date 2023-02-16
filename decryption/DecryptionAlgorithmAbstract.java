@@ -1,16 +1,14 @@
 package encryptionDecryption.decryption;
 
+import java.io.File;
 import java.util.Scanner;
 
 import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
+import static encryptionDecryption.utils.GeneralMethods.pathFromUser;
 import static encryptionDecryption.utils.IOMethods.*;
 
 public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithmInterface{
     protected String decryptionMethod;
-
-    protected String encryptionPath;
-    protected String keyPath;
-    protected String decryptedPath;
 
     public DecryptionAlgorithmAbstract(String decryptionMethod) {
         this.decryptionMethod = decryptionMethod;
@@ -21,24 +19,23 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
     }
 
     public void act(){
-        setPath();
-        final int key = Integer.parseInt(readFile(keyPath).charAt(0)+"");
-        creatFile(decryptedPath);
-        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
-        System.out.println("Location of the decrypted file is - " + decryptedPath);
-    }
-
-    public void setPath(){
-        Scanner myScanner = new Scanner(System.in);
-        System.out.println("Please enter the path to the encryption source file");
-//        encryptionPath = myScanner.nextLine();  // Read user input
-        encryptionPath = "src\\encryptionDecryption\\data\\input text_encrypted.txt";
-
-        System.out.println("Please enter the path to the key file");
-//        keyPath = myScanner.nextLine();  // Read user input
-        keyPath = "src\\encryptionDecryption\\data\\key.txt";
+        String encryptionPath = pathFromUser("encryption", "_encrypted");
+        String keyPath = pathFromUser("key", "");
 
         String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
-        decryptedPath = addSuffixFileName(originalPath, "decrypted");
+        String decryptedPath = addSuffixFileName(new File(originalPath), "decrypted");
+
+        int key = 0; //TODO: should I init the key to 0?
+        try{
+            String keyStr = readFile(keyPath);
+            if(keyStr.charAt(keyStr.length()-1) == '\n')
+                keyStr = keyStr.substring(0, keyStr.length()-1);
+            key = Integer.parseInt(keyStr);
+        } catch (NumberFormatException e) {
+            System.err.println("The key file doesn't contain number");
+        }
+        createFile(decryptedPath);
+        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
+        System.out.println("Location of the decrypted file is - " + decryptedPath);
     }
 }

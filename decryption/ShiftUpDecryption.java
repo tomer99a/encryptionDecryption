@@ -6,7 +6,7 @@ public class ShiftUpDecryption extends DecryptionAlgorithmAbstract{
     }
 
     /**
-     *
+     * decrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
      * @param start start of the ASCII sequence

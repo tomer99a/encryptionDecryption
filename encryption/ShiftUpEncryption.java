@@ -6,10 +6,12 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     }
 
     public void generateKey(){
-        this.key = 1 + (int) (Math.random()*9); // get random number 1 to 10;
+        //TODO: better random, until bit.
+        this.key = 1 + (int) (Math.random()*24); // get random number 1 to 24;
     }
 
     /**
+     * encrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
      * @param start start of the ASCII sequence

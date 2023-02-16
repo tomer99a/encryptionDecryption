@@ -17,7 +17,7 @@ public class GeneralMethods {
         String filename = file.getName().substring(0, file.getName().indexOf("."));
         String fileType = file.getPath().substring(file.getPath().indexOf("."));
 
-        return file.getParent() + filename + "_" + suffix + fileType;
+        return file.getParent() + "\\" + filename + "_" + suffix + fileType;
     }
 
     /**
