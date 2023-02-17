@@ -1,9 +1,7 @@
 package encryptionDecryption.encryption;
 
-import encryptionDecryption.utils.PrimeNumberGenerator;
-
 import java.io.File;
-import java.util.Scanner;
+import java.util.Random;
 
 import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
 import static encryptionDecryption.utils.GeneralMethods.pathFromUser;
@@ -23,7 +21,7 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     }
 
     public void generateKey(){
-        this.key = PrimeNumberGenerator.generatPrimeNumber();
+        this.key = new Random().nextInt(1000) + 1;
     }
 
     public void act(){

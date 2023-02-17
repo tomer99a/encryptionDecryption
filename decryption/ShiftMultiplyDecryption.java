@@ -17,7 +17,7 @@ public class ShiftMultiplyDecryption extends DecryptionAlgorithmAbstract {
         int rest = c - startRange;
 
         for(int i='A'; i<='z'; i++){
-            if((i*key)%myPrimeNumber == rest){
+            if((i*key) % myPrimeNumber == rest){
                 return (char) i;
             }
         }

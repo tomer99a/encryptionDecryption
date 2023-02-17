@@ -1,7 +1,5 @@
 package encryptionDecryption.encryption;
 
-import encryptionDecryption.utils.PrimeNumberGenerator;
-
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");

@@ -1,12 +1,14 @@
 package encryptionDecryption;
 
 import encryptionDecryption.decryption.DecryptionAlgorithmInterface;
-import encryptionDecryption.decryption.ShiftMultiplyDecryption;
 import encryptionDecryption.decryption.ShiftUpDecryption;
-import encryptionDecryption.encryption.DoubleEncryption;
+import encryptionDecryption.decryption.ShiftMultiplyDecryption;
+import encryptionDecryption.decryption.DoubleDecryption;
+
 import encryptionDecryption.encryption.EncryptionAlgorithmInterface;
-import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.ShiftUpEncryption;
+import encryptionDecryption.encryption.ShiftMultiplyEncryption;
+import encryptionDecryption.encryption.DoubleEncryption;
 
 import java.util.Scanner;
 
@@ -23,8 +25,7 @@ public class Main {
                     Please choose method:
                     1 - Shift up
                     2 - Multiply
-                    3 - Double
-                    """);
+                    3 - Double""");
             try {
                 choice = Integer.parseInt(myScanner.nextLine());
             } catch (NumberFormatException e) {
@@ -42,7 +43,7 @@ public class Main {
                 }
                 case 3 -> {
                     encryptionAlgorithm = new DoubleEncryption();
-                    decryptionAlgorithm = new ShiftUpDecryption();
+                    decryptionAlgorithm = new DoubleDecryption();
                 }
                 default -> {
                     System.err.println(invalidChoiceErrorMessage);
