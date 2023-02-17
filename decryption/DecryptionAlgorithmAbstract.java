@@ -22,7 +22,7 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
         String encryptionPath = pathFromUser("encryption", "_encrypted");
         String keyPath = pathFromUser("key", "");
 
-        String originalPath = encryptionPath.substring(0, encryptionPath.indexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
+        String originalPath = encryptionPath.substring(0, encryptionPath.lastIndexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
         String decryptedPath = addSuffixFileName(new File(originalPath), "decrypted");
 
         int key;

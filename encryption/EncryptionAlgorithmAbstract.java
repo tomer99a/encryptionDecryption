@@ -1,5 +1,7 @@
 package encryptionDecryption.encryption;
 
+import encryptionDecryption.utils.PrimeNumberGenerator;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -18,6 +20,10 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
 
     public String getEncryptionMethod() {
         return encryptionMethod;
+    }
+
+    public void generateKey(){
+        this.key = PrimeNumberGenerator.generatPrimeNumber();
     }
 
     public void act(){

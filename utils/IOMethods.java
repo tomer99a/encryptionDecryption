@@ -11,9 +11,9 @@ import static encryptionDecryption.utils.GeneralMethods.scanLines;
 public class IOMethods {
     public static void scanAndSubmitFile(String inputPath, String outputPath, encryptsDecrypt encryptsDecrypt, int key){
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), StandardCharsets.UTF_8)) {
-            while (sc.hasNextLine()) {
+            while (sc.hasNextLine())
                 writeLine(outputPath, scanLines(sc.nextLine(), encryptsDecrypt, key));
-            }
+
 //             note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
                 throw sc.ioException();

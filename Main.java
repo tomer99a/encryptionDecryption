@@ -1,5 +1,6 @@
 package encryptionDecryption;
 
+import encryptionDecryption.decryption.ShiftMultiplyDecryption;
 import encryptionDecryption.decryption.ShiftUpDecryption;
 import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.ShiftUpEncryption;
@@ -25,8 +26,8 @@ public class Main {
                 continue;
             }
             switch (choice) {
-                case 1 -> new ShiftUpEncryption().act();
-                case 2 -> new ShiftUpDecryption().act();
+                case 1 -> new ShiftMultiplyEncryption().act();
+                case 2 -> new ShiftMultiplyDecryption().act();
                 case 3 -> doneLoop = true;
                 default -> System.err.println(invalidChoiceErrorMessage);
             }

@@ -31,8 +31,7 @@ public class GeneralMethods {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < line.length(); i++) {
             char charToAdd = line.charAt(i);
-            charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'A', 'Z');
-            charToAdd = encryptsDecrypt.handleCher(charToAdd, key,'a', 'z');
+            charToAdd = encryptsDecrypt.handleCher(charToAdd, key);
             str.append(charToAdd);
         }
         str.append("\n");
@@ -47,16 +46,6 @@ public class GeneralMethods {
      * @return proper path from user
      */
     public static String pathFromUser(String fileRequired, String shouldContain){
-        // TODO: delete the switch case!!
-        String ans = "";
-        switch (fileRequired) {
-            case "encryption" -> ans = "src\\encryptionDecryption\\data\\input text_encrypted.txt";
-            case "key" -> ans = "src\\encryptionDecryption\\data\\key.txt";
-            case "input" -> ans = "src\\encryptionDecryption\\data\\input text.txt";
-        }
-        if(!ans.equals(""))
-            return ans;
-
         Scanner myScanner = new Scanner(System.in);
         System.out.printf("Please enter the path to the %s source file", fileRequired);
         String path = myScanner.nextLine();  // Read user input
@@ -67,5 +56,18 @@ public class GeneralMethods {
             path = myScanner.nextLine();
         }
         return path;
+    }
+
+    /**
+     * return if the char is capitals or not and the range of the ascii code
+     * @param c char in range
+     * @return range
+     */
+    public static int[] getRange(char c){
+        if('A' <= c && c <= 'Z')
+            return new int[]{'A', 'Z'};
+        else if('a' <= c && c <= 'z')
+            return new int[]{'a', 'z'};
+        return new int[]{-1};
     }
 }

@@ -1,5 +1,7 @@
 package encryptionDecryption.decryption;
 
+import static encryptionDecryption.utils.GeneralMethods.getRange;
+
 public class ShiftUpDecryption extends DecryptionAlgorithmAbstract{
     public ShiftUpDecryption() {
         super("ShiftUp");
@@ -9,16 +11,16 @@ public class ShiftUpDecryption extends DecryptionAlgorithmAbstract{
      * decrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
-     * @param start start of the ASCII sequence
-     * @param end end of the ASCII sequence
      * @return the decryption char that you're looking for
      */
-    public char handleCher(char c, int key, int start, int end){
-        if((int) c >= start && end >= (int) c)
-            if((int) c - key < start)
-                return (char) ((int) c - key + end - start + 1);
-            else
-                return (char) ((int) c - key);
-        return c;
+    public char handleCher(char c, int key){
+        int[] range = getRange(c);
+        if(range[0] == -1)
+            return c;
+        key = key % (range[1] - range[0]);
+        if((int) c - key < range[0])
+            return (char) ((int) c - key + range[1] - range[0] + 1);
+        else
+            return (char) ((int) c - key);
     }
 }
