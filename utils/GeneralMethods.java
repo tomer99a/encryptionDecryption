@@ -5,6 +5,8 @@ import encryptionDecryption.general.encryptsDecrypt;
 import java.io.File;
 import java.util.Scanner;
 
+import static encryptionDecryption.utils.IOMethods.readFile;
+
 public class GeneralMethods {
     /**
      * add suffix only to the name of the file and return the hole path
@@ -69,5 +71,18 @@ public class GeneralMethods {
         else if('a' <= c && c <= 'z')
             return new int[]{'a', 'z'};
         return new int[]{-1};
+    }
+
+    public static int getKeyFromFile(String keyPath){
+        try{
+            String keyStr = readFile(keyPath);
+            if(keyStr.indexOf('\n') != -1)
+                keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
+
+            return Integer.parseInt(keyStr);
+        } catch (NumberFormatException e) {
+            System.err.println("The key file doesn't contain number");
+            return -1;
+        }
     }
 }
