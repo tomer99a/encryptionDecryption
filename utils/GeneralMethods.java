@@ -62,45 +62,4 @@ public class GeneralMethods {
             return -1;
         }
     }
-
-    public static int fixNotGoodChars(int c){
-        //TODO: Need to find a way to do it without 'magic numbers'.
-        if (c == 141) {
-            return 136;
-        }
-        if (c == 143) {
-            return 135;
-        }
-        if (c == 144) {
-            return 134;
-        }
-        if (c == 157) {
-            return 133;
-        }
-        if (c == 160) {
-            return 132;
-        }
-        if (c == 173) {
-            return 131;
-        }
-        if (c == 136) {
-            return 141;
-        }
-        if (c == 135) {
-            return 143;
-        }
-        if (c == 134) {
-            return 144;
-        }
-        if (c == 133) {
-            return 157;
-        }
-        if (c == 132) {
-            return 160;
-        }
-        if (c == 131) {
-            return 173;
-        }
-        return c;
-    }
 }

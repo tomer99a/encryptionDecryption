@@ -15,7 +15,6 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract{
         String className = algo.getClass().toString();
         className = className.substring(className.lastIndexOf("."), className.lastIndexOf("E"));
         this.encryptionMethod += className;
-        System.out.println(className);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract{
         String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
-        String tmpPath = Files.createTempFile("firstOutput", ".txt").toString();
+        String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
         algo.act(originalPath, tmpPath, keyPath1);
         algo.act(tmpPath, outputPath, keyPath2);

@@ -28,7 +28,7 @@ public class Main {
 
         EncryptionAlgorithmInterface encryptionAlgorithm;
         DecryptionAlgorithmInterface decryptionAlgorithm;
-        String algoName = "Dmulti";
+        String algoName = "multinn";
 
         switch (algoName) {
             case "up" -> {

@@ -23,7 +23,7 @@ public class DoubleDecryption extends DecryptionAlgorithmAbstract{
         String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
-        String tmpPath = Files.createTempFile("firstOutput", ".txt").toString();
+        String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
         algo.act(originalPath, tmpPath, keyPath2);
         algo.act(tmpPath, outputPath, keyPath1);
