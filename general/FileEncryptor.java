@@ -3,6 +3,8 @@ package encryptionDecryption.general;
 import encryptionDecryption.decryption.DecryptionAlgorithmInterface;
 import encryptionDecryption.encryption.EncryptionAlgorithmInterface;
 
+import java.io.IOException;
+
 public class FileEncryptor {
     private EncryptionAlgorithmInterface encryptionAlgorithmInterface;
     private DecryptionAlgorithmInterface decryptionAlgorithmInterface;
@@ -15,11 +17,11 @@ public class FileEncryptor {
             throw new Exception("The encryption and decryption should be the same kind");
     }
 
-    public void encrypt(){
-        encryptionAlgorithmInterface.act();
+    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+        encryptionAlgorithmInterface.act(originalPath, outputPath, keyPath);
     }
 
-    public void decrypt(){
-        decryptionAlgorithmInterface.act();
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+        decryptionAlgorithmInterface.act(originalPath, outputPath, keyPath);
     }
 }

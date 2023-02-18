@@ -1,9 +1,7 @@
 package encryptionDecryption.decryption;
 
-import java.io.File;
+import java.io.IOException;
 
-import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
-import static encryptionDecryption.utils.GeneralMethods.pathFromUser;
 import static encryptionDecryption.utils.GeneralMethods.getKeyFromFile;
 import static encryptionDecryption.utils.IOMethods.*;
 
@@ -18,17 +16,11 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
         return decryptionMethod;
     }
 
-    public void act(){
-        String encryptionPath = pathFromUser("encryption", "_encrypted");
-        String keyPath = pathFromUser("key", "");
-
-        String originalPath = encryptionPath.substring(0, encryptionPath.lastIndexOf("_")) + encryptionPath.substring(encryptionPath.indexOf("."));
-        String decryptedPath = addSuffixFileName(new File(originalPath), "decrypted");
-
+    public void act(String originalPath, String outputPath, String keyPath) throws IOException {
         final int key = getKeyFromFile(keyPath);
 
-        createFile(decryptedPath);
-        scanAndSubmitFile(encryptionPath, decryptedPath, this, key);
-        System.out.println("Location of the decrypted file is - " + decryptedPath);
+        createFile(outputPath);
+        scanAndSubmitFile(originalPath, outputPath, this, key);
+        System.out.println("Location of the decrypted file is - " + outputPath);
     }
 }

@@ -1,42 +1,38 @@
 package encryptionDecryption.encryption;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
-import static encryptionDecryption.utils.GeneralMethods.addSuffixFileName;
-import static encryptionDecryption.utils.GeneralMethods.pathFromUser;
-import static encryptionDecryption.utils.IOMethods.*;
+import static encryptionDecryption.utils.IOMethods.createFile;
+import static encryptionDecryption.utils.IOMethods.scanAndSubmitFile;
+import static encryptionDecryption.utils.IOMethods.writeToFile;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String encryptionMethod;
-    protected int key;
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {
         this.encryptionMethod = encryptionMethod;
-        generateKey();
     }
 
     public String getEncryptionMethod() {
         return encryptionMethod;
     }
 
-    public void generateKey(){
-        this.key = new Random().nextInt(1000) + 1;
-    }
-
-    public void act(){
-        String originalPath = pathFromUser("input", "");
-        File file = new File(originalPath);
-
-        String encryptedPath = addSuffixFileName(file, "encrypted");
-        String keyPath = file.getParent() + "\\key.txt";
+    @Override
+    public void act(String originalPath, String outputPath, String keyPath) throws IOException {
+        final int key = this.generateKey();
 
         createFile(keyPath);
-        createFile(encryptedPath);
+        createFile(outputPath);
 
-        scanAndSubmitFile(originalPath, encryptedPath, this, key);
+        scanAndSubmitFile(originalPath, outputPath, this, key);
         writeToFile(keyPath, Integer.toString(key));
 
-        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%n", encryptedPath, keyPath);
+        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s\n", outputPath, keyPath);
+    }
+
+    @Override
+    public int generateKey() {
+        return new Random().nextInt(1000) + 3;
     }
 }

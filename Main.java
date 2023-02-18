@@ -10,10 +10,19 @@ import encryptionDecryption.encryption.ShiftUpEncryption;
 import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.DoubleEncryption;
 
+import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static void menu() {
+    private static void menu() throws IOException {
+        String fileName = "alpha";
+        String basePath = "src\\encryptionDecryption\\data\\";
+        String originalPath = basePath + fileName + ".txt";
+        String encryptedPath = basePath + fileName + "_encrypted.txt";
+        String decryptedPath = basePath + fileName + "_decrypted.txt";
+        String keyPath = basePath + "key.txt";
+
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
@@ -42,8 +51,15 @@ public class Main {
                     decryptionAlgorithm = new ShiftMultiplyDecryption();
                 }
                 case 3 -> {
-                    encryptionAlgorithm = new DoubleEncryption();
-                    decryptionAlgorithm = new DoubleDecryption();
+                    if(new Random().nextInt(2) == 0){
+                        encryptionAlgorithm = new ShiftUpEncryption();
+                        decryptionAlgorithm = new ShiftUpDecryption();
+                    } else {
+                        encryptionAlgorithm = new ShiftMultiplyEncryption();
+                        decryptionAlgorithm = new ShiftMultiplyDecryption();
+                    }
+                    encryptionAlgorithm = new DoubleEncryption(encryptionAlgorithm);
+                    decryptionAlgorithm = new DoubleDecryption(decryptionAlgorithm);
                 }
                 default -> {
                     System.err.println(invalidChoiceErrorMessage);
@@ -64,15 +80,15 @@ public class Main {
                 continue;
             }
             switch (choice) {
-                case 1 -> encryptionAlgorithm.act();
-                case 2 -> decryptionAlgorithm.act();
+                case 1 -> encryptionAlgorithm.act(originalPath, encryptedPath, keyPath);
+                case 2 -> decryptionAlgorithm.act(encryptedPath, decryptedPath, keyPath);
                 case 3 -> doneLoop = true;
                 default -> System.err.println(invalidChoiceErrorMessage);
             }
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         menu();
     }
 }
