@@ -6,22 +6,26 @@ import encryptionDecryption.encryption.EncryptionAlgorithmInterface;
 import java.io.IOException;
 
 public class FileEncryptor {
-    private EncryptionAlgorithmInterface encryptionAlgorithmInterface;
-    private DecryptionAlgorithmInterface decryptionAlgorithmInterface;
+    private EncryptionAlgorithmInterface encryptionAlgorithm;
+    private DecryptionAlgorithmInterface decryptionAlgorithm;
+
+    public FileEncryptor(EncryptionAlgorithmInterface encryptionAlgorithm, DecryptionAlgorithmInterface decryptionAlgorithm) throws Exception {
+        setEncryptionDecryption(encryptionAlgorithm, decryptionAlgorithm);
+    }
 
     public void setEncryptionDecryption(EncryptionAlgorithmInterface encryptionAlgorithm, DecryptionAlgorithmInterface decryptionAlgorithm) throws Exception {
         if(encryptionAlgorithm.getEncryptionMethod().equals(decryptionAlgorithm.getDecryptionMethod())){
-            this.decryptionAlgorithmInterface = decryptionAlgorithm;
-            this.encryptionAlgorithmInterface = encryptionAlgorithm;
+            this.encryptionAlgorithm = encryptionAlgorithm;
+            this.decryptionAlgorithm = decryptionAlgorithm;
         } else
-            throw new Exception("The encryption and decryption should be the same kind");
+            throw new Error("The encryption and decryption should be the same kind");
     }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        encryptionAlgorithmInterface.act(originalPath, outputPath, keyPath);
+        encryptionAlgorithm.act(originalPath, outputPath, keyPath);
     }
 
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        decryptionAlgorithmInterface.act(originalPath, outputPath, keyPath);
+        decryptionAlgorithm.act(originalPath, outputPath, keyPath);
     }
 }

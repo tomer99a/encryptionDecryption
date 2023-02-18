@@ -14,11 +14,10 @@ public class ShiftMultiplyDecryption extends DecryptionAlgorithmAbstract {
      * @return the decryption char that you're looking for
      */
     public char handleCher(char c, int key){
-        int myPrimeNumber = 53;
         int rest;
         int[] range = getRange(c);
 
-        if(c == 248)
+        if(c == mySpecialChar)
             rest = 52;
         else if(range[0] == -1)
             return c;
@@ -31,7 +30,7 @@ public class ShiftMultiplyDecryption extends DecryptionAlgorithmAbstract {
                 if(i > 'Z')
                     i += 6;
                 if(i == '{')
-                    return (char) 248;
+                    return (char) mySpecialChar;
                 return (char) i;
             }
         }

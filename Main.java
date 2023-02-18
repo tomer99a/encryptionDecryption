@@ -9,12 +9,13 @@ import encryptionDecryption.encryption.EncryptionAlgorithmInterface;
 import encryptionDecryption.encryption.ShiftUpEncryption;
 import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.DoubleEncryption;
+import encryptionDecryption.general.FileEncryptor;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    private static void menu() throws IOException {
+    private static void menu() throws Exception {
         String fileName = "alpha";
         String basePath = "src\\encryptionDecryption\\data\\";
         String originalPath = basePath + fileName + ".txt";
@@ -28,7 +29,7 @@ public class Main {
 
         EncryptionAlgorithmInterface encryptionAlgorithm;
         DecryptionAlgorithmInterface decryptionAlgorithm;
-        String algoName = "multinn";
+        String algoName = "doubleUp";
 
         switch (algoName) {
             case "up" -> {
@@ -48,6 +49,13 @@ public class Main {
                 decryptionAlgorithm = new DoubleDecryption(new ShiftMultiplyDecryption());
             }
         }
+        FileEncryptor fileEncryptor;
+        try {
+            fileEncryptor = new FileEncryptor(encryptionAlgorithm, decryptionAlgorithm);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         while (!doneLoop) {
             int choice;
 
@@ -64,15 +72,15 @@ public class Main {
                 continue;
             }
             switch (choice) {
-                case 1 -> encryptionAlgorithm.act(originalPath, encryptedPath, keyPath);
-                case 2 -> decryptionAlgorithm.act(encryptedPath, decryptedPath, keyPath);
+                case 1 -> fileEncryptor.encrypt(originalPath, encryptedPath, keyPath);
+                case 2 -> fileEncryptor.decrypt(encryptedPath, decryptedPath, keyPath);
                 case 3 -> doneLoop = true;
                 default -> System.err.println(invalidChoiceErrorMessage);
             }
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         menu();
     }
 }

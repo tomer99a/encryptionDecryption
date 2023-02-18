@@ -14,9 +14,8 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char handleCher(char c, int key){
-        int myPrimeNumber = 53;
         int[] range = getRange(c);
-        if(c == 248)
+        if(c == mySpecialChar)
             c = (char) ('A' + myPrimeNumber - 1);
         else if(range[0] == -1)
             return c;
@@ -29,7 +28,7 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
         else if(encryptValue != 52)
             encryptValue += 'a' - 26;
         else
-            encryptValue = 248;
+            encryptValue = mySpecialChar;
 
         return (char) encryptValue;
     }
