@@ -9,17 +9,15 @@ import static encryptionDecryption.utils.IOMethods.readFile;
 
 public class GeneralMethods {
     /**
-     * add suffix only to the name of the file and return the hole path
-     * take the full path and enter only to the name some suffix
-     * @param suffix string to add in the end of file name
-     * @param file file object to handle
-     * @return new path that the name of file have new suffix.
+     * Add suffix only to the file name from the full path
+     * @param path original path
+     * @param suffix thing to add at the end of the file name
+     * @return path with changed name
      */
-    public static String addSuffixFileName(File file, String suffix){
-        String filename = file.getName().substring(0, file.getName().indexOf("."));
-        String fileType = file.getPath().substring(file.getPath().indexOf("."));
-
-        return file.getParent() + "\\" + filename + "_" + suffix + fileType;
+    public static String addSuffixToFileNameAtPath(String path, String suffix){
+        File file = new File(path);
+        String fileName = file.getName();
+        return file.getParent() + "\\" + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
@@ -38,26 +36,6 @@ public class GeneralMethods {
         }
         str.append("\n");
         return str.toString();
-    }
-
-    /**
-     * ask path to file from user and check if it is good one.
-     * wait until the given path is good.
-     * @param fileRequired name of the file
-     * @param shouldContain string that the path must include, if not have to include can get empty string
-     * @return proper path from user
-     */
-    public static String pathFromUser(String fileRequired, String shouldContain){
-        Scanner myScanner = new Scanner(System.in);
-        System.out.printf("Please enter the path to the %s source file", fileRequired);
-        String path = myScanner.nextLine();  // Read user input
-        File file = new File(path);
-        while(!(file.exists() && path.contains(shouldContain) && file.isFile())) {
-            System.err.println("The given path is incorrect");
-            System.out.printf("Please enter the path to the %s source file", fileRequired);
-            path = myScanner.nextLine();
-        }
-        return path;
     }
 
     /**
