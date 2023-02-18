@@ -1,5 +1,8 @@
 package encryptionDecryption.encryption;
 
+import static encryptionDecryption.utils.GeneralMethods.fixNotGoodChars;
+import static encryptionDecryption.utils.GeneralMethods.getRange;
+
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");
@@ -12,8 +15,15 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char handleCher(char c, int key){
-        int myPrimeNumber = 67;
-        int startRange = 188;
+        int[] range = getRange(c);
+        int myPrimeNumber = 59;
+        int startRange = 255 - myPrimeNumber;
+        if(range[0] == -1 && !(startRange <= c && c <= 255))
+            return c;
+        if(c > startRange){
+            startRange = 255 - 2 * myPrimeNumber;
+            return (char) fixNotGoodChars((c * key) % myPrimeNumber + startRange);
+        }
         return (char) ((c * key) % myPrimeNumber + startRange);
     }
 }

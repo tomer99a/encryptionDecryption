@@ -11,7 +11,6 @@ import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.DoubleEncryption;
 
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -26,46 +25,31 @@ public class Main {
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
+
+        EncryptionAlgorithmInterface encryptionAlgorithm;
+        DecryptionAlgorithmInterface decryptionAlgorithm;
+        String algoName = "Dmulti";
+
+        switch (algoName) {
+            case "up" -> {
+                encryptionAlgorithm = new ShiftUpEncryption();
+                decryptionAlgorithm = new ShiftUpDecryption();
+            }
+            case "multi" -> {
+                encryptionAlgorithm = new ShiftMultiplyEncryption();
+                decryptionAlgorithm = new ShiftMultiplyDecryption();
+            }
+            case "doubleUp" -> {
+                encryptionAlgorithm = new DoubleEncryption(new ShiftUpEncryption());
+                decryptionAlgorithm = new DoubleDecryption(new ShiftUpDecryption());
+            }
+            default -> {
+                encryptionAlgorithm = new DoubleEncryption(new ShiftMultiplyEncryption());
+                decryptionAlgorithm = new DoubleDecryption(new ShiftMultiplyDecryption());
+            }
+        }
         while (!doneLoop) {
             int choice;
-            EncryptionAlgorithmInterface encryptionAlgorithm;
-            DecryptionAlgorithmInterface decryptionAlgorithm;
-            System.out.println("""
-                    Please choose method:
-                    1 - Shift up
-                    2 - Multiply
-                    3 - Double""");
-            try {
-                choice = Integer.parseInt(myScanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.err.println(invalidChoiceErrorMessage);
-                continue;
-            }
-            switch (choice) {
-                case 1 -> {
-                    encryptionAlgorithm = new ShiftUpEncryption();
-                    decryptionAlgorithm = new ShiftUpDecryption();
-                }
-                case 2 -> {
-                    encryptionAlgorithm = new ShiftMultiplyEncryption();
-                    decryptionAlgorithm = new ShiftMultiplyDecryption();
-                }
-                case 3 -> {
-                    if(new Random().nextInt(2) == 0){
-                        encryptionAlgorithm = new ShiftUpEncryption();
-                        decryptionAlgorithm = new ShiftUpDecryption();
-                    } else {
-                        encryptionAlgorithm = new ShiftMultiplyEncryption();
-                        decryptionAlgorithm = new ShiftMultiplyDecryption();
-                    }
-                    encryptionAlgorithm = new DoubleEncryption(encryptionAlgorithm);
-                    decryptionAlgorithm = new DoubleDecryption(decryptionAlgorithm);
-                }
-                default -> {
-                    System.err.println(invalidChoiceErrorMessage);
-                    continue;
-                }
-            }
 
             System.out.println("""
                     Hello user! please choose number:

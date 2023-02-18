@@ -12,8 +12,8 @@ public class ShiftMultiplyDecryption extends DecryptionAlgorithmAbstract {
      * @return the decryption char that you're looking for
      */
     public char handleCher(char c, int key){
-        int myPrimeNumber = 67;
-        int startRange = 188;
+        int myPrimeNumber = 59;
+        int startRange = 255 - myPrimeNumber;
         int rest = c - startRange;
 
         for(int i='A'; i<='z'; i++){

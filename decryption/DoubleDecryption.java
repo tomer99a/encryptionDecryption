@@ -12,7 +12,9 @@ public class DoubleDecryption extends DecryptionAlgorithmAbstract{
     public DoubleDecryption(DecryptionAlgorithmInterface algo) {
         super("Double");
         this.algo = algo;
-        System.out.println(algo.getClass());
+        String className = algo.getClass().toString();
+        className = className.substring(className.lastIndexOf("."), className.lastIndexOf("D"));
+        this.decryptionMethod += className;
     }
 
     @Override

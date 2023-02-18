@@ -12,7 +12,10 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract{
     public DoubleEncryption(EncryptionAlgorithmInterface algo) {
         super("Double");
         this.algo = algo;
-        System.out.println(algo.getClass());
+        String className = algo.getClass().toString();
+        className = className.substring(className.lastIndexOf("."), className.lastIndexOf("E"));
+        this.encryptionMethod += className;
+        System.out.println(className);
     }
 
     @Override
