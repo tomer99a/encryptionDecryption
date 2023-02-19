@@ -1,9 +1,13 @@
 package encryptionDecryption.utils;
 
+import encryptionDecryption.encryption.EncryptionAlgorithmInterface;
 import encryptionDecryption.general.encryptsDecrypt;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.io.IOException;
 
+import static encryptionDecryption.utils.IOMethods.copyFile;
 import static encryptionDecryption.utils.IOMethods.readFile;
 
 public class GeneralMethods {
@@ -63,5 +67,19 @@ public class GeneralMethods {
             System.err.println("The key file doesn't contain number");
             return -1;
         }
+    }
+
+    public static void repeatAct(int n, String originalPath, String outputPath, String keyPath, encryptsDecrypt algo) throws IOException {
+        // Create a temporary file
+        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
+
+        algo.act(originalPath, tmpPath, keyPath);
+        for(int i=1; i < n; i++){
+            algo.act(tmpPath, outputPath, keyPath);
+            copyFile(outputPath, tmpPath);
+        }
+
+        if (!(new File(tmpPath).delete()))
+            System.err.println("The tmp file didn't auto delete");
     }
 }
