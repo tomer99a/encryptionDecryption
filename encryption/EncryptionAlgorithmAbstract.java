@@ -35,4 +35,9 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     public int generateKey() {
         return new Random().nextInt(1000) + 3;
     }
+
+    @Override
+    public char handleCher(char c, int key) {
+        return c;
+    }
 }

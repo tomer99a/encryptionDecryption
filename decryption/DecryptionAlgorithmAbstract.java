@@ -23,4 +23,9 @@ public abstract class DecryptionAlgorithmAbstract implements DecryptionAlgorithm
         scanAndSubmitFile(originalPath, outputPath, this, key);
         System.out.println("Location of the decrypted file is - " + outputPath);
     }
+
+    @Override
+    public char handleCher(char c, int key) {
+        return c;
+    }
 }

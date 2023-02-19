@@ -9,6 +9,13 @@ import java.util.Scanner;
 import static encryptionDecryption.utils.GeneralMethods.scanLines;
 
 public class IOMethods {
+    /**
+     * Scan the input file line by line and put the changed lines into the output line
+     * @param inputPath path to input file
+     * @param outputPath path to output file
+     * @param encryptsDecrypt interface with the function to change the line
+     * @param key key to usr to encrypt/decrypt
+     */
     public static void scanAndSubmitFile(String inputPath, String outputPath, encryptsDecrypt encryptsDecrypt, int key){
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), StandardCharsets.UTF_8)) {
             while (sc.hasNextLine())
@@ -23,7 +30,12 @@ public class IOMethods {
         }
     }
 
-    public static void writeLine(String path, String line) throws IOException {
+    /**
+     * Open file and append to in message
+     * @param path path to file should be written.
+     * @param line message to be written into file.
+     */
+    public static void writeLine(String path, String line) {
         try (Writer output = new BufferedWriter(new FileWriter(path, true))) {
             output.append(line);
         } catch (IOException e) {
@@ -32,12 +44,12 @@ public class IOMethods {
     }
 
     /**
-     * creat file at the given path
+     * Creat file at the given path and delete the exists if was one.
      * @param path file path and name
      */
     public static void createFile(String path){
         try {
-            File myObj = new File(path);
+            final File myObj = new File(path);
             if(myObj.exists())
                 if(!myObj.delete())
                     throw new IOException("unable to delete existing file");
@@ -50,7 +62,7 @@ public class IOMethods {
     }
 
     /**
-     * write the given message to the file at the given path
+     * Write the given message to the file at the given path
      * @param path file path and name
      * @param message message to write into path
      */
@@ -63,7 +75,7 @@ public class IOMethods {
     }
 
     /**
-     *
+     * Read all file from the path given.
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */

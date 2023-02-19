@@ -20,25 +20,22 @@ public class GeneralMethods {
     }
 
     /**
-     * take string and do action on it char by char
+     * Take string and do action on it char by char
      * @param line string to change
      * @param encryptsDecrypt interface with the method to do the action
      * @param key of the action to use
-     * @return change string
+     * @return changed string
      */
     public static String scanLines(String line, encryptsDecrypt encryptsDecrypt, int key){
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < line.length(); i++) {
-            char charToAdd = line.charAt(i);
-            charToAdd = encryptsDecrypt.handleCher(charToAdd, key);
-            str.append(charToAdd);
-        }
+        for (int i = 0; i < line.length(); i++)
+            str.append(encryptsDecrypt.handleCher(line.charAt(i), key));
         str.append("\n");
         return str.toString();
     }
 
     /**
-     * return if the char is capitals or not and the range of the ascii code
+     * Return if the char is capitals or not and the range of the ascii code
      * @param c char in range
      * @return range
      */
@@ -50,13 +47,18 @@ public class GeneralMethods {
         return new int[]{-1};
     }
 
+    /**
+     * Extract key value from file
+     * @param keyPath the path to the file key
+     * @return key value
+     */
     public static int getKeyFromFile(String keyPath){
         try{
             String keyStr = readFile(keyPath);
             if(keyStr.indexOf('\n') != -1)
                 keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
-
             return Integer.parseInt(keyStr);
+
         } catch (NumberFormatException e) {
             System.err.println("The key file doesn't contain number");
             return -1;

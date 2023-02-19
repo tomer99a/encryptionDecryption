@@ -11,7 +11,6 @@ import encryptionDecryption.encryption.ShiftMultiplyEncryption;
 import encryptionDecryption.encryption.DoubleEncryption;
 import encryptionDecryption.general.FileEncryptor;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {

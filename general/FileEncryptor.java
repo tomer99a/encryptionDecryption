@@ -18,7 +18,7 @@ public class FileEncryptor {
             this.encryptionAlgorithm = encryptionAlgorithm;
             this.decryptionAlgorithm = decryptionAlgorithm;
         } else
-            throw new Error("The encryption and decryption should be the same kind");
+            throw new Error("The encryption and decryption should use the same algo");
     }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {

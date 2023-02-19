@@ -10,7 +10,7 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     }
 
     /**
-     * encrypt the char by key
+     * Encrypt the char by key
      * @param c char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
@@ -27,6 +27,10 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
             return (char) ((int) c + key);
     }
 
+    /**
+     * Generate key that didn't reset the modulo action.
+     * @return random key
+     */
     @Override
     public int generateKey() {
         int key = new Random().nextInt(1000) + 1;

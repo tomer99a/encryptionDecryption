@@ -19,22 +19,16 @@ public class DoubleDecryption extends DecryptionAlgorithmAbstract{
 
     @Override
     public void act(String originalPath, String outputPath, String keyPath) throws IOException {
-        String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
+        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
-        String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
+        final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
         algo.act(originalPath, tmpPath, keyPath2);
         algo.act(tmpPath, outputPath, keyPath1);
 
         if (!(new File(tmpPath).delete()))
             System.err.println("The tmp file didn't auto delete");
-    }
-
-
-    @Override
-    public char handleCher(char c, int key) {
-        return 'T';
     }
 }
