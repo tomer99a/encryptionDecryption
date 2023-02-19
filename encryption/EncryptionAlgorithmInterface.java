@@ -4,5 +4,5 @@ import encryptionDecryption.general.encryptsDecrypt;
 
 public interface EncryptionAlgorithmInterface extends encryptsDecrypt {
     String getEncryptionMethod();
-    int generateKey();
+    void generateKey();
 }

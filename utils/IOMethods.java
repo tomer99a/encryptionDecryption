@@ -90,4 +90,24 @@ public class IOMethods {
         }
         return txt.toString();
     }
+
+    /**
+     * copy content of one file to another
+     * @param originalPath file path to copy from
+     * @param newPath file path to copy
+     */
+    public static void copyFile(String originalPath, String newPath)
+    {
+        File originalFile = new File(originalPath);
+        File newFile = new File(newPath);
+
+        try (FileInputStream in = new FileInputStream(originalFile); FileOutputStream out = new FileOutputStream(newFile)) {
+            int n;
+            while ((n = in.read()) != -1) {
+                out.write(n);
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }

@@ -29,14 +29,12 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
 
     /**
      * Generate key that didn't reset the modulo action.
-     * @return random key
      */
     @Override
-    public int generateKey() {
-        int key = new Random().nextInt(1000) + 1;
-        while (key % ('Z'-'A') != 0){
+    public void generateKey() {
+        key = new Random().nextInt(1000) + 1;
+        while (key % ('Z'-'A') == 0){
             key = new Random().nextInt(1000) + 1;
         }
-        return key;
     }
 }

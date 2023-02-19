@@ -9,9 +9,11 @@ import static encryptionDecryption.utils.IOMethods.writeToFile;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String encryptionMethod;
+    protected int key;
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {
         this.encryptionMethod = encryptionMethod;
+        generateKey();
     }
 
     public String getEncryptionMethod() {
@@ -20,8 +22,6 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
 
     @Override
     public void act(String originalPath, String outputPath, String keyPath) throws IOException {
-        final int key = this.generateKey();
-
         createFile(keyPath);
         createFile(outputPath);
 
@@ -32,8 +32,8 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     }
 
     @Override
-    public int generateKey() {
-        return new Random().nextInt(1000) + 3;
+    public void generateKey() {
+        key = new Random().nextInt(1000) + 3;
     }
 
     @Override

@@ -13,6 +13,7 @@ public class ShiftUpDecryption extends DecryptionAlgorithmAbstract{
      * @param key key to use for encrypt
      * @return the decryption char that you're looking for
      */
+    @Override
     public char handleCher(char c, int key){
         int[] range = getRange(c);
         if(range[0] == -1)
