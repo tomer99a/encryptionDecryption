@@ -22,7 +22,7 @@ public class Main {
 
         EncryptionAlgorithmInterface encryptionAlgorithm;
         DecryptionAlgorithmInterface decryptionAlgorithm;
-        String algoName = "multi";
+        String algoName = "upsd";
 
         switch (algoName) {
             case "up" -> {
@@ -39,7 +39,7 @@ public class Main {
             }
 
         }
-        String algo2 = "repeat";
+        String algo2 = "doublews";
         switch (algo2) {
             case "repeat" -> {
                 int repeatNum = 6;
