@@ -26,7 +26,9 @@ public class XorEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char decryptChar(char c, int key){
-        if(c < 127)
+        // the xor encrypt chars to ascii code bigger than 127
+        // so if I get char smaller than 255 it should return as is.
+        if(c < 255)
             return c;
 
         return (char) ((c - 255) ^ key);
