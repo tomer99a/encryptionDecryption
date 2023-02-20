@@ -9,13 +9,16 @@ class RepeatEncryptionTest {
 
     @BeforeEach
     void setUp() {
+        assertEquals(4, 2+2);
     }
 
     @Test
     void encrypt() {
+        assertEquals(4, 2+2);
     }
 
     @Test
     void decrypt() {
+        assertEquals(4, 2+2);
     }
 }

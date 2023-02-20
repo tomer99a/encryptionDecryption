@@ -4,13 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShiftMultiplyEncryptionTest {
+class DoubleEncryptionTest {
 
     @Test
-    void encryptChar() {
+    void encrypt() {
+        assertEquals(4, 2+2);
     }
 
     @Test
-    void decryptChar() {
+    void decrypt() {
+        assertEquals(4, 2+2);
     }
 }

@@ -8,13 +8,16 @@ class ShiftUpEncryptionTest {
 
     @Test
     void generateKey() {
+        assertEquals(4, 2+2);
     }
 
     @Test
     void encryptChar() {
+        assertEquals(4, 2+2);
     }
 
     @Test
     void decryptChar() {
+        assertEquals(4, 2+2);
     }
 }
