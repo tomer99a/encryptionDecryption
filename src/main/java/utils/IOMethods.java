@@ -49,11 +49,11 @@ public class IOMethods {
      */
     public static void createFile(String path){
         try {
-            final File myObj = new File(path);
-            if(myObj.exists())
-                if(!myObj.delete())
+            final File MY_OBJ = new File(path);
+            if(MY_OBJ.exists())
+                if(!MY_OBJ.delete())
                     throw new IOException("unable to delete existing file");
-            if (!myObj.createNewFile())
+            if (!MY_OBJ.createNewFile())
                 throw new IOException("failed to creat %s file " + path);
 
         } catch (IOException e) {

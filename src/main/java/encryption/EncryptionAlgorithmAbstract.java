@@ -12,8 +12,7 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     protected String encryptionMethod;
     protected int key;
 
-    public EncryptionAlgorithmAbstract(String encryptionMethod) {
-        this.encryptionMethod = encryptionMethod;
+    public EncryptionAlgorithmAbstract() {
         generateKey();
     }
 
@@ -21,7 +20,6 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
         return encryptionMethod;
     }
 
-    @Override
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         createFile(keyPath);
         createFile(outputPath);
@@ -32,26 +30,22 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s\n", outputPath, keyPath);
     }
 
-    @Override
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final int key = getKeyFromFile(keyPath);
+        final int KEY = getKeyFromFile(keyPath);
 
         createFile(outputPath);
-        scanAndSubmitFile(false, originalPath, outputPath, this, key);
+        scanAndSubmitFile(false, originalPath, outputPath, this, KEY);
         System.out.println("Location of the decrypted file is - " + outputPath);
     }
 
-    @Override
     public void generateKey() {
         key = new Random().nextInt(1000) + 3;
     }
 
-    @Override
     public char encryptChar(char c, int key) {
         return c;
     }
 
-    @Override
     public char decryptChar(char c, int key) {
         return c;
     }

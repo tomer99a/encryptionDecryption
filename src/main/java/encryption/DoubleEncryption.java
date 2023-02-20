@@ -7,42 +7,39 @@ import java.nio.file.Files;
 import static main.java.utils.GeneralMethods.addSuffixToFileNameAtPath;
 
 public class DoubleEncryption extends EncryptionAlgorithmAbstract{
-    final private EncryptionAlgorithmInterface algo;
+    final private EncryptionAlgorithmInterface ALGO;
 
     public DoubleEncryption(EncryptionAlgorithmInterface algo) {
-        super("Double");
-        this.algo = algo;
-        String className = algo.getEncryptionMethod();
-        this.encryptionMethod += className;
+        this.ALGO = algo;
     }
 
     @Override
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+        final String KEY_PATH1 = addSuffixToFileNameAtPath(keyPath, "1");
+        final String KEY_PATH2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
-        final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
+        final String TMP_PATH = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
-        algo.encrypt(originalPath, tmpPath, keyPath1);
-        algo.encrypt(tmpPath, outputPath, keyPath2);
+        ALGO.encrypt(originalPath, TMP_PATH, KEY_PATH1);
+        ALGO.encrypt(TMP_PATH, outputPath, KEY_PATH2);
         
-        if(!(new File(tmpPath).delete()))
+        if(!(new File(TMP_PATH).delete()))
             System.err.println("The tmp file didn't auto delete");
     }
 
     @Override
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+        final String KEY_PATH1 = addSuffixToFileNameAtPath(keyPath, "1");
+        final String KEY_PATH2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
-        final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
+        final String TMP_PATH = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
-        algo.decrypt(originalPath, tmpPath, keyPath2);
-        algo.decrypt(tmpPath, outputPath, keyPath1);
+        ALGO.decrypt(originalPath, TMP_PATH, KEY_PATH2);
+        ALGO.decrypt(TMP_PATH, outputPath, KEY_PATH1);
 
-        if(!(new File(tmpPath).delete()))
+        if(!(new File(TMP_PATH).delete()))
             System.err.println("The tmp file didn't auto delete");
     }
 }

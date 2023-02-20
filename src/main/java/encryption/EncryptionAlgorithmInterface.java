@@ -9,6 +9,5 @@ public interface EncryptionAlgorithmInterface {
     char encryptChar(char c, int key);
     char decryptChar(char c, int key);
 
-    String getEncryptionMethod();
     void generateKey();
 }

@@ -5,17 +5,17 @@ import main.java.encryption.EncryptionAlgorithmInterface;
 import java.io.IOException;
 
 public class FileEncryptor {
-    final private EncryptionAlgorithmInterface encryptionAlgorithm;
+    final private EncryptionAlgorithmInterface ENCRYPTION_ALGORITHM;
 
-    public FileEncryptor(EncryptionAlgorithmInterface encryptionAlgorithm) {
-        this.encryptionAlgorithm = encryptionAlgorithm;
+    public FileEncryptor(EncryptionAlgorithmInterface ENCRYPTION_ALGORITHM) {
+        this.ENCRYPTION_ALGORITHM = ENCRYPTION_ALGORITHM;
     }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        encryptionAlgorithm.encrypt(originalPath, outputPath, keyPath);
+        ENCRYPTION_ALGORITHM.encrypt(originalPath, outputPath, keyPath);
     }
 
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        encryptionAlgorithm.decrypt(originalPath, outputPath, keyPath);
+        ENCRYPTION_ALGORITHM.decrypt(originalPath, outputPath, keyPath);
     }
 }

@@ -7,44 +7,41 @@ import java.nio.file.Files;
 import static main.java.utils.IOMethods.copyFile;
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
-    final private EncryptionAlgorithmInterface algo;
-    final private int repeatNum;
+    final private EncryptionAlgorithmInterface ALGO;
+    final private int REPEAT_NUM;
 
-    public RepeatEncryption(int n, EncryptionAlgorithmInterface algo) {
-        super("Repeat");
-        this.repeatNum = n;
-        this.algo = algo;
-        String className = algo.getEncryptionMethod();
-        this.encryptionMethod += className;
+    public RepeatEncryption(int n, EncryptionAlgorithmInterface ALGO) {
+        this.REPEAT_NUM = n;
+        this.ALGO = ALGO;
     }
 
     @Override
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         // Create a temporary file
-        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
+        final String TMP_PATH = Files.createTempFile("RepeatTmp", ".txt").toString();
 
-        algo.encrypt(originalPath, tmpPath, keyPath);
-        for(int i=1; i < repeatNum; i++){
-            algo.encrypt(tmpPath, outputPath, keyPath);
-            copyFile(outputPath, tmpPath);
+        ALGO.encrypt(originalPath, TMP_PATH, keyPath);
+        for(int i=1; i < REPEAT_NUM; i++){
+            ALGO.encrypt(TMP_PATH, outputPath, keyPath);
+            copyFile(outputPath, TMP_PATH);
         }
 
-        if (!(new File(tmpPath).delete()))
+        if (!(new File(TMP_PATH).delete()))
             System.err.println("The tmp file didn't auto delete");
     }
 
     @Override
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         // Create a temporary file
-        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
+        final String TMP_PATH = Files.createTempFile("RepeatTmp", ".txt").toString();
 
-        algo.decrypt(originalPath, tmpPath, keyPath);
-        for(int i=1; i < repeatNum; i++){
-            algo.decrypt(tmpPath, outputPath, keyPath);
-            copyFile(outputPath, tmpPath);
+        ALGO.decrypt(originalPath, TMP_PATH, keyPath);
+        for(int i=1; i < REPEAT_NUM; i++){
+            ALGO.decrypt(TMP_PATH, outputPath, keyPath);
+            copyFile(outputPath, TMP_PATH);
         }
 
-        if (!(new File(tmpPath).delete()))
+        if (!(new File(TMP_PATH).delete()))
             System.err.println("The tmp file didn't auto delete");
     }
 }

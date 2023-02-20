@@ -5,10 +5,6 @@ import java.util.Random;
 import static main.java.utils.GeneralMethods.getRange;
 
 public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
-    public ShiftUpEncryption() {
-        super("ShiftUp");
-    }
-
     /**
      * Generate key that didn't reset the modulo action.
      */
