@@ -1,6 +1,6 @@
 package main.java.utils;
 
-import main.java.general.encryptsDecrypt;
+import main.java.encryption.EncryptionAlgorithmInterface;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -16,10 +16,10 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(String inputPath, String outputPath, encryptsDecrypt encryptsDecrypt, int key){
+    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, EncryptionAlgorithmInterface encryptsDecrypt, int key){
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
             while (sc.hasNextLine())
-                writeLine(outputPath, scanLines(sc.nextLine(), encryptsDecrypt, key));
+                writeLine(outputPath, scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key));
 
 //             note that Scanner suppresses exceptions
             if (sc.ioException() != null) {

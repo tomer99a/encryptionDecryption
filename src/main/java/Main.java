@@ -1,6 +1,6 @@
 package main.java;
 
-import main.java.decryption.*;
+//import main.java.decryption.*;
 import main.java.encryption.*;
 import main.java.general.FileEncryptor;
 
@@ -20,21 +20,17 @@ public class Main {
         Scanner myScanner = new Scanner(System.in);
 
         EncryptionAlgorithmInterface encryptionAlgorithm;
-        DecryptionAlgorithmInterface decryptionAlgorithm;
         String algoName = "up";
 
         switch (algoName) {
             case "up":
                 encryptionAlgorithm = new ShiftUpEncryption();
-                decryptionAlgorithm = new ShiftUpDecryption();
                 break;
             case "multi":
                 encryptionAlgorithm = new ShiftMultiplyEncryption();
-                decryptionAlgorithm = new ShiftMultiplyDecryption();
                 break;
             default:
                 encryptionAlgorithm = new XorEncryption();
-                decryptionAlgorithm = new XorDecrypt();
                 break;
         }
         String algo2 = "doublewskj";
@@ -42,17 +38,15 @@ public class Main {
             case "repeat":
                 int repeatNum = 6;
                 encryptionAlgorithm = new RepeatEncryption(repeatNum, encryptionAlgorithm);
-                decryptionAlgorithm = new RepeatDecryption(repeatNum, decryptionAlgorithm);
                 break;
 
             case "double":
                 encryptionAlgorithm = new DoubleEncryption(encryptionAlgorithm);
-                decryptionAlgorithm = new DoubleDecryption(decryptionAlgorithm);
                 break;
         }
         FileEncryptor fileEncryptor;
         try {
-            fileEncryptor = new FileEncryptor(encryptionAlgorithm, decryptionAlgorithm);
+            fileEncryptor = new FileEncryptor(encryptionAlgorithm);
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return;

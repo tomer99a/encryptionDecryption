@@ -17,17 +17,32 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract{
     }
 
     @Override
-    public void act(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
         final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
 
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
-        algo.act(originalPath, tmpPath, keyPath1);
-        algo.act(tmpPath, outputPath, keyPath2);
+        algo.encrypt(originalPath, tmpPath, keyPath1);
+        algo.encrypt(tmpPath, outputPath, keyPath2);
         
-        if (!(new File(tmpPath).delete()))
+        if(!(new File(tmpPath).delete()))
+            System.err.println("The tmp file didn't auto delete");
+    }
+
+    @Override
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
+        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+
+        // Create a temporary file
+        final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
+
+        algo.decrypt(originalPath, tmpPath, keyPath2);
+        algo.decrypt(tmpPath, outputPath, keyPath1);
+
+        if(!(new File(tmpPath).delete()))
             System.err.println("The tmp file didn't auto delete");
     }
 }

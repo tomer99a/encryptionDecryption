@@ -3,6 +3,9 @@ package main.java.encryption;
 import static main.java.utils.GeneralMethods.getRange;
 
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
+    final protected int myPrimeNumber = 53;
+    final protected int mySpecialChar = 248;
+
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");
     }
@@ -14,7 +17,7 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
      * @return the encryption char that you're looking for
      */
     @Override
-    public char handleCher(char c, int key){
+    public char encryptChar(char c, int key){
         int numberOfLetter = 52;
         int[] range = getRange(c);
         if(c == mySpecialChar)
@@ -34,5 +37,39 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
             encryptValue = mySpecialChar;
 
         return (char) encryptValue;
+    }
+
+    /**
+     * decrypt the char by key
+     * @param c char to decrypt
+     * @param key key to use for decrypt
+     * @return the decryption char that you're looking for
+     */
+    @Override
+    public char decryptChar(char c, int key){
+        int numberOfLetter = 52;
+        int rest;
+        int[] range = getRange(c);
+
+        if(c == mySpecialChar)
+            rest = numberOfLetter;
+        else if(range[0] == -1)
+            return c;
+        else
+            rest = c - range[0];
+        rest += range[0]=='a' ? numberOfLetter/2 : 0;
+
+
+        for(int i='A'; i<='z'; i++){
+            if((i*key) % myPrimeNumber == rest){
+                //In the middle of capitals and lower case there are 6 chars, so I add 6 to get rid of the gap
+                if(i > 'Z')
+                    i += 6;
+                if(i == '{')
+                    return (char) mySpecialChar;
+                return (char) i;
+            }
+        }
+        return c;
     }
 }

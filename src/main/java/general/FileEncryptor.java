@@ -1,31 +1,21 @@
 package main.java.general;
 
-import main.java.decryption.DecryptionAlgorithmInterface;
 import main.java.encryption.EncryptionAlgorithmInterface;
 
 import java.io.IOException;
 
 public class FileEncryptor {
-    private EncryptionAlgorithmInterface encryptionAlgorithm;
-    private DecryptionAlgorithmInterface decryptionAlgorithm;
+    final private EncryptionAlgorithmInterface encryptionAlgorithm;
 
-    public FileEncryptor(EncryptionAlgorithmInterface encryptionAlgorithm, DecryptionAlgorithmInterface decryptionAlgorithm) throws Exception {
-        setEncryptionDecryption(encryptionAlgorithm, decryptionAlgorithm);
-    }
-
-    public void setEncryptionDecryption(EncryptionAlgorithmInterface encryptionAlgorithm, DecryptionAlgorithmInterface decryptionAlgorithm) throws Exception {
-        if(encryptionAlgorithm.getEncryptionMethod().equals(decryptionAlgorithm.getDecryptionMethod())){
-            this.encryptionAlgorithm = encryptionAlgorithm;
-            this.decryptionAlgorithm = decryptionAlgorithm;
-        } else
-            throw new Exception("The encryption and decryption should use the same algo");
+    public FileEncryptor(EncryptionAlgorithmInterface encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm;
     }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        encryptionAlgorithm.act(originalPath, outputPath, keyPath);
+        encryptionAlgorithm.encrypt(originalPath, outputPath, keyPath);
     }
 
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        decryptionAlgorithm.act(originalPath, outputPath, keyPath);
+        encryptionAlgorithm.decrypt(originalPath, outputPath, keyPath);
     }
 }

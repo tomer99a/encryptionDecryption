@@ -1,12 +1,9 @@
 package main.java.utils;
 
-import main.java.general.encryptsDecrypt;
+import main.java.encryption.EncryptionAlgorithmInterface;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
-import static main.java.utils.IOMethods.copyFile;
 import static main.java.utils.IOMethods.readFile;
 
 public class GeneralMethods {
@@ -29,10 +26,14 @@ public class GeneralMethods {
      * @param key of the action to use
      * @return changed string
      */
-    public static String scanLines(String line, encryptsDecrypt encryptsDecrypt, int key){
+    public static String scanLines(boolean encrypt, String line, EncryptionAlgorithmInterface encryptsDecrypt, int key){
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < line.length(); i++)
-            str.append(encryptsDecrypt.handleCher(line.charAt(i), key));
+        for (int i = 0; i < line.length(); i++) {
+            if(encrypt)
+                str.append(encryptsDecrypt.encryptChar(line.charAt(i), key));
+            else
+                str.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
+        }
         str.append("\n");
         return str.toString();
     }
@@ -68,17 +69,5 @@ public class GeneralMethods {
         }
     }
 
-    public static void repeatAct(int n, String originalPath, String outputPath, String keyPath, encryptsDecrypt algo) throws IOException {
-        // Create a temporary file
-        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
-        algo.act(originalPath, tmpPath, keyPath);
-        for(int i=1; i < n; i++){
-            algo.act(tmpPath, outputPath, keyPath);
-            copyFile(outputPath, tmpPath);
-        }
-
-        if (!(new File(tmpPath).delete()))
-            System.err.println("The tmp file didn't auto delete");
-    }
 }
