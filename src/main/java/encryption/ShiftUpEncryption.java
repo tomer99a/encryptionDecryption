@@ -25,12 +25,13 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        int[] range = getRange(c);
-        if(range[0] == -1)
+        final int START_RANGE = getRange(c);
+        if(START_RANGE == -1)
             return c;
-        key = key % (range[1] - range[0]);
-        if((int) c + key > range[1])
-            return (char) ((int) c + key - range[1] + range[0] - 1);
+        final char END_RANGE = START_RANGE == 'a' ? 'z' : 'Z';
+        key = key % (END_RANGE - START_RANGE);
+        if((int) c + key > END_RANGE)
+            return (char) ((int) c + key - END_RANGE + START_RANGE - 1);
         else
             return (char) ((int) c + key);
     }
@@ -43,12 +44,13 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char decryptChar(char c, int key){
-        int[] range = getRange(c);
-        if(range[0] == -1)
+        final int START_RANGE = getRange(c);
+        if(START_RANGE == -1)
             return c;
-        key = key % (range[1] - range[0]);
-        if((int) c - key < range[0])
-            return (char) ((int) c - key + range[1] - range[0] + 1);
+        final char END_RANGE = START_RANGE == 'a' ? 'z' : 'Z';
+        key = key % (END_RANGE - START_RANGE);
+        if((int) c - key < START_RANGE)
+            return (char) ((int) c - key + END_RANGE - START_RANGE + 1);
         else
             return (char) ((int) c - key);
     }

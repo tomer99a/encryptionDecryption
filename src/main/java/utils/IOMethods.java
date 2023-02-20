@@ -102,9 +102,9 @@ public class IOMethods {
         File newFile = new File(newPath);
 
         try (FileInputStream in = new FileInputStream(originalFile); FileOutputStream out = new FileOutputStream(newFile)) {
-            int n;
-            while ((n = in.read()) != -1) {
-                out.write(n);
+            int tmpChar;
+            while ((tmpChar = in.read()) != -1) {
+                out.write(tmpChar);
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());

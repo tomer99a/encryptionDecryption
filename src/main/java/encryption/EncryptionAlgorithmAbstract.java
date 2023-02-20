@@ -39,7 +39,8 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     }
 
     public void generateKey() {
-        key = new Random().nextInt(1000) + 3;
+        // I don't want that the random number will be 0/1 because it will destroy the mul and add
+        key = new Random().nextInt(1000) + 2;
     }
 
     public char encryptChar(char c, int key) {

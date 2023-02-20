@@ -11,8 +11,7 @@ public class XorEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        int[] range = getRange(c);
-        if(range[0] == -1)
+        if(getRange(c) == -1)
             return c;
 
         System.out.print((c ^ key) + ", ");

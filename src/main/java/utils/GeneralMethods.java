@@ -43,12 +43,11 @@ public class GeneralMethods {
      * @param c char in range
      * @return range
      */
-    public static int[] getRange(char c){
-        if('A' <= c && c <= 'Z')
-            return new int[]{'A', 'Z'};
-        else if('a' <= c && c <= 'z')
-            return new int[]{'a', 'z'};
-        return new int[]{-1};
+    public static int getRange(char c){
+        if(Character.isLetter(c)) {
+            return Character.isUpperCase(c) ? 'A' : 'a';
+        }
+        return -1;
     }
 
     /**
