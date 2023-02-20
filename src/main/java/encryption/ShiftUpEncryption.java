@@ -1,6 +1,6 @@
 package main.java.encryption;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 import static main.java.utils.GeneralMethods.getRange;
 
@@ -10,10 +10,12 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public void generateKey() {
-        key = new Random().nextInt(1000) + 1;
+        key = new SecureRandom().nextInt(1000);
 
-        while (key % ('Z'-'A') == 0){
-            key = new Random().nextInt(1000) + 1;
+        // if the random number is divided by The number of letters that
+        // we encrypt the encryption won't do anything's
+        while (key % (BIG_Z - BIG_A) == 0){
+            key = new SecureRandom().nextInt(1000);
         }
     }
 
@@ -28,7 +30,7 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
         final int START_RANGE = getRange(c);
         if(START_RANGE == -1)
             return c;
-        final char END_RANGE = START_RANGE == 'a' ? 'z' : 'Z';
+        final char END_RANGE = START_RANGE == SMALL_A ? SMALL_Z : BIG_Z;
         key = key % (END_RANGE - START_RANGE);
         if((int) c + key > END_RANGE)
             return (char) ((int) c + key - END_RANGE + START_RANGE - 1);
@@ -47,7 +49,7 @@ public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
         final int START_RANGE = getRange(c);
         if(START_RANGE == -1)
             return c;
-        final char END_RANGE = START_RANGE == 'a' ? 'z' : 'Z';
+        final char END_RANGE = START_RANGE == SMALL_A ? SMALL_Z : BIG_Z;
         key = key % (END_RANGE - START_RANGE);
         if((int) c - key < START_RANGE)
             return (char) ((int) c - key + END_RANGE - START_RANGE + 1);
