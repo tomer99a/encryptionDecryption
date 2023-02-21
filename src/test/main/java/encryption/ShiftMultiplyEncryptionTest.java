@@ -1,18 +1,16 @@
-package main.java.encryption;
+package java.encryption;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ShiftMultiplyEncryptionTest {
+class ShiftMultiplyEncryptionTest extends EncryptionAlgorithmAbstractTest {
 
     @Test
     void encryptChar() {
-        assertEquals(4, 2+2);
+        encryptTest(new ShiftMultiplyEncryption());
     }
 
     @Test
     void decryptChar() {
-        assertEquals(4, 2+2);
+        decryptTest(new ShiftMultiplyEncryption());
     }
 }

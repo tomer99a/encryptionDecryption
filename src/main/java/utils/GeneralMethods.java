@@ -1,10 +1,10 @@
-package main.java.utils;
+package java.utils;
 
-import main.java.encryption.EncryptionAlgorithmInterface;
+import java.encryption.EncryptionAlgorithmInterface;
 
 import java.io.File;
 
-import static main.java.utils.IOMethods.readFile;
+import static java.utils.IOMethods.readFile;
 
 public class GeneralMethods {
     /**

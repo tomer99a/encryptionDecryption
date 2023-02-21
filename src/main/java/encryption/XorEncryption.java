@@ -1,8 +1,12 @@
-package main.java.encryption;
+package java.encryption;
 
-import static main.java.utils.GeneralMethods.getRange;
+import static java.utils.GeneralMethods.getRange;
 
 public class XorEncryption extends EncryptionAlgorithmAbstract {
+    public XorEncryption() {
+        super("Xor");
+    }
+
     /**
      * Encrypt the char by key
      * @param c char to encrypt

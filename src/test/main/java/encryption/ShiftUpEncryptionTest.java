@@ -1,23 +1,19 @@
-package main.java.encryption;
+package java.encryption;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ShiftUpEncryptionTest {
+class ShiftUpEncryptionTest extends EncryptionAlgorithmAbstractTest {
 
     @Test
-    void generateKey() {
-        assertEquals(4, 2+2);
-    }
-
-    @Test
+    @DisplayName("encrypt by using plus")
     void encryptChar() {
-        assertEquals(4, 2+2);
+        encryptTest(new ShiftUpEncryption());
     }
 
     @Test
+    @DisplayName("decrypt by using plus")
     void decryptChar() {
-        assertEquals(4, 2+2);
+        decryptTest(new ShiftUpEncryption());
     }
 }

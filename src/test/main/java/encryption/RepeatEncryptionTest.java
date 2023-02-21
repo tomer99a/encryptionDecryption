@@ -1,4 +1,4 @@
-package main.java.encryption;
+package java.encryption;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,14 @@
-package main.java.encryption;
+package java.encryption;
 
-import static main.java.utils.GeneralMethods.getRange;
+import static java.utils.GeneralMethods.getRange;
 
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
     final private int MY_PRIME_NUMBER = 53;
     final private int MY_SPECIAL_CHAR = 248;
+
+    public ShiftMultiplyEncryption() {
+        super("ShiftMultiply");
+    }
 
     /**
      * Encrypt the char by key

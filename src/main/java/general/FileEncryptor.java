@@ -1,6 +1,6 @@
-package main.java.general;
+package java.general;
 
-import main.java.encryption.EncryptionAlgorithmInterface;
+import java.encryption.EncryptionAlgorithmInterface;
 
 import java.io.IOException;
 

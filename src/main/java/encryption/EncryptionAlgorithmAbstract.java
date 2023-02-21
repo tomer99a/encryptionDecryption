@@ -1,12 +1,12 @@
-package main.java.encryption;
+package java.encryption;
 
 import java.io.IOException;
 import java.security.SecureRandom;
 
-import static main.java.utils.GeneralMethods.getKeyFromFile;
-import static main.java.utils.IOMethods.createFile;
-import static main.java.utils.IOMethods.scanAndSubmitFile;
-import static main.java.utils.IOMethods.writeToFile;
+import static java.utils.GeneralMethods.getKeyFromFile;
+import static java.utils.IOMethods.createFile;
+import static java.utils.IOMethods.scanAndSubmitFile;
+import static java.utils.IOMethods.writeToFile;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String encryptionMethod;
@@ -17,7 +17,8 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     final protected char BIG_A = 'A';
     final protected char BIG_Z = 'Z';
 
-    public EncryptionAlgorithmAbstract() {
+    public EncryptionAlgorithmAbstract(String encryptionMethod) {
+        this.encryptionMethod = encryptionMethod;
         generateKey();
     }
 

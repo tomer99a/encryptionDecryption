@@ -1,12 +1,11 @@
-package main.java.utils;
-
-import main.java.encryption.EncryptionAlgorithmInterface;
+package java.utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static main.java.utils.GeneralMethods.scanLines;
+import java.encryption.EncryptionAlgorithmInterface;
+import static java.utils.GeneralMethods.scanLines;
 
 public class IOMethods {
     /**

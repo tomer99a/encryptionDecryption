@@ -1,8 +1,8 @@
-package main.java;
+package java;
 
-//import main.java.decryption.*;
-import main.java.encryption.*;
-import main.java.general.FileEncryptor;
+import java.encryption.*;
+import java.general.FileEncryptor;
+import static java.utils.IOMethods.compareTwoFiles;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package main.java.encryption;
+package java.encryption;
 
 import java.io.IOException;
 
@@ -10,4 +10,5 @@ public interface EncryptionAlgorithmInterface {
     char decryptChar(char c, int key);
 
     void generateKey();
+    String getEncryptionMethod();
 }
