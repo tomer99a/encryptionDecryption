@@ -83,8 +83,8 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
     public void generateKey() {
         key = new SecureRandom().nextInt(1000);
 
-        // if the random number is divided by The number of letters that
-        // we encrypt the encryption won't do anything's
+        // If the random number is divided by my prime number
+        // the encryption will tern everthing to the letter A
         while (key % MY_PRIME_NUMBER == 0){
             key = new SecureRandom().nextInt(1000);
         }
