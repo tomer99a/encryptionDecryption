@@ -21,7 +21,7 @@ public class IOMethods {
             while (sc.hasNextLine()){
                 String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
                 if(sc.hasNextLine())
-                    lineToWrite += "\r\n";
+                    lineToWrite += System.lineSeparator();
                 writeLine(outputPath, lineToWrite);
             }
 
