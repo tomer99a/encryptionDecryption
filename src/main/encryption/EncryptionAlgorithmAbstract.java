@@ -2,6 +2,7 @@ package encryption;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.nio.file.Path;
 
 import static utils.GeneralMethods.getKeyFromFile;
 import static utils.IOMethods.createFile;
@@ -26,7 +27,7 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
         return encryptionMethod;
     }
 
-    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void encrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
         createFile(keyPath);
         createFile(outputPath);
 
@@ -36,7 +37,7 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s\n", outputPath, keyPath);
     }
 
-    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void decrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
         final int KEY = getKeyFromFile(keyPath);
 
         createFile(outputPath);

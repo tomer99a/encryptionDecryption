@@ -1,16 +1,18 @@
 import encryption.*;
 import general.FileEncryptor;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
     private static void menu() throws Exception {
         String fileName = "input_text";
-        String basePath = "src\\main\\data\\";
-        String originalPath = basePath + fileName + ".txt";
-        String encryptedPath = basePath + fileName + "_encrypted.txt";
-        String decryptedPath = basePath + fileName + "_decrypted.txt";
-        String keyPath = basePath + "key.txt";
+        Path basePath = Paths.get("src\\main\\data\\");
+        Path originalPath = Paths.get(String.valueOf(basePath), fileName + ".txt");
+        Path encryptedPath = Paths.get(String.valueOf(basePath), fileName + "_encrypted.txt");
+        Path decryptedPath = Paths.get(String.valueOf(basePath), fileName + "_decrypted.txt");
+        Path keyPath = Paths.get(String.valueOf(basePath), "key.txt");
 
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;

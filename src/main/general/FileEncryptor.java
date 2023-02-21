@@ -1,6 +1,7 @@
 package general;
 
 import encryption.EncryptionAlgorithmInterface;
+import java.nio.file.Path;
 
 import java.io.IOException;
 
@@ -11,11 +12,11 @@ public class FileEncryptor {
         this.ENCRYPTION_ALGORITHM = ENCRYPTION_ALGORITHM;
     }
 
-    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void encrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
         ENCRYPTION_ALGORITHM.encrypt(originalPath, outputPath, keyPath);
     }
 
-    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void decrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
         ENCRYPTION_ALGORITHM.decrypt(originalPath, outputPath, keyPath);
     }
 }

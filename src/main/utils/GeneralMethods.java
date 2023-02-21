@@ -1,7 +1,7 @@
 package utils;
 
 import encryption.EncryptionAlgorithmInterface;
-
+import java.nio.file.Path;
 import java.io.File;
 
 import static utils.IOMethods.readFile;
@@ -13,8 +13,8 @@ public class GeneralMethods {
      * @param suffix thing to add at the end of the file name
      * @return path with changed name
      */
-    public static String addSuffixToFileNameAtPath(String path, String suffix){
-        File file = new File(path);
+    public static String addSuffixToFileNameAtPath(Path path, String suffix){
+        File file = new File(String.valueOf(path));
         String fileName = file.getName();
         return file.getParent() + "\\" + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
     }
@@ -54,7 +54,7 @@ public class GeneralMethods {
      * @param keyPath the path to the file key
      * @return key value
      */
-    public static int getKeyFromFile(String keyPath){
+    public static int getKeyFromFile(Path keyPath){
         try{
             String keyStr = readFile(keyPath);
             if(keyStr.indexOf('\n') != -1)
