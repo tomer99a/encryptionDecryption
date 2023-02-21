@@ -7,26 +7,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest{
-    final int REPEAT_NUM = 5;
+    final int repeatNum = 9;
 
     @Test
     @DisplayName("encrypt and decrypt by using RepeatPlus")
     void encryptPlus() {
-        encryptTest(new RepeatEncryption(REPEAT_NUM, new ShiftUpEncryption()));
-        decryptTest(new RepeatEncryption(REPEAT_NUM, new ShiftUpEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption()));
+        decryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using RepeatMulti")
     void encryptMulti() {
-        encryptTest(new RepeatEncryption(REPEAT_NUM, new ShiftMultiplyEncryption()));
-        decryptTest(new RepeatEncryption(REPEAT_NUM, new ShiftMultiplyEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
+        decryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using RepeatXor")
     void encryptXor() {
-        encryptTest(new RepeatEncryption(REPEAT_NUM, new XorEncryption()));
-        decryptTest(new RepeatEncryption(REPEAT_NUM, new XorEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
+        decryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
     }
 }

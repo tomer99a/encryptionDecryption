@@ -13,10 +13,10 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     protected String encryptionMethod;
     protected int key = 742;
 
-    final protected char SMALL_A = 'a';
-    final protected char SMALL_Z = 'z';
-    final protected char BIG_A = 'A';
-    final protected char BIG_Z = 'Z';
+    final static protected char SMALL_A = 'a';
+    final static protected char SMALL_Z = 'z';
+    final static protected char BIG_A = 'A';
+    final static protected char BIG_Z = 'Z';
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {
         this.encryptionMethod = encryptionMethod;
@@ -38,10 +38,10 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
     }
 
     public void decrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
-        final int KEY = getKeyFromFile(keyPath);
+        final int key = getKeyFromFile(keyPath);
 
         createFile(outputPath);
-        scanAndSubmitFile(false, originalPath, outputPath, this, KEY);
+        scanAndSubmitFile(false, originalPath, outputPath, this, key);
         System.out.println("Location of the decrypted file is - " + outputPath);
     }
 

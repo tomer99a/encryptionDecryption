@@ -9,18 +9,18 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EncryptionAlgorithmAbstractTest {
-    final protected Path ORIGINAL_PATH;
-    final protected Path ENCRYPT_PATH;
-    final protected Path DECRYPT_PATH;
-    final protected Path KEY_PATH;
+    final protected Path originalPath;
+    final protected Path encryptedPath;
+    final protected Path decryptedPath;
+    final protected Path keyPath;
 
     EncryptionAlgorithmAbstractTest() {
         String fileName = "input_text";
         Path basePath = Paths.get("src\\main\\data\\");
-        this.ORIGINAL_PATH = Paths.get(String.valueOf(basePath), fileName + ".txt");
-        this.ENCRYPT_PATH = Paths.get(String.valueOf(basePath), fileName + "_encrypted.txt");
-        this.DECRYPT_PATH = Paths.get(String.valueOf(basePath), fileName + "_decrypted.txt");
-        this.KEY_PATH = Paths.get(String.valueOf(basePath), "key.txt");
+        this.originalPath = Paths.get(String.valueOf(basePath), fileName + ".txt");
+        this.encryptedPath = Paths.get(String.valueOf(basePath), fileName + "_encrypted.txt");
+        this.decryptedPath = Paths.get(String.valueOf(basePath), fileName + "_decrypted.txt");
+        this.keyPath = Paths.get(String.valueOf(basePath), "key.txt");
     }
 
     public static boolean compareTwoFiles(Path path1, Path path2){
@@ -49,20 +49,20 @@ class EncryptionAlgorithmAbstractTest {
 
     protected void encryptTest(EncryptionAlgorithmInterface algo){
         try {
-            algo.encrypt(ORIGINAL_PATH, ENCRYPT_PATH, KEY_PATH);
+            algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
             fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
         }
-        assertFalse(compareTwoFiles(ORIGINAL_PATH, ENCRYPT_PATH));
+        assertFalse(compareTwoFiles(originalPath, encryptedPath));
     }
 
     protected void decryptTest(EncryptionAlgorithmInterface algo) {
         try {
-            algo.decrypt(ENCRYPT_PATH, DECRYPT_PATH, KEY_PATH);
+            algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {
             fail(String.format("The %s decrypt failed", algo.getEncryptionMethod()));
         }
-        assertFalse(compareTwoFiles(ENCRYPT_PATH, DECRYPT_PATH));
-        assertTrue(compareTwoFiles(ORIGINAL_PATH, DECRYPT_PATH));
+        assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
+        assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 }

@@ -5,8 +5,8 @@ import java.security.SecureRandom;
 import static utils.GeneralMethods.getRange;
 
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
-    final private int MY_PRIME_NUMBER = 53;
-    final private int MY_SPECIAL_CHAR = 248;
+    final static private int MY_PRIME_NUMBER = 53;
+    final static private int MY_SPECIAL_CHAR = 248;
 
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");
