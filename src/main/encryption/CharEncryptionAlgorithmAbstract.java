@@ -2,7 +2,6 @@ package encryption;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.security.SecureRandom;
 
 import static utils.GeneralMethods.getKeyFromFile;
 import static utils.IOMethods.*;
@@ -36,10 +35,5 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         createFile(outputPath);
         scanAndSubmitFile(false, originalPath, outputPath, this, key);
         System.out.println("Location of the decrypted file is - " + outputPath);
-    }
-
-    public void generateKey() {
-        // I don't want that the random number will be 0/1 because it will destroy the mul and add
-        key = new SecureRandom().nextInt(1000) + 2;
     }
 }

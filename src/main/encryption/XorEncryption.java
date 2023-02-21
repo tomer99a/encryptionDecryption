@@ -1,10 +1,16 @@
 package encryption;
 
+import java.security.SecureRandom;
+
 import static utils.GeneralMethods.getRange;
 
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
         super("Xor");
+    }
+
+    public void generateKey() {
+        key = new SecureRandom().nextInt(1000);
     }
 
     /**
