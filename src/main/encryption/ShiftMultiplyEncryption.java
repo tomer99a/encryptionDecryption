@@ -84,7 +84,7 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
         key = new SecureRandom().nextInt(1000);
 
         // If the random number is divided by my prime number
-        // the encryption will tern everthing to the letter A
+        // the encryption will tern everything to the letter A
         while (key % MY_PRIME_NUMBER == 0){
             key = new SecureRandom().nextInt(1000);
         }
