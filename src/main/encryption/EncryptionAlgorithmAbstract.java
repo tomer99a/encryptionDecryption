@@ -1,16 +1,16 @@
-package java.encryption;
+package encryption;
 
 import java.io.IOException;
 import java.security.SecureRandom;
 
-import static java.utils.GeneralMethods.getKeyFromFile;
-import static java.utils.IOMethods.createFile;
-import static java.utils.IOMethods.scanAndSubmitFile;
-import static java.utils.IOMethods.writeToFile;
+import static utils.GeneralMethods.getKeyFromFile;
+import static utils.IOMethods.createFile;
+import static utils.IOMethods.scanAndSubmitFile;
+import static utils.IOMethods.writeToFile;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface{
     protected String encryptionMethod;
-    protected int key;
+    protected int key = 742;
 
     final protected char SMALL_A = 'a';
     final protected char SMALL_Z = 'z';

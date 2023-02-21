@@ -1,6 +1,8 @@
-package java.encryption;
+package encryption;
 
-import static java.utils.GeneralMethods.getRange;
+import java.security.SecureRandom;
+
+import static utils.GeneralMethods.getRange;
 
 public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
     final private int MY_PRIME_NUMBER = 53;
@@ -55,9 +57,10 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
             rest = numberOfLetter;
         else if(range == -1)
             return c;
-        else
+        else {
             rest = c - range;
-        rest += range==SMALL_A ? numberOfLetter/2 : 0;
+            rest += range == SMALL_A ? numberOfLetter / 2 : 0;
+        }
 
 
         for(int i=BIG_A; i<=SMALL_Z; i++){
@@ -71,5 +74,19 @@ public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
             }
         }
         return c;
+    }
+
+    /**
+     * Generate key that didn't reset the modulo action.
+     */
+    @Override
+    public void generateKey() {
+        key = new SecureRandom().nextInt(1000);
+
+        // if the random number is divided by The number of letters that
+        // we encrypt the encryption won't do anything's
+        while (key % MY_PRIME_NUMBER == 0){
+            key = new SecureRandom().nextInt(1000);
+        }
     }
 }

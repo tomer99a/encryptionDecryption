@@ -1,6 +1,6 @@
-package java.encryption;
+package encryption;
 
-import static java.utils.GeneralMethods.getRange;
+import static utils.GeneralMethods.getRange;
 
 public class XorEncryption extends EncryptionAlgorithmAbstract {
     public XorEncryption() {
@@ -18,7 +18,6 @@ public class XorEncryption extends EncryptionAlgorithmAbstract {
         if(getRange(c) == -1)
             return c;
 
-        System.out.print((c ^ key) + ", ");
         return (char) ((c ^ key) + 255);
     }
 

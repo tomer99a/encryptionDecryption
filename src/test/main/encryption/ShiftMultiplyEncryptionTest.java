@@ -1,16 +1,19 @@
-package java.encryption;
+package encryption;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ShiftMultiplyEncryptionTest extends EncryptionAlgorithmAbstractTest {
 
     @Test
-    void encryptChar() {
+    @DisplayName("encrypt by using multi")
+    void encrypt() {
         encryptTest(new ShiftMultiplyEncryption());
     }
 
     @Test
-    void decryptChar() {
+    @DisplayName("decrypt by using multi")
+    void decrypt() {
         decryptTest(new ShiftMultiplyEncryption());
     }
 }

@@ -1,10 +1,10 @@
-package java.utils;
+package utils;
 
-import java.encryption.EncryptionAlgorithmInterface;
+import encryption.EncryptionAlgorithmInterface;
 
 import java.io.File;
 
-import static java.utils.IOMethods.readFile;
+import static utils.IOMethods.readFile;
 
 public class GeneralMethods {
     /**
@@ -34,7 +34,6 @@ public class GeneralMethods {
             else
                 str.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
         }
-        str.append("\n");
         return str.toString();
     }
 

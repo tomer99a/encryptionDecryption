@@ -1,10 +1,10 @@
-package java.encryption;
+package encryption;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static java.utils.GeneralMethods.addSuffixToFileNameAtPath;
+import static utils.GeneralMethods.addSuffixToFileNameAtPath;
 
 public class DoubleEncryption extends EncryptionAlgorithmAbstract{
     final private EncryptionAlgorithmInterface ALGO;

@@ -1,15 +1,12 @@
-package java;
-
-import java.encryption.*;
-import java.general.FileEncryptor;
-import static java.utils.IOMethods.compareTwoFiles;
+import encryption.*;
+import general.FileEncryptor;
 
 import java.util.Scanner;
 
 public class Main {
     private static void menu() throws Exception {
-        String fileName = "alpha";
-        String basePath = "src\\main\\java\\data\\";
+        String fileName = "input_text";
+        String basePath = "src\\main\\data\\";
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";

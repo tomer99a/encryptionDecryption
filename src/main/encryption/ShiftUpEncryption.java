@@ -1,8 +1,8 @@
-package java.encryption;
+package encryption;
 
 import java.security.SecureRandom;
 
-import static java.utils.GeneralMethods.getRange;
+import static utils.GeneralMethods.getRange;
 
 public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
     public ShiftUpEncryption() {

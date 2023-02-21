@@ -1,11 +1,11 @@
-package java.utils;
+package utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import java.encryption.EncryptionAlgorithmInterface;
-import static java.utils.GeneralMethods.scanLines;
+import encryption.EncryptionAlgorithmInterface;
+import static utils.GeneralMethods.scanLines;
 
 public class IOMethods {
     /**
@@ -17,8 +17,12 @@ public class IOMethods {
      */
     public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, EncryptionAlgorithmInterface encryptsDecrypt, int key){
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
-            while (sc.hasNextLine())
-                writeLine(outputPath, scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key));
+            while (sc.hasNextLine()){
+                String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
+                if(sc.hasNextLine())
+                    lineToWrite += "\r\n";
+                writeLine(outputPath, lineToWrite);
+            }
 
 //             note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
@@ -82,7 +86,7 @@ public class IOMethods {
         StringBuilder txt = new StringBuilder();
         try (Scanner myReader = new Scanner(new File(path))) {
             while (myReader.hasNextLine()) {
-                txt.append(myReader.nextLine()).append("\n");
+                txt.append(myReader.nextLine()).append((char) 10);
             }
         } catch (FileNotFoundException e) {
             System.err.printf("failed to read %s file", path);
@@ -107,30 +111,6 @@ public class IOMethods {
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        }
-    }
-
-    public static boolean compareTwoFiles(String path1, String path2){
-//        if(path1.equals(path2))
-//            return true;
-        File file1 = new File(path1);
-        File file2 = new File(path2);
-
-        try (FileInputStream in1 = new FileInputStream(file1); FileInputStream in2 = new FileInputStream(file2)) {
-            int tmpChar1, tmpChar2;
-
-            while ((tmpChar1 = in1.read()) != -1) {
-                tmpChar2 = in2.read();
-                if(tmpChar2 == -1)
-                    return false;
-                if(tmpChar1 != tmpChar2)
-                    return false;
-            }
-            tmpChar2 = in2.read();
-            return tmpChar2 == -1;
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            return false;
         }
     }
 }

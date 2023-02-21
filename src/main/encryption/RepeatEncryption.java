@@ -1,10 +1,10 @@
-package java.encryption;
+package encryption;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static java.utils.IOMethods.copyFile;
+import static utils.IOMethods.copyFile;
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
     final private EncryptionAlgorithmInterface ALGO;

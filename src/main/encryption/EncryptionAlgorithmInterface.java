@@ -1,4 +1,4 @@
-package java.encryption;
+package encryption;
 
 import java.io.IOException;
 
