@@ -2,7 +2,7 @@ package encryption;
 
 import static utils.GeneralMethods.getRange;
 
-public class XorEncryption extends EncryptionAlgorithmAbstract {
+public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
         super("Xor");
     }

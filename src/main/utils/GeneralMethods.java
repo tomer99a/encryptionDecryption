@@ -1,6 +1,6 @@
 package utils;
 
-import encryption.EncryptionAlgorithmInterface;
+import encryption.CharEncryptionAlgorithmInterface;
 import java.nio.file.Path;
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class GeneralMethods {
      * @param key of the action to use
      * @return changed string
      */
-    public static String scanLines(boolean encrypt, String line, EncryptionAlgorithmInterface encryptsDecrypt, int key){
+    public static String scanLines(boolean encrypt, String line, CharEncryptionAlgorithmInterface encryptsDecrypt, int key){
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < line.length(); i++) {
             if(encrypt)

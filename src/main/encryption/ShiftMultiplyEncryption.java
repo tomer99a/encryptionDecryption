@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 
 import static utils.GeneralMethods.getRange;
 
-public class ShiftMultiplyEncryption extends EncryptionAlgorithmAbstract {
+public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
 

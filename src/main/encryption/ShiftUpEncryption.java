@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 
 import static utils.GeneralMethods.getRange;
 
-public class ShiftUpEncryption extends EncryptionAlgorithmAbstract {
+public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     public ShiftUpEncryption() {
         super("ShiftUp");
     }
