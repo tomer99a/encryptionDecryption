@@ -9,14 +9,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
-    final private EncryptionAlgorithmInterface algo;
+    final private CharEncryptionAlgorithmInterface algo;
     final private int repeatNum;
 
-    public RepeatEncryption(int n, EncryptionAlgorithmInterface algo) {
-        super("Repeat");
+    public RepeatEncryption(int n, CharEncryptionAlgorithmInterface algo) {
+        super("Repeat" + algo.getEncryptionMethod());
         this.repeatNum = n;
         this.algo = algo;
-        this.encryptionMethod += algo.getEncryptionMethod();
     }
 
     @Override

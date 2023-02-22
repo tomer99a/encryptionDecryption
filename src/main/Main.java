@@ -18,29 +18,30 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        EncryptionAlgorithmInterface encryptionAlgorithm;
+        CharEncryptionAlgorithmInterface charEncryptionAlgorithm;
         String algoName = "up";
 
         switch (algoName) {
             case "up":
-                encryptionAlgorithm = new ShiftUpEncryption();
+                charEncryptionAlgorithm = new ShiftUpEncryption();
                 break;
             case "multi":
-                encryptionAlgorithm = new ShiftMultiplyEncryption();
+                charEncryptionAlgorithm = new ShiftMultiplyEncryption();
                 break;
             default:
-                encryptionAlgorithm = new XorEncryption();
+                charEncryptionAlgorithm = new XorEncryption();
                 break;
         }
+        EncryptionAlgorithmInterface encryptionAlgorithm = charEncryptionAlgorithm;
         String algo2 = "doublewskj";
         switch (algo2) {
             case "repeat":
                 int repeatNum = 6;
-                encryptionAlgorithm = new RepeatEncryption(repeatNum, encryptionAlgorithm);
+                encryptionAlgorithm = new RepeatEncryption(repeatNum, charEncryptionAlgorithm);
                 break;
 
             case "double":
-                encryptionAlgorithm = new DoubleEncryption(encryptionAlgorithm);
+                encryptionAlgorithm = new DoubleEncryption(charEncryptionAlgorithm);
                 break;
         }
         FileEncryptor fileEncryptor;

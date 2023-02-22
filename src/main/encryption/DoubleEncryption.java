@@ -9,12 +9,11 @@ import java.nio.file.Paths;
 import static utils.GeneralMethods.addSuffixToFileNameAtPath;
 
 public class DoubleEncryption extends EncryptionAlgorithmAbstract{
-    final private EncryptionAlgorithmInterface algo;
+    final private CharEncryptionAlgorithmInterface algo;
 
-    public DoubleEncryption(EncryptionAlgorithmInterface algo) {
-        super("Double");
+    public DoubleEncryption(CharEncryptionAlgorithmInterface algo) {
+        super("Double" + algo.getEncryptionMethod());
         this.algo = algo;
-        this.encryptionMethod += algo.getEncryptionMethod();
     }
 
     @Override
