@@ -1,5 +1,6 @@
 package encryption;
 
+import encryption.charAlgo.ShiftUpEncryption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

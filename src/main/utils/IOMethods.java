@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import encryption.CharEncryptionAlgorithmInterface;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
 import static utils.GeneralMethods.scanLines;
 
 public class IOMethods {

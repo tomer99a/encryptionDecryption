@@ -1,4 +1,8 @@
 import encryption.*;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import encryption.charAlgo.ShiftMultiplyEncryption;
+import encryption.charAlgo.ShiftUpEncryption;
+import encryption.charAlgo.XorEncryption;
 
 import java.io.File;
 import java.util.Scanner;

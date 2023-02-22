@@ -1,4 +1,6 @@
-package encryption;
+package encryption.charAlgo;
+
+import encryption.EncryptionAlgorithmAbstract;
 
 import java.io.IOException;
 

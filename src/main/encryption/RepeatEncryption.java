@@ -1,5 +1,7 @@
 package encryption;
 
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

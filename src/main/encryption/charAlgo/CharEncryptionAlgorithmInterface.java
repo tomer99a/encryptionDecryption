@@ -1,4 +1,6 @@
-package encryption;
+package encryption.charAlgo;
+
+import encryption.EncryptionAlgorithmInterface;
 
 public interface CharEncryptionAlgorithmInterface extends EncryptionAlgorithmInterface {
     char encryptChar(char c, int key);

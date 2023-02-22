@@ -1,5 +1,6 @@
 package encryption;
 
+import encryption.charAlgo.XorEncryption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

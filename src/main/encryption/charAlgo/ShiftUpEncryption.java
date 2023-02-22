@@ -1,4 +1,4 @@
-package encryption;
+package encryption.charAlgo;
 
 import java.security.SecureRandom;
 

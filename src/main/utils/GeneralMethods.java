@@ -1,8 +1,6 @@
 package utils;
 
-import encryption.CharEncryptionAlgorithmInterface;
-
-import java.io.File;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
 
 import static utils.IOMethods.readFile;
 
