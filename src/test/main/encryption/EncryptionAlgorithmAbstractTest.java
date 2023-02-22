@@ -18,7 +18,7 @@ class EncryptionAlgorithmAbstractTest {
         this.originalPath = basePath + fileName + ".txt";
         this.encryptedPath = basePath + fileName + "_encrypted.txt";
         this.decryptedPath = basePath + fileName + "_decrypted.txt";
-        this.keyPath =basePath + "key.txt";
+        this.keyPath = basePath + "key.txt";
     }
 
     public static boolean compareTwoFiles(String path1, String path2){

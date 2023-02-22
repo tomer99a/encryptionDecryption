@@ -1,5 +1,6 @@
-package encryption;
+package encryption.generalsAlgo;
 
+import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmInterface;
 
 import java.io.File;

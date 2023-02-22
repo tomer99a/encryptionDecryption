@@ -3,6 +3,7 @@ package encryption;
 import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.ShiftUpEncryption;
 import encryption.charAlgo.XorEncryption;
+import encryption.generalsAlgo.RepeatEncryption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
