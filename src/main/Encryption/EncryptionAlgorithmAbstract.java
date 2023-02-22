@@ -1,4 +1,4 @@
-package encryption;
+package Encryption;
 
 public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface {
     protected String encryptionMethod;

@@ -1,11 +1,11 @@
-package utils;
+package Utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
-import static utils.GeneralMethods.scanLines;
+import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import static Utils.GeneralMethods.scanLines;
 
 public class IOMethods {
     /**

@@ -1,8 +1,6 @@
-package utils;
+package Utils;
 
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
-
-import static utils.IOMethods.readFile;
+import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
 
 public class GeneralMethods {
     /**
@@ -33,23 +31,5 @@ public class GeneralMethods {
             return Character.isUpperCase(c) ? 'A' : 'a';
         }
         return -1;
-    }
-
-    /**
-     * Extract key value from file
-     * @param keyPath the path to the file key
-     * @return key value
-     */
-    public static int getKeyFromFile(String keyPath){
-        try{
-            String keyStr = readFile(keyPath);
-            if(keyStr.indexOf('\n') != -1)
-                keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
-            return Integer.parseInt(keyStr);
-
-        } catch (NumberFormatException e) {
-            System.err.println("The key file doesn't contain number");
-            return -1;
-        }
     }
 }

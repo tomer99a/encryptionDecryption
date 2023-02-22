@@ -1,13 +1,14 @@
-package encryption;
+package Encryption.GeneralsAlgo;
 
-import encryption.charAlgo.ShiftMultiplyEncryption;
-import encryption.charAlgo.ShiftUpEncryption;
-import encryption.charAlgo.XorEncryption;
-import encryption.generalsAlgo.RepeatEncryption;
+import Encryption.CharAlgo.ShiftMultiplyEncryption;
+import Encryption.CharAlgo.ShiftUpEncryption;
+import Encryption.CharAlgo.XorEncryption;
+import Encryption.EncryptionAlgorithmAbstractTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest{
+class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
     final int repeatNum = 9;
 
     @Test

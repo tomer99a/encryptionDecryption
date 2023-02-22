@@ -1,6 +1,6 @@
-package encryption;
+package Encryption.CharAlgo;
 
-import encryption.charAlgo.ShiftMultiplyEncryption;
+import Encryption.EncryptionAlgorithmAbstractTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

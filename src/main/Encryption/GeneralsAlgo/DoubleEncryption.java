@@ -1,7 +1,7 @@
-package encryption.generalsAlgo;
+package Encryption.GeneralsAlgo;
 
-import encryption.EncryptionAlgorithmAbstract;
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.EncryptionAlgorithmAbstract;
+import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
 
 import java.io.File;
 import java.io.IOException;

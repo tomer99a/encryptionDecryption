@@ -1,8 +1,8 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.myIsUpperCase;
+import static Utils.GeneralMethods.myIsUpperCase;
 
 public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int NUMBER_OF_LETTERS = 26;

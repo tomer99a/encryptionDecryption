@@ -1,11 +1,10 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
-import encryption.EncryptionAlgorithmAbstract;
+import Encryption.EncryptionAlgorithmAbstract;
 
 import java.io.IOException;
 
-import static utils.GeneralMethods.getKeyFromFile;
-import static utils.IOMethods.*;
+import static Utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract implements CharEncryptionAlgorithmInterface {
     protected int key;
@@ -36,5 +35,23 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         createFile(outputPath);
         scanAndSubmitFile(false, originalPath, outputPath, this, key);
         System.out.println("Location of the decrypted file is - " + outputPath);
+    }
+
+    /**
+     * Extract key value from file
+     * @param keyPath the path to the file key
+     * @return key value
+     */
+    private int getKeyFromFile(String keyPath) throws IOException {
+        try{
+            String keyStr = readFile(keyPath);
+            if(keyStr.indexOf('\n') != -1)
+                keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
+            return Integer.parseInt(keyStr);
+
+        } catch (NumberFormatException e) {
+            System.err.println("The key file doesn't contain number");
+            throw new IOException();
+        }
     }
 }

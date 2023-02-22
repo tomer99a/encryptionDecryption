@@ -1,4 +1,4 @@
-package encryption;
+package Encryption;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,15 +6,15 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EncryptionAlgorithmAbstractTest {
+public class EncryptionAlgorithmAbstractTest {
     final protected String originalPath;
     final protected String encryptedPath;
     final protected String decryptedPath;
     final protected String keyPath;
 
-    EncryptionAlgorithmAbstractTest() {
+    public EncryptionAlgorithmAbstractTest() {
         String fileName = "input_text";
-        String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
+        String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
         this.originalPath = basePath + fileName + ".txt";
         this.encryptedPath = basePath + fileName + "_encrypted.txt";
         this.decryptedPath = basePath + fileName + "_decrypted.txt";

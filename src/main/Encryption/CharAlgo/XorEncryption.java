@@ -1,8 +1,8 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.myIsUpperCase;
+import static Utils.GeneralMethods.myIsUpperCase;
 
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
