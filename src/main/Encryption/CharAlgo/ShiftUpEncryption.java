@@ -16,12 +16,12 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
 
         // if the random number is divided by The number of letters that
         // we encrypt the encryption won't do anything's
         while (key % (BIG_Z - BIG_A) == 0){
-            key = new SecureRandom().nextInt(1000);
+            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
         }
     }
 

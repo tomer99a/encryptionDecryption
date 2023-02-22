@@ -10,7 +10,7 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     }
 
     public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
     }
 
     /**

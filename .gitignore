@@ -2,5 +2,5 @@
 /out
 /666.iml
 /.idea
-/target
+/target/*
 java tutorial.pdf

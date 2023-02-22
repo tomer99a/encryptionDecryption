@@ -81,12 +81,12 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
 
         // If the random number is divided by my prime number
         // the encryption will tern everything to the letter A
         while (key % MY_PRIME_NUMBER == 0){
-            key = new SecureRandom().nextInt(1000);
+            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
         }
     }
 }

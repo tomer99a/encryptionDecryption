@@ -14,6 +14,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
     final static protected char SMALL_Z = 'z';
     final static protected char BIG_A = 'A';
     final static protected char BIG_Z = 'Z';
+    final static protected int BOUND_RANDOM_NUMBER = 1000;
 
     public CharEncryptionAlgorithmAbstract(String encryptionMethod) {
         super(encryptionMethod);
