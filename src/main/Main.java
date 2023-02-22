@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Main {
     private static void menu() {
         String fileName = "input_text";
-        String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
+        String basePath = "src" + File.separator + "maidffdfdfdfdffdfn" + File.separator + "Data" + File.separator;
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";

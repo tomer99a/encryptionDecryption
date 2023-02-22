@@ -1,6 +1,7 @@
 package Encryption.CharAlgo;
 
 import Encryption.EncryptionAlgorithmAbstract;
+import Exceptions.InvalidEncryptionKeyException;
 
 import java.io.IOException;
 
@@ -30,10 +31,16 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
     }
 
     public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final int key = getKeyFromFile(keyPath);
+        final int decryptKey;
+        try {
+            decryptKey = getKeyFromFile(keyPath);
+        } catch (InvalidEncryptionKeyException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
 
         createFile(outputPath);
-        scanAndSubmitFile(false, originalPath, outputPath, this, key);
+        scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey);
         System.out.println("Location of the decrypted file is - " + outputPath);
     }
 
@@ -42,16 +49,14 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
      * @param keyPath the path to the file key
      * @return key value
      */
-    private int getKeyFromFile(String keyPath) throws IOException {
+    private int getKeyFromFile(String keyPath) throws IOException, InvalidEncryptionKeyException {
         try{
             String keyStr = readFile(keyPath);
             if(keyStr.indexOf('\n') != -1)
                 keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
             return Integer.parseInt(keyStr);
-
         } catch (NumberFormatException e) {
-            System.err.println("The key file doesn't contain number");
-            throw new IOException();
+            throw new InvalidEncryptionKeyException("The key file doesn't contain number");
         }
     }
 }

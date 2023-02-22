@@ -50,30 +50,25 @@ public class IOMethods {
      * Creat file at the given path and delete the exists if was one.
      * @param path file path and name
      */
-    public static void createFile(String path){
-        try {
-            final File myObj = new File(path);
-            if(myObj.exists())
-                if(!myObj.delete())
-                    throw new IOException("unable to delete existing file");
-            if (!myObj.createNewFile())
-                throw new IOException("failed to creat %s file " + path);
-
-        } catch (IOException e) {
-            System.err.print(e.getMessage());
+    public static void createFile(String path) throws IOException {
+        final File myObj = new File(path);
+        if(myObj.exists())
+            if(!myObj.delete())
+                throw new IOException("unable to delete existing file" + System.lineSeparator());
+        if (!myObj.createNewFile())
+            throw new IOException(System.lineSeparator() + "failed to creat %s file " + path + System.lineSeparator());
         }
-    }
 
     /**
      * Write the given message to the file at the given path
      * @param path file path and name
      * @param message message to write into path
      */
-    public static void writeToFile(String path, String message){
+    public static void writeToFile(String path, String message) throws IOException {
         try (FileWriter myWriter = new FileWriter(path)) {
             myWriter.write(message);
         } catch (IOException e) {
-            System.err.printf("failed to write to %s file", path);
+            throw new IOException("failed to write to %s file " + path + System.lineSeparator());
         }
     }
 
@@ -82,14 +77,14 @@ public class IOMethods {
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
-    public static String readFile(String path){
+    public static String readFile(String path) throws IOException {
         StringBuilder txt = new StringBuilder();
         try (Scanner myReader = new Scanner(new File(path))) {
             while (myReader.hasNextLine()) {
                 txt.append(myReader.nextLine()).append((char) 10);
             }
         } catch (FileNotFoundException e) {
-            System.err.printf("failed to read %s file", path);
+            throw new IOException("failed to read " + path + " file" + System.lineSeparator());
         }
         return txt.toString();
     }
