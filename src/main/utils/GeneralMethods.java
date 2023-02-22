@@ -30,7 +30,7 @@ public class GeneralMethods {
      * @param c char in range
      * @return range
      */
-    public static int getRange(char c){
+    public static int myIsUpperCase(char c){
         if(Character.isLetter(c)) {
             return Character.isUpperCase(c) ? 'A' : 'a';
         }

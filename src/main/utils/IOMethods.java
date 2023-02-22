@@ -29,7 +29,7 @@ public class IOMethods {
                 throw sc.ioException();
             }
         } catch (IOException e) {
-            System.err.println("failed to scan file");
+            throw new IOException("failed to scan file");
         }
     }
 

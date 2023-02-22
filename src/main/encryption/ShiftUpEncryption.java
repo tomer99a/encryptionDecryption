@@ -2,9 +2,11 @@ package encryption;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.getRange;
+import static utils.GeneralMethods.myIsUpperCase;
 
 public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
+    final static private int NUMBER_OF_LETTERS = 26;
+    
     public ShiftUpEncryption() {
         super("ShiftUp");
     }
@@ -31,13 +33,13 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        final int START_RANGE = getRange(c);
-        if(START_RANGE == -1)
+        final int startRange = myIsUpperCase(c);
+        if(startRange == -1)
             return c;
-        final char END_RANGE = START_RANGE == SMALL_A ? SMALL_Z : BIG_Z;
-        key = key % (END_RANGE - START_RANGE);
-        if((int) c + key > END_RANGE)
-            return (char) ((int) c + key - END_RANGE + START_RANGE - 1);
+        final char endRange = startRange == SMALL_A ? SMALL_Z : BIG_Z;
+        key = key % NUMBER_OF_LETTERS;
+        if((int) c + key > endRange)
+            return (char) ((int) c + key - NUMBER_OF_LETTERS);
         else
             return (char) ((int) c + key);
     }
@@ -50,13 +52,12 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char decryptChar(char c, int key){
-        final int START_RANGE = getRange(c);
-        if(START_RANGE == -1)
+        final int startRange = myIsUpperCase(c);
+        if(startRange == -1)
             return c;
-        final char END_RANGE = START_RANGE == SMALL_A ? SMALL_Z : BIG_Z;
-        key = key % (END_RANGE - START_RANGE);
-        if((int) c - key < START_RANGE)
-            return (char) ((int) c - key + END_RANGE - START_RANGE + 1);
+        key = key % NUMBER_OF_LETTERS;
+        if((int) c - key < startRange)
+            return (char) ((int) c - key + NUMBER_OF_LETTERS);
         else
             return (char) ((int) c - key);
     }

@@ -2,10 +2,11 @@ package encryption;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.getRange;
+import static utils.GeneralMethods.myIsUpperCase;
 
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 6;
+    final static private int NUMBER_OF_LETTERS = 52;
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
 
@@ -21,8 +22,7 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        int numberOfLetter = 52;
-        int range = getRange(c);
+        int range = myIsUpperCase(c);
         if(c == MY_SPECIAL_CHAR)
             c = (char) (BIG_A + MY_PRIME_NUMBER - 1);
         else if(range == -1)
@@ -32,10 +32,10 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
             c -= GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
 
         int encryptValue = (c * key) % MY_PRIME_NUMBER;
-        if(encryptValue < numberOfLetter/2)
+        if(encryptValue < NUMBER_OF_LETTERS/2)
             encryptValue += BIG_A;
-        else if(encryptValue != numberOfLetter)
-            encryptValue += SMALL_A - numberOfLetter/2;
+        else if(encryptValue != NUMBER_OF_LETTERS)
+            encryptValue += SMALL_A - NUMBER_OF_LETTERS/2;
         else
             encryptValue = MY_SPECIAL_CHAR;
 
@@ -50,23 +50,22 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char decryptChar(char c, int key){
-        int numberOfLetter = 52;
         int rest;
-        int range = getRange(c);
+        int range = myIsUpperCase(c);
 
         if(c == MY_SPECIAL_CHAR)
-            rest = numberOfLetter;
+            rest = NUMBER_OF_LETTERS;
         else if(range == -1)
             return c;
         else {
             rest = c - range;
-            rest += range == SMALL_A ? numberOfLetter / 2 : 0;
+            rest += range == SMALL_A ? NUMBER_OF_LETTERS / 2 : 0;
         }
 
 
-        for(int i=BIG_A; i<=SMALL_Z; i++){
+        for(int i=BIG_A; i <= SMALL_Z; i++){
             if((i*key) % MY_PRIME_NUMBER == rest){
-                //In the middle of capitals and lower case there are 6 chars, so I add 6 to get rid of the gap
+                // In the middle of capitals and lower case there are 6 chars, so I add 6 to get rid of the gap
                 if(i > BIG_Z)
                     i += GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
                 if(i == '{')
