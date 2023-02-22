@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 import static Utils.GeneralMethods.myIsUpperCase;
 
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
-    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 6;
+    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 'a' - 'Z' - 1;
     final static private int NUMBER_OF_LETTERS = 52;
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
