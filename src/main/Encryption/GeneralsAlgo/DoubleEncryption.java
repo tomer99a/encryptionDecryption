@@ -1,16 +1,16 @@
 package Encryption.GeneralsAlgo;
 
 import Encryption.EncryptionAlgorithmAbstract;
-import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 public class DoubleEncryption extends EncryptionAlgorithmAbstract {
-    final private CharEncryptionAlgorithmInterface algo;
+    final private CharEncryptionAlgorithmAbstract algo;
 
-    public DoubleEncryption(CharEncryptionAlgorithmInterface algo) {
+    public DoubleEncryption(CharEncryptionAlgorithmAbstract algo) {
         super("Double" + algo.getEncryptionMethod());
         this.algo = algo;
     }

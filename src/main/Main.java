@@ -1,5 +1,5 @@
 import Encryption.*;
-import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 import Encryption.CharAlgo.ShiftMultiplyEncryption;
 import Encryption.CharAlgo.ShiftUpEncryption;
 import Encryption.CharAlgo.XorEncryption;
@@ -22,7 +22,7 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        CharEncryptionAlgorithmInterface charEncryptionAlgorithm;
+        CharEncryptionAlgorithmAbstract charEncryptionAlgorithm;
         String algoName = "up";
 
         switch (algoName) {
@@ -36,7 +36,7 @@ public class Main {
                 charEncryptionAlgorithm = new XorEncryption();
                 break;
         }
-        EncryptionAlgorithmInterface encryptionAlgorithm = charEncryptionAlgorithm;
+        InterfaceEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
         String algo2 = "doublewskj";
         switch (algo2) {
             case "repeat":

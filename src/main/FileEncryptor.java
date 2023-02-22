@@ -1,11 +1,11 @@
-import Encryption.EncryptionAlgorithmInterface;
+import Encryption.InterfaceEncryptionAlgorithm;
 
 import java.io.IOException;
 
 public class FileEncryptor {
-    final private EncryptionAlgorithmInterface encryptionAlgo;
+    final private InterfaceEncryptionAlgorithm encryptionAlgo;
 
-    public FileEncryptor(EncryptionAlgorithmInterface encryptionAlgo) {
+    public FileEncryptor(InterfaceEncryptionAlgorithm encryptionAlgo) {
         this.encryptionAlgo = encryptionAlgo;
     }
 

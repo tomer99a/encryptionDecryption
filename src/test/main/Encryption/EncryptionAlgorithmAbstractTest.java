@@ -3,22 +3,32 @@ package Encryption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.SecureRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EncryptionAlgorithmAbstractTest {
-    final protected String originalPath;
-    final protected String encryptedPath;
-    final protected String decryptedPath;
-    final protected String keyPath;
+    protected String originalPath;
+    protected String encryptedPath;
+    protected String decryptedPath;
+    protected String keyPath;
 
     public EncryptionAlgorithmAbstractTest() {
+        generatePaths();
+    }
+
+    private void generatePaths() {
         String fileName = "input_text";
         String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
         this.originalPath = basePath + fileName + ".txt";
         this.encryptedPath = basePath + fileName + "_encrypted.txt";
         this.decryptedPath = basePath + fileName + "_decrypted.txt";
         this.keyPath = basePath + "key.txt";
+    }
+
+    private void fuckThePath() {
+        int randNum = new SecureRandom().nextInt(1000000000);
+        this.encryptedPath = randNum + this.encryptedPath;
     }
 
     public static boolean compareTwoFiles(String path1, String path2){
@@ -45,16 +55,21 @@ public class EncryptionAlgorithmAbstractTest {
         }
     }
 
-    protected void encryptTest(EncryptionAlgorithmInterface algo){
+    protected void encryptTest(InterfaceEncryptionAlgorithm algo){
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
             fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
         }
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
+
+        fuckThePath();
+
+        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
+        assertEquals("The system cannot find the path specified", exception.getMessage());
     }
 
-    protected void decryptTest(EncryptionAlgorithmInterface algo) {
+    protected void decryptTest(InterfaceEncryptionAlgorithm algo) {
         try {
             algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {

@@ -1,6 +1,6 @@
 package Encryption;
 
-public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface {
+public abstract class EncryptionAlgorithmAbstract implements InterfaceEncryptionAlgorithm {
     protected String encryptionMethod;
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {

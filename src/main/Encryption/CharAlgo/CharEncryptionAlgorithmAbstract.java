@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static Utils.IOMethods.*;
 
-public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract implements CharEncryptionAlgorithmInterface {
+public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract {
     protected int key;
 
     final static protected char SMALL_A = 'a';
@@ -19,6 +19,10 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         super(encryptionMethod);
         generateKey();
     }
+
+    public abstract char encryptChar(char c, int key);
+    public abstract char decryptChar(char c, int key);
+    abstract void generateKey();
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         createFile(keyPath);

@@ -1,7 +1,7 @@
 package Encryption.GeneralsAlgo;
 
 import Encryption.EncryptionAlgorithmAbstract;
-import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +11,10 @@ import static Utils.IOMethods.copyFile;
 
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
-    final private CharEncryptionAlgorithmInterface algo;
+    final private CharEncryptionAlgorithmAbstract algo;
     final private int repeatNum;
 
-    public RepeatEncryption(int n, CharEncryptionAlgorithmInterface algo) {
+    public RepeatEncryption(int n, CharEncryptionAlgorithmAbstract algo) {
         super("Repeat" + algo.getEncryptionMethod());
         this.repeatNum = n;
         this.algo = algo;

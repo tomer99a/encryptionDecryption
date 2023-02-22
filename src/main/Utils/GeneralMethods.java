@@ -1,6 +1,6 @@
 package Utils;
 
-import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 
 public class GeneralMethods {
     /**
@@ -10,7 +10,7 @@ public class GeneralMethods {
      * @param key of the action to use
      * @return changed string
      */
-    public static String scanLines(boolean encrypt, String line, CharEncryptionAlgorithmInterface encryptsDecrypt, int key){
+    public static String scanLines(boolean encrypt, String line, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key){
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < line.length(); i++) {
             if(encrypt)

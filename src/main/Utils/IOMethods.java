@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import Encryption.CharAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 import static Utils.GeneralMethods.scanLines;
 
 public class IOMethods {
@@ -15,7 +15,7 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmInterface encryptsDecrypt, int key) throws IOException {
+    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key) throws IOException {
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
             while (sc.hasNextLine()){
                 String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
