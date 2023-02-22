@@ -1,7 +1,6 @@
 package encryption;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import static utils.GeneralMethods.getKeyFromFile;
 import static utils.IOMethods.*;
@@ -19,17 +18,17 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         generateKey();
     }
 
-    public void encrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
+    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         createFile(keyPath);
         createFile(outputPath);
 
         scanAndSubmitFile(true, originalPath, outputPath, this, key);
         writeToFile(keyPath, Integer.toString(key));
 
-        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s\n", outputPath, keyPath);
+        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPath, System.lineSeparator());
     }
 
-    public void decrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         final int key = getKeyFromFile(keyPath);
 
         createFile(outputPath);

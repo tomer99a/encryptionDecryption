@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import static utils.GeneralMethods.getRange;
 
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
+    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 6;
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
 
@@ -28,7 +29,7 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
             return c;
         else if (range == SMALL_A)
             //In the middle of capitals and lower case there are 6 chars, so I bring down 6 to get rid of the gap
-            c -= 6;
+            c -= GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
 
         int encryptValue = (c * key) % MY_PRIME_NUMBER;
         if(encryptValue < numberOfLetter/2)
@@ -67,7 +68,7 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
             if((i*key) % MY_PRIME_NUMBER == rest){
                 //In the middle of capitals and lower case there are 6 chars, so I add 6 to get rid of the gap
                 if(i > BIG_Z)
-                    i += 6;
+                    i += GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
                 if(i == '{')
                     return (char) MY_SPECIAL_CHAR;
                 return (char) i;

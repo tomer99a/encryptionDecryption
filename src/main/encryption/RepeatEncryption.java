@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import static utils.IOMethods.copyFile;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
     final private CharEncryptionAlgorithmInterface algo;
@@ -19,9 +18,9 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract {
     }
 
     @Override
-    public void encrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
+    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         // Create a temporary file
-        final Path tmpPath = Paths.get(Files.createTempFile("RepeatTmp", ".txt").toString());
+        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
         algo.encrypt(originalPath, tmpPath, keyPath);
         for(int i=1; i < repeatNum; i++){
@@ -29,14 +28,14 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(String.valueOf(tmpPath)).delete()))
+        if (!(new File(tmpPath)).delete())
             System.err.println("The tmp file didn't auto delete");
     }
 
     @Override
-    public void decrypt(Path originalPath, Path outputPath, Path keyPath) throws IOException {
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         // Create a temporary file
-        final Path tmpPath = Paths.get(Files.createTempFile("RepeatTmp", ".txt").toString());
+        final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
         algo.decrypt(originalPath, tmpPath, keyPath);
         for(int i=1; i < repeatNum; i++){
@@ -44,7 +43,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(String.valueOf(tmpPath)).delete()))
+        if (!(new File(tmpPath)).delete())
             System.err.println("The tmp file didn't auto delete");
     }
 }

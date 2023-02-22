@@ -3,31 +3,29 @@ package encryption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EncryptionAlgorithmAbstractTest {
-    final protected Path originalPath;
-    final protected Path encryptedPath;
-    final protected Path decryptedPath;
-    final protected Path keyPath;
+    final protected String originalPath;
+    final protected String encryptedPath;
+    final protected String decryptedPath;
+    final protected String keyPath;
 
     EncryptionAlgorithmAbstractTest() {
         String fileName = "input_text";
-        Path basePath = Paths.get("src\\main\\data\\");
-        this.originalPath = Paths.get(String.valueOf(basePath), fileName + ".txt");
-        this.encryptedPath = Paths.get(String.valueOf(basePath), fileName + "_encrypted.txt");
-        this.decryptedPath = Paths.get(String.valueOf(basePath), fileName + "_decrypted.txt");
-        this.keyPath = Paths.get(String.valueOf(basePath), "key.txt");
+        String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
+        this.originalPath = basePath + fileName + ".txt";
+        this.encryptedPath = basePath + fileName + "_encrypted.txt";
+        this.decryptedPath = basePath + fileName + "_decrypted.txt";
+        this.keyPath =basePath + "key.txt";
     }
 
-    public static boolean compareTwoFiles(Path path1, Path path2){
+    public static boolean compareTwoFiles(String path1, String path2){
         if(path1.equals(path2))
             return true;
-        File file1 = new File(String.valueOf(path1));
-        File file2 = new File(String.valueOf(path2));
+        File file1 = new File(path1);
+        File file2 = new File(path2);
 
         try (FileInputStream in1 = new FileInputStream(file1); FileInputStream in2 = new FileInputStream(file2)) {
             int tmpChar1, tmpChar2;

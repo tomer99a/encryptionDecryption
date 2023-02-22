@@ -3,10 +3,8 @@ package utils;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import java.nio.file.Path;
 
 import encryption.CharEncryptionAlgorithmInterface;
-
 import static utils.GeneralMethods.scanLines;
 
 public class IOMethods {
@@ -17,8 +15,8 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(boolean encrypt, Path inputPath, Path outputPath, CharEncryptionAlgorithmInterface encryptsDecrypt, int key){
-        try (Scanner sc = new Scanner(new FileInputStream(String.valueOf(inputPath)), String.valueOf(StandardCharsets.UTF_8))) {
+    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmInterface encryptsDecrypt, int key) throws IOException {
+        try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
             while (sc.hasNextLine()){
                 String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
                 if(sc.hasNextLine())
@@ -26,7 +24,7 @@ public class IOMethods {
                 writeLine(outputPath, lineToWrite);
             }
 
-//             note that Scanner suppresses exceptions
+             // note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
                 throw sc.ioException();
             }
@@ -40,8 +38,8 @@ public class IOMethods {
      * @param path path to file should be written.
      * @param line message to be written into file.
      */
-    public static void writeLine(Path path, String line) {
-        try (Writer output = new BufferedWriter(new FileWriter(String.valueOf(path), true))) {
+    public static void writeLine(String path, String line) {
+        try (Writer output = new BufferedWriter(new FileWriter(path, true))) {
             output.append(line);
         } catch (IOException e) {
             System.err.println("failed to write to file " + path);
@@ -52,9 +50,9 @@ public class IOMethods {
      * Creat file at the given path and delete the exists if was one.
      * @param path file path and name
      */
-    public static void createFile(Path path){
+    public static void createFile(String path){
         try {
-            final File myObj = new File(String.valueOf(path));
+            final File myObj = new File(path);
             if(myObj.exists())
                 if(!myObj.delete())
                     throw new IOException("unable to delete existing file");
@@ -71,8 +69,8 @@ public class IOMethods {
      * @param path file path and name
      * @param message message to write into path
      */
-    public static void writeToFile(Path path, String message){
-        try (FileWriter myWriter = new FileWriter(String.valueOf(path))) {
+    public static void writeToFile(String path, String message){
+        try (FileWriter myWriter = new FileWriter(path)) {
             myWriter.write(message);
         } catch (IOException e) {
             System.err.printf("failed to write to %s file", path);
@@ -84,9 +82,9 @@ public class IOMethods {
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
-    public static String readFile(Path path){
+    public static String readFile(String path){
         StringBuilder txt = new StringBuilder();
-        try (Scanner myReader = new Scanner(new File(String.valueOf(path)))) {
+        try (Scanner myReader = new Scanner(new File(path))) {
             while (myReader.hasNextLine()) {
                 txt.append(myReader.nextLine()).append((char) 10);
             }
@@ -101,10 +99,10 @@ public class IOMethods {
      * @param originalPath file path to copy from
      * @param newPath file path to copy
      */
-    public static void copyFile(Path originalPath, Path newPath)
+    public static void copyFile(String originalPath, String newPath)
     {
-        File originalFile = new File(String.valueOf(originalPath));
-        File newFile = new File(String.valueOf(newPath));
+        File originalFile = new File(originalPath);
+        File newFile = new File(newPath);
 
         try (FileInputStream in = new FileInputStream(originalFile); FileOutputStream out = new FileOutputStream(newFile)) {
             int tmpChar;
