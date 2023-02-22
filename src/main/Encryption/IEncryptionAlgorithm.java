@@ -2,7 +2,7 @@ package Encryption;
 
 import java.io.IOException;
 
-public interface InterfaceEncryptionAlgorithm {
+public interface IEncryptionAlgorithm {
     void encrypt(String originalPath, String outputPath, String keyPath) throws IOException;
     void decrypt(String originalPath, String outputPath, String keyPath) throws IOException;
 

@@ -55,7 +55,7 @@ public class EncryptionAlgorithmAbstractTest {
         }
     }
 
-    protected void encryptTest(InterfaceEncryptionAlgorithm algo){
+    protected void encryptTest(IEncryptionAlgorithm algo){
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class EncryptionAlgorithmAbstractTest {
         assertEquals("The system cannot find the path specified", exception.getMessage());
     }
 
-    protected void decryptTest(InterfaceEncryptionAlgorithm algo) {
+    protected void decryptTest(IEncryptionAlgorithm algo) {
         try {
             algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {

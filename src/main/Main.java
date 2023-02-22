@@ -36,7 +36,7 @@ public class Main {
                 charEncryptionAlgorithm = new XorEncryption();
                 break;
         }
-        InterfaceEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
+        IEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
         String algo2 = "doublewskj";
         switch (algo2) {
             case "repeat":
