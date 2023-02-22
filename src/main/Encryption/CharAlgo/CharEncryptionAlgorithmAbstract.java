@@ -59,4 +59,12 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
             throw new InvalidEncryptionKeyException("The key file doesn't contain number");
         }
     }
+
+    /**
+     * describe the maximal length (number of digits) of the key.
+     * @return the maximal length of the key.
+     */
+    public int getKeyStrength() {
+        return 3;
+    }
 }

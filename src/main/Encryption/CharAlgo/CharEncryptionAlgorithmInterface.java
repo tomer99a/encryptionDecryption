@@ -6,4 +6,5 @@ public interface CharEncryptionAlgorithmInterface extends EncryptionAlgorithmInt
     char encryptChar(char c, int key);
     char decryptChar(char c, int key);
     void generateKey();
+    int getKeyStrength();
 }
