@@ -1,8 +1,18 @@
-package main.java.encryption;
+package encryption.charAlgo;
 
-import static main.java.utils.GeneralMethods.getRange;
+import java.security.SecureRandom;
 
-public class XorEncryption extends EncryptionAlgorithmAbstract {
+import static utils.GeneralMethods.myIsUpperCase;
+
+public class XorEncryption extends CharEncryptionAlgorithmAbstract {
+    public XorEncryption() {
+        super("Xor");
+    }
+
+    public void generateKey() {
+        key = new SecureRandom().nextInt(1000);
+    }
+
     /**
      * Encrypt the char by key
      * @param c char to encrypt
@@ -11,10 +21,9 @@ public class XorEncryption extends EncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        if(getRange(c) == -1)
+        if(myIsUpperCase(c) == -1)
             return c;
 
-        System.out.print((c ^ key) + ", ");
         return (char) ((c ^ key) + 255);
     }
 

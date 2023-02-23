@@ -1,24 +1,10 @@
-package main.java.utils;
+package utils;
 
-import main.java.encryption.EncryptionAlgorithmInterface;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
 
-import java.io.File;
-
-import static main.java.utils.IOMethods.readFile;
+import static utils.IOMethods.readFile;
 
 public class GeneralMethods {
-    /**
-     * Add suffix only to the file name from the full path
-     * @param path original path
-     * @param suffix thing to add at the end of the file name
-     * @return path with changed name
-     */
-    public static String addSuffixToFileNameAtPath(String path, String suffix){
-        File file = new File(path);
-        String fileName = file.getName();
-        return file.getParent() + "\\" + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
-    }
-
     /**
      * Take string and do action on it char by char
      * @param line string to change
@@ -26,7 +12,7 @@ public class GeneralMethods {
      * @param key of the action to use
      * @return changed string
      */
-    public static String scanLines(boolean encrypt, String line, EncryptionAlgorithmInterface encryptsDecrypt, int key){
+    public static String scanLines(boolean encrypt, String line, CharEncryptionAlgorithmInterface encryptsDecrypt, int key){
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < line.length(); i++) {
             if(encrypt)
@@ -34,7 +20,6 @@ public class GeneralMethods {
             else
                 str.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
         }
-        str.append("\n");
         return str.toString();
     }
 
@@ -43,7 +28,7 @@ public class GeneralMethods {
      * @param c char in range
      * @return range
      */
-    public static int getRange(char c){
+    public static int myIsUpperCase(char c){
         if(Character.isLetter(c)) {
             return Character.isUpperCase(c) ? 'A' : 'a';
         }
@@ -67,6 +52,4 @@ public class GeneralMethods {
             return -1;
         }
     }
-
-
 }

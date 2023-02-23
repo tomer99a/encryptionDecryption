@@ -1,15 +1,18 @@
-package main.java;
+import encryption.*;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import encryption.charAlgo.ShiftMultiplyEncryption;
+import encryption.charAlgo.ShiftUpEncryption;
+import encryption.charAlgo.XorEncryption;
+import encryption.generalsAlgo.DoubleEncryption;
+import encryption.generalsAlgo.RepeatEncryption;
 
-//import main.java.decryption.*;
-import main.java.encryption.*;
-import main.java.general.FileEncryptor;
-
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
     private static void menu() throws Exception {
-        String fileName = "alpha";
-        String basePath = "src\\main\\java\\data\\";
+        String fileName = "input_text";
+        String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";
@@ -19,29 +22,30 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        EncryptionAlgorithmInterface encryptionAlgorithm;
+        CharEncryptionAlgorithmInterface charEncryptionAlgorithm;
         String algoName = "up";
 
         switch (algoName) {
             case "up":
-                encryptionAlgorithm = new ShiftUpEncryption();
+                charEncryptionAlgorithm = new ShiftUpEncryption();
                 break;
             case "multi":
-                encryptionAlgorithm = new ShiftMultiplyEncryption();
+                charEncryptionAlgorithm = new ShiftMultiplyEncryption();
                 break;
             default:
-                encryptionAlgorithm = new XorEncryption();
+                charEncryptionAlgorithm = new XorEncryption();
                 break;
         }
+        EncryptionAlgorithmInterface encryptionAlgorithm = charEncryptionAlgorithm;
         String algo2 = "doublewskj";
         switch (algo2) {
             case "repeat":
                 int repeatNum = 6;
-                encryptionAlgorithm = new RepeatEncryption(repeatNum, encryptionAlgorithm);
+                encryptionAlgorithm = new RepeatEncryption(repeatNum, charEncryptionAlgorithm);
                 break;
 
             case "double":
-                encryptionAlgorithm = new DoubleEncryption(encryptionAlgorithm);
+                encryptionAlgorithm = new DoubleEncryption(charEncryptionAlgorithm);
                 break;
         }
         FileEncryptor fileEncryptor;

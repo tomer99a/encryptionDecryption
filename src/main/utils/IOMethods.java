@@ -1,12 +1,11 @@
-package main.java.utils;
-
-import main.java.encryption.EncryptionAlgorithmInterface;
+package utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static main.java.utils.GeneralMethods.scanLines;
+import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import static utils.GeneralMethods.scanLines;
 
 public class IOMethods {
     /**
@@ -16,17 +15,21 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, EncryptionAlgorithmInterface encryptsDecrypt, int key){
+    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmInterface encryptsDecrypt, int key) throws IOException {
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
-            while (sc.hasNextLine())
-                writeLine(outputPath, scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key));
+            while (sc.hasNextLine()){
+                String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
+                if(sc.hasNextLine())
+                    lineToWrite += System.lineSeparator();
+                writeLine(outputPath, lineToWrite);
+            }
 
-//             note that Scanner suppresses exceptions
+             // note that Scanner suppresses exceptions
             if (sc.ioException() != null) {
                 throw sc.ioException();
             }
         } catch (IOException e) {
-            System.err.println("failed to scan file");
+            throw new IOException("failed to scan file");
         }
     }
 
@@ -49,11 +52,11 @@ public class IOMethods {
      */
     public static void createFile(String path){
         try {
-            final File MY_OBJ = new File(path);
-            if(MY_OBJ.exists())
-                if(!MY_OBJ.delete())
+            final File myObj = new File(path);
+            if(myObj.exists())
+                if(!myObj.delete())
                     throw new IOException("unable to delete existing file");
-            if (!MY_OBJ.createNewFile())
+            if (!myObj.createNewFile())
                 throw new IOException("failed to creat %s file " + path);
 
         } catch (IOException e) {
@@ -83,7 +86,7 @@ public class IOMethods {
         StringBuilder txt = new StringBuilder();
         try (Scanner myReader = new Scanner(new File(path))) {
             while (myReader.hasNextLine()) {
-                txt.append(myReader.nextLine()).append("\n");
+                txt.append(myReader.nextLine()).append((char) 10);
             }
         } catch (FileNotFoundException e) {
             System.err.printf("failed to read %s file", path);
