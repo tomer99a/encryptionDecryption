@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class InvalidEncryptionKeyException extends Exception{
-    public InvalidEncryptionKeyException(String message) {
-        super(message);
+    public InvalidEncryptionKeyException() {
+        super("The key file doesn't contain number");
     }
 }

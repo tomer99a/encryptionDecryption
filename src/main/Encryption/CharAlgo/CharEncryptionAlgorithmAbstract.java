@@ -61,7 +61,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
                 keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
             return Integer.parseInt(keyStr);
         } catch (NumberFormatException e) {
-            throw new InvalidEncryptionKeyException("The key file doesn't contain number");
+            throw new InvalidEncryptionKeyException();
         }
     }
 

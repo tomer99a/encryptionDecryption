@@ -54,11 +54,8 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
         else if(!Character.isLetter(c))
             return c;
         else {
-            rest = c - SMALL_A;
-            if(Character.isLowerCase(c))
-                rest += NUMBER_OF_LETTERS / 2;
+            rest = c - (Character.isUpperCase(c) ? BIG_A : SMALL_A - NUMBER_OF_LETTERS / 2);
         }
-
 
         for(int i=BIG_A; i <= SMALL_Z; i++){
             if((i*key) % MY_PRIME_NUMBER == rest){

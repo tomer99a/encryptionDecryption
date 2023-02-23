@@ -59,10 +59,10 @@ public class EncryptionAlgorithmAbstractTest {
         }
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
 
-//        fuckThePath();
-//
-//        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
-//        assertEquals("The system cannot find the path specified", exception.getMessage());
+        fuckThePath();
+
+        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
+        assertEquals("The system cannot find the path specified", exception.getMessage());
     }
 
     protected void decryptTest(IEncryptionAlgorithm algo) {
