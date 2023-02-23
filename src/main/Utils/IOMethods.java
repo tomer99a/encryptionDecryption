@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
-import static Utils.GeneralMethods.scanLines;
 
 public class IOMethods {
     /**
@@ -18,10 +17,16 @@ public class IOMethods {
     public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key) throws IOException {
         try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
             while (sc.hasNextLine()){
-                String lineToWrite = scanLines(encrypt, sc.nextLine(), encryptsDecrypt, key);
+                StringBuilder lineToWrite = new StringBuilder();
+                String line = sc.nextLine();
+                for (int i = 0; i < line.length(); i++)
+                    if (encrypt)
+                        lineToWrite.append(encryptsDecrypt.encryptChar(line.charAt(i), key));
+                    else
+                        lineToWrite.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
                 if(sc.hasNextLine())
-                    lineToWrite += System.lineSeparator();
-                writeLine(outputPath, lineToWrite);
+                    lineToWrite.append(System.lineSeparator());
+                writeLine(outputPath, lineToWrite.toString());
             }
 
              // note that Scanner suppresses exceptions

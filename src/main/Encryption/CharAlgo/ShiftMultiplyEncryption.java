@@ -2,8 +2,6 @@ package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
 
-import static Utils.GeneralMethods.myIsUpperCase;
-
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 'a' - 'Z' - 1;
     final static private int NUMBER_OF_LETTERS = 52;
@@ -22,12 +20,11 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        int range = myIsUpperCase(c);
         if(c == MY_SPECIAL_CHAR)
             c = (char) (BIG_A + MY_PRIME_NUMBER - 1);
-        else if(range == -1)
+        else if(!Character.isLetter(c))
             return c;
-        else if (range == SMALL_A)
+        else if (Character.isLowerCase(c))
             //In the middle of capitals and lower case there are 6 chars, so I bring down 6 to get rid of the gap
             c -= GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
 
@@ -51,15 +48,15 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     @Override
     public char decryptChar(char c, int key){
         int rest;
-        int range = myIsUpperCase(c);
 
         if(c == MY_SPECIAL_CHAR)
             rest = NUMBER_OF_LETTERS;
-        else if(range == -1)
+        else if(!Character.isLetter(c))
             return c;
         else {
-            rest = c - range;
-            rest += range == SMALL_A ? NUMBER_OF_LETTERS / 2 : 0;
+            rest = c - SMALL_A;
+            if(Character.isLowerCase(c))
+                rest += NUMBER_OF_LETTERS / 2;
         }
 
 

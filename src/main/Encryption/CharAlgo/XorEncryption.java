@@ -2,8 +2,6 @@ package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
 
-import static Utils.GeneralMethods.myIsUpperCase;
-
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
         super("Xor");
@@ -21,7 +19,7 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        if(myIsUpperCase(c) == -1)
+        if(!Character.isLetter(c))
             return c;
 
         return (char) ((c ^ key) + 255);
