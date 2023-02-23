@@ -89,7 +89,7 @@ public class IOMethods {
                 txt.append(myReader.nextLine()).append((char) 10);
             }
         } catch (FileNotFoundException e) {
-            throw new IOException("failed to read " + path + " file" + System.lineSeparator());
+            throw new IOException("failed to read file " + path + System.lineSeparator());
         }
         return txt.toString();
     }

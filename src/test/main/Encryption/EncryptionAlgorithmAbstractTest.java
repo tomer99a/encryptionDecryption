@@ -20,9 +20,11 @@ public class EncryptionAlgorithmAbstractTest {
     static protected String decryptedPath;
     static protected String keyPath;
 
-    private void fuckThePath() {
+    private String fuckThePath() {
+        String savePath = keyPath;
         int randNum = new SecureRandom().nextInt(1000000000);
-        encryptedPath = randNum + encryptedPath;
+        keyPath = randNum + keyPath;
+        return savePath;
     }
 
     @BeforeAll
@@ -47,7 +49,7 @@ public class EncryptionAlgorithmAbstractTest {
         String[] allPath = new String[]{originalPath, encryptedPath, decryptedPath, keyPath};
         for (String s : allPath) {
             if (!(new File(s).delete()))
-                System.err.println("the file " + s + " didn't deleted");
+                System.err.println("the file " + s + " didn't deleted!!!");
         }
     }
 
@@ -58,11 +60,6 @@ public class EncryptionAlgorithmAbstractTest {
             fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
         }
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
-
-        fuckThePath();
-
-        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
-        assertEquals("The system cannot find the path specified", exception.getMessage());
     }
 
     protected void decryptTest(IEncryptionAlgorithm algo) {
@@ -73,6 +70,20 @@ public class EncryptionAlgorithmAbstractTest {
         }
         assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
         assertTrue(compareTwoFiles(originalPath, decryptedPath));
+    }
+
+    protected void encryptWrongPath(IEncryptionAlgorithm algo) {
+        String savePath = fuckThePath();
+        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
+        assertEquals("The filename, directory name, or volume label syntax is incorrect", exception.getMessage());
+        keyPath = savePath;
+    }
+
+    protected void decryptWrongPath(IEncryptionAlgorithm algo) {
+        String savePath = fuckThePath();
+        Throwable exception = assertThrows(IOException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
+        assertEquals("failed to read file " + keyPath + System.lineSeparator(), exception.getMessage());
+        keyPath = savePath;
     }
 
     public static boolean compareTwoFiles(String path1, String path2){
