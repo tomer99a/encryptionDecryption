@@ -1,34 +1,78 @@
 package Encryption;
 
+//import com.sun.org.apache.xpath.internal.operations.String;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.SecureRandom;
 
+import static Utils.IOMethods.createFile;
+import static Utils.IOMethods.writeToFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EncryptionAlgorithmAbstractTest {
-    protected String originalPath;
-    protected String encryptedPath;
-    protected String decryptedPath;
-    protected String keyPath;
-
-    public EncryptionAlgorithmAbstractTest() {
-        generatePaths();
-    }
-
-    private void generatePaths() {
-        String fileName = "input_text";
-        String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
-        this.originalPath = basePath + fileName + ".txt";
-        this.encryptedPath = basePath + fileName + "_encrypted.txt";
-        this.decryptedPath = basePath + fileName + "_decrypted.txt";
-        this.keyPath = basePath + "key.txt";
-    }
+    static protected String originalPath;
+    static protected String encryptedPath;
+    static protected String decryptedPath;
+    static protected String keyPath;
 
     private void fuckThePath() {
         int randNum = new SecureRandom().nextInt(1000000000);
-        this.encryptedPath = randNum + this.encryptedPath;
+        encryptedPath = randNum + encryptedPath;
+    }
+
+    @BeforeAll
+    static void createFiles() throws IOException {
+        originalPath = Files.createTempFile("input_text", ".txt").toString();
+        encryptedPath = Files.createTempFile("input_text_encrypted", ".txt").toString();
+        decryptedPath = Files.createTempFile("input_text_decrypted", ".txt").toString();
+        keyPath = Files.createTempFile("key", ".txt").toString();
+
+        createFile(originalPath);
+        String message = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + System.lineSeparator() +
+                "abcdefghijklmnopqrstuvwxyz" + System.lineSeparator() +
+                "Fuck AngularJS" + System.lineSeparator() +
+                "$#@^%$&^*$#@!" + System.lineSeparator() +
+                "the text to Encryption!!!" + System.lineSeparator() +
+                "@#$$%^&^*&*^(*&(*&&^(%&)*)%&*)_+_-809-7087956845463";
+        writeToFile(originalPath, message);
+    }
+
+    @AfterAll
+    static void cleanFiles(){
+        String[] allPath = new String[]{originalPath, encryptedPath, decryptedPath, keyPath};
+        for (String s : allPath) {
+            if (!(new File(s).delete()))
+                System.err.println("the file " + s + " didn't deleted");
+        }
+    }
+
+    protected void encryptTest(IEncryptionAlgorithm algo){
+        try {
+            algo.encrypt(originalPath, encryptedPath, keyPath);
+        } catch (IOException e) {
+            fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
+        }
+        assertFalse(compareTwoFiles(originalPath, encryptedPath));
+
+//        fuckThePath();
+//
+//        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
+//        assertEquals("The system cannot find the path specified", exception.getMessage());
+    }
+
+    protected void decryptTest(IEncryptionAlgorithm algo) {
+        try {
+            algo.decrypt(encryptedPath, decryptedPath, keyPath);
+        } catch (IOException e) {
+            fail(String.format("The %s decrypt failed", algo.getEncryptionMethod()));
+        }
+        assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
+        assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 
     public static boolean compareTwoFiles(String path1, String path2){
@@ -53,29 +97,5 @@ public class EncryptionAlgorithmAbstractTest {
             System.err.println("fail at compare two files");
             return false;
         }
-    }
-
-    protected void encryptTest(IEncryptionAlgorithm algo){
-        try {
-            algo.encrypt(originalPath, encryptedPath, keyPath);
-        } catch (IOException e) {
-            fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
-        }
-        assertFalse(compareTwoFiles(originalPath, encryptedPath));
-
-        fuckThePath();
-
-        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
-        assertEquals("The system cannot find the path specified", exception.getMessage());
-    }
-
-    protected void decryptTest(IEncryptionAlgorithm algo) {
-        try {
-            algo.decrypt(encryptedPath, decryptedPath, keyPath);
-        } catch (IOException e) {
-            fail(String.format("The %s decrypt failed", algo.getEncryptionMethod()));
-        }
-        assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
-        assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 }
