@@ -21,8 +21,6 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         generateKey();
     }
 
-
-
     public abstract char encryptChar(char c, int key);
     public abstract char decryptChar(char c, int key);
     abstract void generateKey();
@@ -62,10 +60,10 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
      * @return key value
      */
     private int getKeyFromFile(String keyPath) throws IOException, InvalidEncryptionKeyException {
+        String keyStr = readFile(keyPath);
         try{
-            String keyStr = readFile(keyPath);
             if(keyStr.indexOf('\n') != -1)
-                keyStr = keyStr.substring(0, keyStr.indexOf('\n'));
+                keyStr = keyStr.substring(0, keyStr.indexOf(System.lineSeparator()));
             return Integer.parseInt(keyStr);
         } catch (NumberFormatException e) {
             throw new InvalidEncryptionKeyException();

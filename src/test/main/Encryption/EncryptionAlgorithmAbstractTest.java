@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import static Utils.IOMethods.createFile;
 import static Utils.IOMethods.writeToFile;
@@ -46,10 +47,10 @@ public class EncryptionAlgorithmAbstractTest {
 
     @AfterAll
     static void cleanFiles(){
-        String[] allPath = new String[]{originalPath, encryptedPath, decryptedPath, keyPath};
-        for (String s : allPath) {
-            if (!(new File(s).delete()))
-                System.err.println("the file " + s + " didn't deleted!!!");
+        String[] allPathToDelete = new String[]{originalPath, encryptedPath, decryptedPath, keyPath};
+        for (String path : allPathToDelete) {
+            if (!(new File(path).delete()))
+                System.err.println("the file " + path + " didn't deleted!!!");
         }
     }
 
@@ -57,7 +58,8 @@ public class EncryptionAlgorithmAbstractTest {
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
-            fail(String.format("The %s encrypt failed", algo.getEncryptionMethod()));
+            String message = String.format("The %s encryption failed\nError message - %s", algo.getEncryptionMethod(), e.getMessage());
+            fail(message);
         }
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
     }
@@ -66,7 +68,7 @@ public class EncryptionAlgorithmAbstractTest {
         try {
             algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {
-            fail(String.format("The %s decrypt failed", algo.getEncryptionMethod()));
+            fail(String.format("The %s decryption failed", algo.getEncryptionMethod()));
         }
         assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
         assertTrue(compareTwoFiles(originalPath, decryptedPath));
@@ -82,7 +84,7 @@ public class EncryptionAlgorithmAbstractTest {
     protected void decryptWrongPath(IEncryptionAlgorithm algo) {
         String savePath = fuckThePath();
         Throwable exception = assertThrows(IOException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
-        assertEquals("failed to read file " + keyPath + System.lineSeparator(), exception.getMessage());
+        assertEquals(keyPath + " (The filename, directory name, or volume label syntax is incorrect)", exception.getMessage());
         keyPath = savePath;
     }
 

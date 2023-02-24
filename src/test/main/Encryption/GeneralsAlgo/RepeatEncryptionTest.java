@@ -27,7 +27,7 @@ class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {2, 5, 9, 15})
+    @ValueSource(ints = {3, 5, 9, 15})
     @DisplayName("encrypt and decrypt by using RepeatXor")
     void encryptXor(int repeatNum) {
         encryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));

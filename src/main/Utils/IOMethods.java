@@ -1,7 +1,6 @@
 package Utils;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
@@ -15,27 +14,25 @@ public class IOMethods {
      * @param key key to usr to encrypt/decrypt
      */
     public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key) throws IOException {
-        try (Scanner sc = new Scanner(new FileInputStream(inputPath), String.valueOf(StandardCharsets.UTF_8))) {
-            while (sc.hasNextLine()){
-                StringBuilder lineToWrite = new StringBuilder();
-                String line = sc.nextLine();
-                for (int i = 0; i < line.length(); i++)
-                    if (encrypt)
-                        lineToWrite.append(encryptsDecrypt.encryptChar(line.charAt(i), key));
-                    else
-                        lineToWrite.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
-                if(sc.hasNextLine())
-                    lineToWrite.append(System.lineSeparator());
-                writeLine(outputPath, lineToWrite.toString());
-            }
-
-             // note that Scanner suppresses exceptions
-            if (sc.ioException() != null) {
-                throw sc.ioException();
-            }
-        } catch (IOException e) {
-            throw new IOException("failed to scan file");
+        Scanner sc = new Scanner(new FileInputStream(inputPath));
+        while (sc.hasNextLine()){
+            StringBuilder lineToWrite = new StringBuilder();
+            String line = sc.nextLine();
+            for (int i = 0; i < line.length(); i++)
+                if (encrypt)
+                    lineToWrite.append(encryptsDecrypt.encryptChar(line.charAt(i), key));
+                else
+                    lineToWrite.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
+            if(sc.hasNextLine())
+                lineToWrite.append(System.lineSeparator());
+            writeLine(outputPath, lineToWrite.toString());
         }
+
+         // note that Scanner suppresses exceptions
+        if (sc.ioException() != null)
+            throw sc.ioException();
+
+        sc.close();
     }
 
     /**
@@ -43,12 +40,10 @@ public class IOMethods {
      * @param path path to file should be written.
      * @param line message to be written into file.
      */
-    public static void writeLine(String path, String line) {
-        try (Writer output = new BufferedWriter(new FileWriter(path, true))) {
-            output.append(line);
-        } catch (IOException e) {
-            System.err.println("failed to write to file " + path);
-        }
+    public static void writeLine(String path, String line) throws IOException {
+        Writer output = new BufferedWriter(new FileWriter(path, true));
+        output.append(line);
+        output.close();
     }
 
     /**
@@ -62,7 +57,7 @@ public class IOMethods {
                 throw new IOException("unable to delete existing file" + System.lineSeparator());
         if (!myObj.createNewFile())
             throw new IOException(System.lineSeparator() + "failed to creat %s file " + path + System.lineSeparator());
-        }
+    }
 
     /**
      * Write the given message to the file at the given path
@@ -70,11 +65,9 @@ public class IOMethods {
      * @param message message to write into path
      */
     public static void writeToFile(String path, String message) throws IOException {
-        try (FileWriter myWriter = new FileWriter(path)) {
-            myWriter.write(message);
-        } catch (IOException e) {
-            throw new IOException("failed to write to %s file " + path + System.lineSeparator());
-        }
+        FileWriter myWriter = new FileWriter(path);
+        myWriter.write(message);
+        myWriter.close();
     }
 
     /**
@@ -82,15 +75,12 @@ public class IOMethods {
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
-    public static String readFile(String path) throws IOException {
+    public static String readFile(String path) throws FileNotFoundException {
         StringBuilder txt = new StringBuilder();
-        try (Scanner myReader = new Scanner(new File(path))) {
-            while (myReader.hasNextLine()) {
-                txt.append(myReader.nextLine()).append((char) 10);
-            }
-        } catch (FileNotFoundException e) {
-            throw new IOException("failed to read file " + path + System.lineSeparator());
-        }
+        Scanner myReader = new Scanner(new File(path));
+        while (myReader.hasNextLine())
+            txt.append(myReader.nextLine()).append(System.lineSeparator());
+        myReader.close();
         return txt.toString();
     }
 
@@ -99,18 +89,18 @@ public class IOMethods {
      * @param originalPath file path to copy from
      * @param newPath file path to copy
      */
-    public static void copyFile(String originalPath, String newPath)
-    {
+    public static void copyFile(String originalPath, String newPath) throws IOException {
         File originalFile = new File(originalPath);
         File newFile = new File(newPath);
 
-        try (FileInputStream in = new FileInputStream(originalFile); FileOutputStream out = new FileOutputStream(newFile)) {
-            int tmpChar;
-            while ((tmpChar = in.read()) != -1) {
-                out.write(tmpChar);
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        FileInputStream in = new FileInputStream(originalFile);
+        FileOutputStream out = new FileOutputStream(newFile);
+
+        int tmpChar;
+        while ((tmpChar = in.read()) != -1)
+            out.write(tmpChar);
+
+        in.close();
+        out.close();
     }
 }
