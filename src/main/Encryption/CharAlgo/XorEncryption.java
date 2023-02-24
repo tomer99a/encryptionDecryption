@@ -5,10 +5,11 @@ import java.security.SecureRandom;
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
         super("Xor");
+        keyMaxRange = BOUND_RANDOM_NUMBER*10;
     }
 
     public void generateKey() {
-        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*10);
+        key = new SecureRandom().nextInt(keyMaxRange);
     }
 
     @Override

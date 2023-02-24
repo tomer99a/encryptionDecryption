@@ -9,6 +9,7 @@ import static Utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract {
     protected int key;
+    protected int keyMaxRange;
 
     final static protected char SMALL_A = 'a';
     final static protected char SMALL_Z = 'z';
@@ -29,6 +30,10 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
      * @return the maximal length of the key.
      */
     abstract public int getKeyStrength();
+
+    public int getKeyMaxRange() {
+        return keyMaxRange;
+    }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         createFile(keyPath);
@@ -61,12 +66,16 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
      */
     private int getKeyFromFile(String keyPath) throws IOException, InvalidEncryptionKeyException {
         String keyStr = readFile(keyPath);
+        if(keyStr.indexOf('\n') != -1)
+            keyStr = keyStr.substring(0, keyStr.indexOf(System.lineSeparator()));
+        int myKey;
         try{
-            if(keyStr.indexOf('\n') != -1)
-                keyStr = keyStr.substring(0, keyStr.indexOf(System.lineSeparator()));
-            return Integer.parseInt(keyStr);
+            myKey = Integer.parseInt(keyStr);
         } catch (NumberFormatException e) {
-            throw new InvalidEncryptionKeyException();
+            throw new InvalidEncryptionKeyException("The key file doesn't contain number");
         }
+        if (0 > myKey || myKey >= this.getKeyMaxRange())
+            throw new InvalidEncryptionKeyException("The key not in the correct range that suppose to be");
+        return myKey;
     }
 }

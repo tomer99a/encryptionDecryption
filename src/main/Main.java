@@ -78,7 +78,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        menu();
+        System.out.println(Math.pow(2,3));
+//        menu();
         System.out.println("Done program");
     }
 }
