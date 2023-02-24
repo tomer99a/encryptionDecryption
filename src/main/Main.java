@@ -9,6 +9,9 @@ import Encryption.GeneralsAlgo.RepeatEncryption;
 import java.io.File;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.LogManager;
+
 public class Main {
     private static void menu() {
         String fileName = "input_text";
@@ -16,7 +19,7 @@ public class Main {
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";
-        String keyPath = basePath + "kgdsfsdfsey.txt";
+        String keyPath = basePath + "key.txt";
 
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
@@ -37,7 +40,7 @@ public class Main {
                 break;
         }
         IEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
-        String algo2 = "doublewskj";
+        String algo2 = "doubleWrong";
         switch (algo2) {
             case "repeat":
                 int repeatNum = 6;
@@ -78,7 +81,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println(Math.pow(2,3));
+        Logger logger = LogManager.getLogger(Main.class);
+        logger.info("adsfasdfadsf");
 //        menu();
         System.out.println("Done program");
     }
