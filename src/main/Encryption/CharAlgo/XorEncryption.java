@@ -8,7 +8,12 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     }
 
     public void generateKey() {
-        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*10);
+    }
+
+    @Override
+    public int getKeyStrength() {
+        return 4;
     }
 
     /**

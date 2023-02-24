@@ -3,7 +3,7 @@ package Encryption.CharAlgo;
 import java.security.SecureRandom;
 
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
-    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 'a' - 'Z' - 1;
+    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = SMALL_A - BIG_Z - 1;
     final static private int NUMBER_OF_LETTERS = 52;
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
@@ -75,12 +75,17 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public void generateKey() {
-        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*100);
 
         // If the random number is divided by my prime number
         // the encryption will tern everything to the letter A
         while (key % MY_PRIME_NUMBER == 0){
-            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
+            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*100);
         }
+    }
+
+    @Override
+    public int getKeyStrength() {
+        return 5;
     }
 }

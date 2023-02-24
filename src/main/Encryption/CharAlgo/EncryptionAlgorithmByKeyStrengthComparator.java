@@ -2,7 +2,7 @@ package Encryption.CharAlgo;
 
 import java.util.Comparator;
 
-public class BestAlgo implements Comparator<CharEncryptionAlgorithmAbstract>{
+public class EncryptionAlgorithmByKeyStrengthComparator implements Comparator<CharEncryptionAlgorithmAbstract>{
 
     @Override
     public int compare(CharEncryptionAlgorithmAbstract algo1, CharEncryptionAlgorithmAbstract algo2) {

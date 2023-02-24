@@ -10,4 +10,9 @@ public abstract class EncryptionAlgorithmAbstract implements IEncryptionAlgorith
     public String getEncryptionMethod() {
         return encryptionMethod;
     }
+
+    @Override
+    public String toString() {
+        return this.getEncryptionMethod();
+    }
 }

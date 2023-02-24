@@ -21,9 +21,16 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         generateKey();
     }
 
+
+
     public abstract char encryptChar(char c, int key);
     public abstract char decryptChar(char c, int key);
     abstract void generateKey();
+    /**
+     * describe the maximal length (number of digits) of the key.
+     * @return the maximal length of the key.
+     */
+    abstract public int getKeyStrength();
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
         createFile(keyPath);
@@ -63,13 +70,5 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         } catch (NumberFormatException e) {
             throw new InvalidEncryptionKeyException();
         }
-    }
-
-    /**
-     * describe the maximal length (number of digits) of the key.
-     * @return the maximal length of the key.
-     */
-    public int getKeyStrength() {
-        return 3;
     }
 }

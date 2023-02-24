@@ -23,6 +23,11 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
         }
     }
 
+    @Override
+    public int getKeyStrength() {
+        return 3;
+    }
+
     /**
      * Encrypt the char by key
      * @param c char to encrypt
