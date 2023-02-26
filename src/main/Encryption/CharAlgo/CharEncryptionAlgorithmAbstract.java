@@ -47,14 +47,9 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPath, System.lineSeparator());
     }
 
-    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
-        try {
-            decryptKey = getKeyFromFile(keyPath);
-        } catch (InvalidEncryptionKeyException e) {
-            System.err.println(e.getMessage());
-            return;
-        }
+        decryptKey = getKeyFromFile(keyPath);
 
         createFile(outputPath);
         scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey);

@@ -1,6 +1,6 @@
 package Encryption;
 
-//import com.sun.org.apache.xpath.internal.operations.String;
+import Exceptions.invalidPathException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 
 import static Utils.IOMethods.createFile;
 import static Utils.IOMethods.writeToFile;
@@ -76,15 +75,13 @@ public class EncryptionAlgorithmAbstractTest {
 
     protected void encryptWrongPath(IEncryptionAlgorithm algo) {
         String savePath = fuckThePath();
-        Throwable exception = assertThrows(IOException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
-        assertEquals("The filename, directory name, or volume label syntax is incorrect", exception.getMessage());
+        assertThrows(invalidPathException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
         keyPath = savePath;
     }
 
     protected void decryptWrongPath(IEncryptionAlgorithm algo) {
         String savePath = fuckThePath();
-        Throwable exception = assertThrows(IOException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
-        assertEquals("The path given is invalid", exception.getMessage());
+        assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = savePath;
     }
 
