@@ -10,6 +10,10 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
 
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");
+    }
+
+    @Override
+    public void setKeyMaxRange() {
         keyMaxRange = BOUND_RANDOM_NUMBER*100;
     }
 

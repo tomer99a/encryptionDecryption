@@ -19,6 +19,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
 
     public CharEncryptionAlgorithmAbstract(String encryptionMethod) {
         super(encryptionMethod);
+        setKeyMaxRange();
         generateKey();
     }
 
@@ -30,6 +31,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
      * @return the maximal length of the key.
      */
     abstract public int getKeyStrength();
+    abstract public void setKeyMaxRange();
 
     public int getKeyMaxRange() {
         return keyMaxRange;

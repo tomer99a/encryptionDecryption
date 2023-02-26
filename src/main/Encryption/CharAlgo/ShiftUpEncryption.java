@@ -7,6 +7,10 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     
     public ShiftUpEncryption() {
         super("ShiftUp");
+    }
+
+    @Override
+    public void setKeyMaxRange() {
         keyMaxRange = BOUND_RANDOM_NUMBER;
     }
 
