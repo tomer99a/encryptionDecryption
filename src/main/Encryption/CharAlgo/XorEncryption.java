@@ -8,7 +8,7 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
 
     }
 
-    public void generateKey() {
+    protected void generateKey() {
         key = new SecureRandom().nextInt(keyMaxRange);
     }
 
@@ -18,7 +18,7 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     }
 
     @Override
-    public void setKeyMaxRange() {
+    protected void setKeyMaxRange() {
         keyMaxRange = BOUND_RANDOM_NUMBER*10;
     }
 

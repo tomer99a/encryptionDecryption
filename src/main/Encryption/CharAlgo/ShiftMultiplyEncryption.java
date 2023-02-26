@@ -13,7 +13,7 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     }
 
     @Override
-    public void setKeyMaxRange() {
+    protected void setKeyMaxRange() {
         keyMaxRange = BOUND_RANDOM_NUMBER*100;
     }
 
@@ -79,7 +79,7 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      * Generate key that didn't reset the modulo action.
      */
     @Override
-    public void generateKey() {
+    protected void generateKey() {
         key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*100);
 
         // If the random number is divided by my prime number

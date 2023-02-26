@@ -23,15 +23,15 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         generateKey();
     }
 
-    public abstract char encryptChar(char c, int key);
-    public abstract char decryptChar(char c, int key);
-    abstract void generateKey();
+    abstract public char encryptChar(char c, int key);
+    abstract public char decryptChar(char c, int key);
+    abstract protected void generateKey();
     /**
      * describe the maximal length (number of digits) of the key.
      * @return the maximal length of the key.
      */
     abstract public int getKeyStrength();
-    abstract public void setKeyMaxRange();
+    abstract protected void setKeyMaxRange();
 
     public int getKeyMaxRange() {
         return keyMaxRange;
