@@ -1,17 +1,20 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.myIsUpperCase;
-
 public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
-    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = 6;
+    final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = SMALL_A - BIG_Z - 1;
     final static private int NUMBER_OF_LETTERS = 52;
     final static private int MY_PRIME_NUMBER = 53;
     final static private int MY_SPECIAL_CHAR = 248;
 
     public ShiftMultiplyEncryption() {
         super("ShiftMultiply");
+    }
+
+    @Override
+    protected void setKeyMaxRange() {
+        keyMaxRange = BOUND_RANDOM_NUMBER*100;
     }
 
     /**
@@ -22,12 +25,11 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        int range = myIsUpperCase(c);
         if(c == MY_SPECIAL_CHAR)
             c = (char) (BIG_A + MY_PRIME_NUMBER - 1);
-        else if(range == -1)
+        else if(!Character.isLetter(c))
             return c;
-        else if (range == SMALL_A)
+        else if (Character.isLowerCase(c))
             //In the middle of capitals and lower case there are 6 chars, so I bring down 6 to get rid of the gap
             c -= GAP_BETWEEN_UPPER_AND_LOWER_LETTERS;
 
@@ -51,17 +53,14 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     @Override
     public char decryptChar(char c, int key){
         int rest;
-        int range = myIsUpperCase(c);
 
         if(c == MY_SPECIAL_CHAR)
             rest = NUMBER_OF_LETTERS;
-        else if(range == -1)
+        else if(!Character.isLetter(c))
             return c;
         else {
-            rest = c - range;
-            rest += range == SMALL_A ? NUMBER_OF_LETTERS / 2 : 0;
+            rest = c - (Character.isUpperCase(c) ? BIG_A : SMALL_A - NUMBER_OF_LETTERS / 2);
         }
-
 
         for(int i=BIG_A; i <= SMALL_Z; i++){
             if((i*key) % MY_PRIME_NUMBER == rest){
@@ -80,13 +79,18 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
      * Generate key that didn't reset the modulo action.
      */
     @Override
-    public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+    protected void generateKey() {
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*100);
 
         // If the random number is divided by my prime number
         // the encryption will tern everything to the letter A
         while (key % MY_PRIME_NUMBER == 0){
-            key = new SecureRandom().nextInt(1000);
+            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER*100);
         }
+    }
+
+    @Override
+    public int getKeyStrength() {
+        return 5;
     }
 }

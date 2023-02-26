@@ -1,23 +1,29 @@
-package encryption.generalsAlgo;
+package Encryption.GeneralsAlgo;
 
-import encryption.EncryptionAlgorithmAbstract;
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import Encryption.CharAlgo.ShiftUpEncryption;
+import Encryption.EncryptionAlgorithmAbstract;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static utils.IOMethods.copyFile;
+import static Utils.IOMethods.copyFile;
 
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract {
-    final private CharEncryptionAlgorithmInterface algo;
+    final private CharEncryptionAlgorithmAbstract algo;
     final private int repeatNum;
 
-    public RepeatEncryption(int n, CharEncryptionAlgorithmInterface algo) {
+    public RepeatEncryption(int n, CharEncryptionAlgorithmAbstract algo) {
         super("Repeat" + algo.getEncryptionMethod());
         this.repeatNum = n;
         this.algo = algo;
+        if (algo.getEncryptionMethod().equals("ShiftUp")) {
+            int numberLetters = 26;
+            while (((repeatNum * algo.getKey()) % numberLetters != 0))
+                algo = new ShiftUpEncryption();
+        }
     }
 
     @Override

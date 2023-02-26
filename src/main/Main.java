@@ -1,28 +1,28 @@
-import encryption.*;
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
-import encryption.charAlgo.ShiftMultiplyEncryption;
-import encryption.charAlgo.ShiftUpEncryption;
-import encryption.charAlgo.XorEncryption;
-import encryption.generalsAlgo.DoubleEncryption;
-import encryption.generalsAlgo.RepeatEncryption;
+import Encryption.*;
+import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
+import Encryption.CharAlgo.ShiftMultiplyEncryption;
+import Encryption.CharAlgo.ShiftUpEncryption;
+import Encryption.CharAlgo.XorEncryption;
+import Encryption.GeneralsAlgo.DoubleEncryption;
+import Encryption.GeneralsAlgo.RepeatEncryption;
 
 import java.io.File;
 import java.util.Scanner;
 
 public class Main {
-    private static void menu() throws Exception {
+    private static void menu() {
         String fileName = "input_text";
-        String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
+        String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";
-        String keyPath = basePath + "key.txt";
+        String keyPath = basePath + "kgdsfsdfsey.txt";
 
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        CharEncryptionAlgorithmInterface charEncryptionAlgorithm;
+        CharEncryptionAlgorithmAbstract charEncryptionAlgorithm;
         String algoName = "up";
 
         switch (algoName) {
@@ -36,7 +36,7 @@ public class Main {
                 charEncryptionAlgorithm = new XorEncryption();
                 break;
         }
-        EncryptionAlgorithmInterface encryptionAlgorithm = charEncryptionAlgorithm;
+        IEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
         String algo2 = "doublewskj";
         switch (algo2) {
             case "repeat":
@@ -48,13 +48,7 @@ public class Main {
                 encryptionAlgorithm = new DoubleEncryption(charEncryptionAlgorithm);
                 break;
         }
-        FileEncryptor fileEncryptor;
-        try {
-            fileEncryptor = new FileEncryptor(encryptionAlgorithm);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return;
-        }
+        FileEncryptor fileEncryptor = new FileEncryptor(encryptionAlgorithm);
         while (!doneLoop) {
             int choice;
 
@@ -83,7 +77,9 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        menu();
+    public static void main(String[] args) {
+        System.out.println(Math.pow(2,3));
+//        menu();
+        System.out.println("Done program");
     }
 }

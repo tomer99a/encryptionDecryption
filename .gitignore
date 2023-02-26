@@ -1,5 +1,6 @@
-/src/main/data
-/out
+/src/main/Data
 /666.iml
 /.idea
+/target/
 java tutorial.pdf
+apache-log4j-2.20.0-bin

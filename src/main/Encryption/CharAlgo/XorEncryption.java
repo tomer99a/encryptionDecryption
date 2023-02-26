@@ -1,16 +1,25 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
-
-import static utils.GeneralMethods.myIsUpperCase;
 
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
     public XorEncryption() {
         super("Xor");
+
     }
 
-    public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+    protected void generateKey() {
+        key = new SecureRandom().nextInt(keyMaxRange);
+    }
+
+    @Override
+    public int getKeyStrength() {
+        return 4;
+    }
+
+    @Override
+    protected void setKeyMaxRange() {
+        keyMaxRange = BOUND_RANDOM_NUMBER*10;
     }
 
     /**
@@ -21,7 +30,7 @@ public class XorEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        if(myIsUpperCase(c) == -1)
+        if(!Character.isLetter(c))
             return c;
 
         return (char) ((c ^ key) + 255);

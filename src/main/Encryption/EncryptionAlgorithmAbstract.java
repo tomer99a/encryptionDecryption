@@ -1,6 +1,6 @@
-package encryption;
+package Encryption;
 
-public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithmInterface {
+public abstract class EncryptionAlgorithmAbstract implements IEncryptionAlgorithm {
     protected String encryptionMethod;
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {
@@ -9,5 +9,10 @@ public abstract class EncryptionAlgorithmAbstract implements EncryptionAlgorithm
 
     public String getEncryptionMethod() {
         return encryptionMethod;
+    }
+
+    @Override
+    public String toString() {
+        return this.getEncryptionMethod();
     }
 }

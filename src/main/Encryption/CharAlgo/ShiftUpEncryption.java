@@ -1,8 +1,6 @@
-package encryption.charAlgo;
+package Encryption.CharAlgo;
 
 import java.security.SecureRandom;
-
-import static utils.GeneralMethods.myIsUpperCase;
 
 public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int NUMBER_OF_LETTERS = 26;
@@ -11,18 +9,28 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
         super("ShiftUp");
     }
 
+    @Override
+    protected void setKeyMaxRange() {
+        keyMaxRange = BOUND_RANDOM_NUMBER;
+    }
+
     /**
      * Generate key that didn't reset the modulo action.
      */
     @Override
-    public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+    protected void generateKey() {
+        key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
 
         // if the random number is divided by The number of letters that
         // we encrypt the encryption won't do anything's
         while (key % (BIG_Z - BIG_A) == 0){
-            key = new SecureRandom().nextInt(1000);
+            key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
         }
+    }
+
+    @Override
+    public int getKeyStrength() {
+        return 3;
     }
 
     /**
@@ -33,10 +41,9 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char encryptChar(char c, int key){
-        final int startRange = myIsUpperCase(c);
-        if(startRange == -1)
+        if(!Character.isLetter(c))
             return c;
-        final char endRange = startRange == SMALL_A ? SMALL_Z : BIG_Z;
+        final char endRange = Character.isLowerCase(c) ? SMALL_Z : BIG_Z;
         key = key % NUMBER_OF_LETTERS;
         if((int) c + key > endRange)
             return (char) ((int) c + key - NUMBER_OF_LETTERS);
@@ -52,11 +59,10 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      */
     @Override
     public char decryptChar(char c, int key){
-        final int startRange = myIsUpperCase(c);
-        if(startRange == -1)
+        if(!Character.isLetter(c))
             return c;
         key = key % NUMBER_OF_LETTERS;
-        if((int) c - key < startRange)
+        if((int) c - key < (Character.isUpperCase(c) ? 'A' : 'a'))
             return (char) ((int) c - key + NUMBER_OF_LETTERS);
         else
             return (char) ((int) c - key);
