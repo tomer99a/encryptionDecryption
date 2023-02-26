@@ -84,7 +84,7 @@ public class EncryptionAlgorithmAbstractTest {
     protected void decryptWrongPath(IEncryptionAlgorithm algo) {
         String savePath = fuckThePath();
         Throwable exception = assertThrows(IOException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
-        assertEquals(keyPath + " (The filename, directory name, or volume label syntax is incorrect)", exception.getMessage());
+        assertEquals("The path given is invalid", exception.getMessage());
         keyPath = savePath;
     }
 

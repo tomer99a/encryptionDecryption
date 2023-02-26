@@ -7,11 +7,6 @@ import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 import Exceptions.invalidPathException;
 
 public class IOMethods {
-    private static void checkExistPath(String path){
-        if(!new File(path).exists())
-            throw new invalidPathException();
-    }
-
     /**
      * Scan the input file line by line and put the changed lines into the output line
      * @param inputPath path to input file
@@ -59,8 +54,6 @@ public class IOMethods {
      * @param path file path and name
      */
     public static void createFile(String path) throws IOException {
-        if(!new File(path).exists())
-            throw new invalidPathException();
         final File myObj = new File(path);
         if(myObj.exists())
             if(!myObj.delete())
@@ -87,7 +80,7 @@ public class IOMethods {
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
-    public static String readFile(String path) throws FileNotFoundException {
+    public static String readFile(String path) throws FileNotFoundException, invalidPathException {
         if(!new File(path).exists())
             throw new invalidPathException();
         StringBuilder txt = new StringBuilder();
