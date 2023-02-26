@@ -23,6 +23,10 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         generateKey();
     }
 
+    public int getKey() {
+        return key;
+    }
+
     abstract public char encryptChar(char c, int key);
     abstract public char decryptChar(char c, int key);
     abstract protected void generateKey();
