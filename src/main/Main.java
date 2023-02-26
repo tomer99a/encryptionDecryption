@@ -83,6 +83,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = LogManager.getLogger(Main.class);
         logger.info("adsfasdfadsf");
+//        logger.error("ERRORRR");
 //        menu();
         System.out.println("Done program");
     }

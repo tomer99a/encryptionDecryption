@@ -2,6 +2,7 @@ package Encryption.CharAlgo;
 
 import Encryption.EncryptionAlgorithmAbstract;
 import Exceptions.InvalidEncryptionKeyException;
+import Logs.EncryptionEventArgs;
 
 import java.io.IOException;
 
@@ -36,6 +37,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
     }
 
     public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+//        EncryptionEventArgs e
         createFile(keyPath);
         createFile(outputPath);
 
@@ -69,12 +71,13 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         if(keyStr.indexOf('\n') != -1)
             keyStr = keyStr.substring(0, keyStr.indexOf(System.lineSeparator()));
         int myKey;
+
         try{
             myKey = Integer.parseInt(keyStr);
         } catch (NumberFormatException e) {
             throw new InvalidEncryptionKeyException("The key file doesn't contain number");
         }
-        if (0 > myKey || myKey >= this.getKeyMaxRange())
+        if (0 >= myKey || myKey >= this.getKeyMaxRange())
             throw new InvalidEncryptionKeyException("The key not in the correct range that suppose to be");
         return myKey;
     }
