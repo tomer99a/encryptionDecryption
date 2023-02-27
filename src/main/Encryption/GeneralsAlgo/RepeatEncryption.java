@@ -1,5 +1,6 @@
 package Encryption.GeneralsAlgo;
 
+import Encryption.CharAlgo.ShiftUpEncryption;
 import Encryption.EncryptionAlgorithmAbstract;
 import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
 
@@ -18,6 +19,11 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract {
         super("Repeat" + algo.getEncryptionMethod());
         this.repeatNum = n;
         this.algo = algo;
+        if (algo.getEncryptionMethod().equals("ShiftUp")) {
+            int numberLetters = 26;
+            while (((repeatNum * algo.getKey()) % numberLetters != 0))
+                algo = new ShiftUpEncryption();
+        }
     }
 
     @Override

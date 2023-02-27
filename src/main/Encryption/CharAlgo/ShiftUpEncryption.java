@@ -7,6 +7,10 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     
     public ShiftUpEncryption() {
         super("ShiftUp");
+    }
+
+    @Override
+    protected void setKeyMaxRange() {
         keyMaxRange = BOUND_RANDOM_NUMBER;
     }
 
@@ -14,7 +18,7 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
      * Generate key that didn't reset the modulo action.
      */
     @Override
-    public void generateKey() {
+    protected void generateKey() {
         key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
 
         // if the random number is divided by The number of letters that

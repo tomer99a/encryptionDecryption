@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
+import Exceptions.invalidPathException;
 
 public class IOMethods {
     /**
@@ -41,6 +42,8 @@ public class IOMethods {
      * @param line message to be written into file.
      */
     public static void writeLine(String path, String line) throws IOException {
+        if(!new File(path).getParentFile().exists())
+            throw new invalidPathException();
         Writer output = new BufferedWriter(new FileWriter(path, true));
         output.append(line);
         output.close();
@@ -52,11 +55,12 @@ public class IOMethods {
      */
     public static void createFile(String path) throws IOException {
         final File myObj = new File(path);
+        if(!myObj.getParentFile().exists())
+            throw new invalidPathException();
         if(myObj.exists())
             if(!myObj.delete())
                 throw new IOException("unable to delete existing file" + System.lineSeparator());
-        if (!myObj.createNewFile())
-            throw new IOException(System.lineSeparator() + "failed to creat %s file " + path + System.lineSeparator());
+        boolean didCreat = myObj.createNewFile();
     }
 
     /**
@@ -65,6 +69,8 @@ public class IOMethods {
      * @param message message to write into path
      */
     public static void writeToFile(String path, String message) throws IOException {
+        if(!new File(path).exists())
+            throw new invalidPathException();
         FileWriter myWriter = new FileWriter(path);
         myWriter.write(message);
         myWriter.close();
@@ -75,7 +81,9 @@ public class IOMethods {
      * @param path file path and name
      * @return string of the text to the given file combine and separated by \n char
      */
-    public static String readFile(String path) throws FileNotFoundException {
+    public static String readFile(String path) throws FileNotFoundException, invalidPathException {
+        if(!new File(path).getParentFile().exists())
+            throw new invalidPathException();
         StringBuilder txt = new StringBuilder();
         Scanner myReader = new Scanner(new File(path));
         while (myReader.hasNextLine())
@@ -90,6 +98,10 @@ public class IOMethods {
      * @param newPath file path to copy
      */
     public static void copyFile(String originalPath, String newPath) throws IOException {
+        if(!new File(originalPath).getParentFile().exists())
+            throw new invalidPathException();
+        if(!new File(newPath).getParentFile().exists())
+            throw new invalidPathException();
         File originalFile = new File(originalPath);
         File newFile = new File(newPath);
 

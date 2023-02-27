@@ -19,17 +19,23 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
 
     public CharEncryptionAlgorithmAbstract(String encryptionMethod) {
         super(encryptionMethod);
+        setKeyMaxRange();
         generateKey();
     }
 
-    public abstract char encryptChar(char c, int key);
-    public abstract char decryptChar(char c, int key);
-    abstract void generateKey();
+    public int getKey() {
+        return key;
+    }
+
+    abstract public char encryptChar(char c, int key);
+    abstract public char decryptChar(char c, int key);
+    abstract protected void generateKey();
     /**
      * describe the maximal length (number of digits) of the key.
      * @return the maximal length of the key.
      */
     abstract public int getKeyStrength();
+    abstract protected void setKeyMaxRange();
 
     public int getKeyMaxRange() {
         return keyMaxRange;
@@ -46,14 +52,9 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPath, System.lineSeparator());
     }
 
-    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
+    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
-        try {
-            decryptKey = getKeyFromFile(keyPath);
-        } catch (InvalidEncryptionKeyException e) {
-            System.err.println(e.getMessage());
-            return;
-        }
+        decryptKey = getKeyFromFile(keyPath);
 
         createFile(outputPath);
         scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey);
