@@ -1,6 +1,6 @@
-import Encryption.IEncryptionAlgorithm;
-import Logs.EncryptionLogEventArgs;
-import Logs.EncryptionLogger;
+import encryption.IEncryptionAlgorithm;
+import logs.EncryptionLogEventArgs;
+import logs.EncryptionLogger;
 
 import java.io.IOException;
 
@@ -11,9 +11,9 @@ public class FileEncryptor {
         this.encryptionAlgo = encryptionAlgo;
     }
 
-    public void encrypt(String originalPath, String outputPath, String keyPath){
+    public void encrypt(final String originalPath, final String outputPath, final String keyPath) {
         EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start encryption"));
-        try{
+        try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -22,7 +22,7 @@ public class FileEncryptor {
 
     }
 
-    public void decrypt(String originalPath, String outputPath, String keyPath){
+    public void decrypt(final String originalPath, final String outputPath, final String keyPath){
         EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start decryption"));
         try{
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);

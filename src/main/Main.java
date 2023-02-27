@@ -1,10 +1,10 @@
-import Encryption.*;
-import Encryption.CharAlgo.CharEncryptionAlgorithmAbstract;
-import Encryption.CharAlgo.ShiftMultiplyEncryption;
-import Encryption.CharAlgo.ShiftUpEncryption;
-import Encryption.CharAlgo.XorEncryption;
-import Encryption.GeneralsAlgo.DoubleEncryption;
-import Encryption.GeneralsAlgo.RepeatEncryption;
+import encryption.*;
+import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
+import encryption.charAlgo.ShiftMultiplyEncryption;
+import encryption.charAlgo.ShiftUpEncryption;
+import encryption.charAlgo.XorEncryption;
+import encryption.generalsAlgo.DoubleEncryption;
+import encryption.generalsAlgo.RepeatEncryption;
 
 import java.io.File;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ import org.apache.log4j.LogManager;
 public class Main {
     private static void menu() {
         String fileName = "input_text";
-        String basePath = "src" + File.separator + "main" + File.separator + "Data" + File.separator;
+        String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";
