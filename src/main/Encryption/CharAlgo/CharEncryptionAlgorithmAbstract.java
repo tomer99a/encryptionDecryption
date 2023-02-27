@@ -2,7 +2,6 @@ package Encryption.CharAlgo;
 
 import Encryption.EncryptionAlgorithmAbstract;
 import Exceptions.InvalidEncryptionKeyException;
-import Logs.EncryptionEventArgs;
 
 import java.io.IOException;
 
