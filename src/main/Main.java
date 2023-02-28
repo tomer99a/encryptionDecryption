@@ -9,8 +9,8 @@ import encryption.generalsAlgo.RepeatEncryption;
 import java.io.File;
 import java.util.Scanner;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.LogManager;
 
 public class Main {
     private static void menu() {
@@ -81,10 +81,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Logger logger = LogManager.getLogger(Main.class);
-        logger.info("adsfasdfadsf");
+//        Logger logger = LogManager.getLogger(Main.class);
+//        logger.info("adsfasdfadsf");
 //        logger.error("ERRORRR");
-//        menu();
+        menu();
         System.out.println("Done program");
     }
 }
