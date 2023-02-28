@@ -1,10 +1,7 @@
-import encryption.*;
-import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
-import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.ShiftUpEncryption;
-import encryption.charAlgo.XorEncryption;
 import encryption.generalsAlgo.DoubleEncryption;
-import encryption.generalsAlgo.RepeatEncryption;
+import keys.DoubleKey;
+import keys.NormalKey;
 
 import java.io.File;
 import java.util.Scanner;
@@ -25,33 +22,11 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        CharEncryptionAlgorithmAbstract charEncryptionAlgorithm;
-        String algoName = "up";
+        ShiftUpEncryption charEncryptionAlgorithm = new ShiftUpEncryption();
 
-        switch (algoName) {
-            case "up":
-                charEncryptionAlgorithm = new ShiftUpEncryption();
-                break;
-            case "multi":
-                charEncryptionAlgorithm = new ShiftMultiplyEncryption();
-                break;
-            default:
-                charEncryptionAlgorithm = new XorEncryption();
-                break;
-        }
-        IEncryptionAlgorithm encryptionAlgorithm = charEncryptionAlgorithm;
-        String algo2 = "doubleWrong";
-        switch (algo2) {
-            case "repeat":
-                int repeatNum = 6;
-                encryptionAlgorithm = new RepeatEncryption(repeatNum, charEncryptionAlgorithm);
-                break;
+//        DoubleEncryption<DoubleKey> encryptionAlgorithm = new DoubleEncryption<DoubleKey>(charEncryptionAlgorithm);
 
-            case "double":
-                encryptionAlgorithm = new DoubleEncryption(charEncryptionAlgorithm);
-                break;
-        }
-        FileEncryptor fileEncryptor = new FileEncryptor(encryptionAlgorithm);
+        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<NormalKey>(charEncryptionAlgorithm);
         while (!doneLoop) {
             int choice;
 
@@ -65,10 +40,10 @@ public class Main {
             }
             switch (choice) {
                 case 1:
-                    fileEncryptor.encrypt(originalPath, encryptedPath, keyPath);
+                    fileEncryptor.encrypt(originalPath, encryptedPath, new NormalKey(keyPath));
                     break;
                 case 2:
-                    fileEncryptor.decrypt(encryptedPath, decryptedPath, keyPath);
+                    fileEncryptor.decrypt(encryptedPath, decryptedPath, new NormalKey(keyPath));
                     break;
                 case 3:
                     doneLoop = true;

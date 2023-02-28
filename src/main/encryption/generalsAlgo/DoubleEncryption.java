@@ -2,18 +2,21 @@ package encryption.generalsAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
+import keys.IKey;
+import keys.NormalKey;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class DoubleEncryption extends EncryptionAlgorithmAbstract {
-    final private CharEncryptionAlgorithmAbstract algo;
+public class DoubleEncryption<K extends IKey> extends EncryptionAlgorithmAbstract<K> {
+    final private CharEncryptionAlgorithmAbstract<IKey> algo;
 
-    public DoubleEncryption(CharEncryptionAlgorithmAbstract algo) {
+    public DoubleEncryption(CharEncryptionAlgorithmAbstract<IKey> algo) {
         super("Double" + algo.getEncryptionMethod());
         this.algo = algo;
     }
+
     /**
      * Add suffix only to the file name from the full path
      * @param path original path
@@ -27,15 +30,16 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract {
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+    public void encrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException {
+
+        final String keyPath1 = addSuffixToFileNameAtPath(keyPath.getKey(), "1");
+        final String keyPath2 = addSuffixToFileNameAtPath(keyPath.getKey(), "2");
 
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
-        algo.encrypt(originalPath, tmpPath, keyPath1);
-        algo.encrypt(tmpPath, outputPath, keyPath2);
+        algo.encrypt(originalPath, tmpPath, new NormalKey(keyPath1));
+        algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath2));
         
         if (!(new File(tmpPath).delete())) {
             System.err.println("The tmp file didn't auto delete");
@@ -43,15 +47,15 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract {
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
+    public void decrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException {
+        final String keyPath1 = addSuffixToFileNameAtPath(keyPath.toString(), "1");
+        final String keyPath2 = addSuffixToFileNameAtPath(keyPath.toString(), "2");
 
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
-        algo.decrypt(originalPath, tmpPath, keyPath2);
-        algo.decrypt(tmpPath, outputPath, keyPath1);
+        algo.decrypt(originalPath, tmpPath, new NormalKey(keyPath2));
+        algo.decrypt(tmpPath, outputPath, new NormalKey(keyPath1));
 
         if (!(new File(tmpPath).delete())) {
             System.err.println("The tmp file didn't auto delete");

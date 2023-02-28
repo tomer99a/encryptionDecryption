@@ -1,7 +1,8 @@
 /src/main/data
-/666.iml
+/*.iml
 /.idea
 /target/
+/out/
 java tutorial.pdf
 apache-log4j-2.20.0-bin
 apache-log4j-1.2.17
