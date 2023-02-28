@@ -1,10 +1,10 @@
 package logs;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.LogManager;
 
 public class EncryptionLog4JLogger {
-    private static final Logger logger = LogManager.getLogger(EncryptionLog4JLogger.class);
+//    private static final Logger logger = LogManager.getLogger(EncryptionLog4JLogger.class);
 
     
 }

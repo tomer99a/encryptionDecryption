@@ -12,23 +12,23 @@ public class FileEncryptor {
     }
 
     public void encrypt(final String originalPath, final String outputPath, final String keyPath) {
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start encryption"));
+//        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start encryption"));
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end encryption"));
+//        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end encryption"));
 
     }
 
     public void decrypt(final String originalPath, final String outputPath, final String keyPath){
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start decryption"));
+//        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start decryption"));
         try{
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end decryption"));
+//        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end decryption"));
     }
 }
