@@ -59,7 +59,7 @@ public class EncryptionAlgorithmAbstractTest {
         }
     }
 
-    protected void encryptTest(IEncryptionAlgorithm<AKey> algo){
+    protected void encryptTest(IEncryptionAlgorithm<? extends AKey> algo){
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class EncryptionAlgorithmAbstractTest {
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
     }
 
-    protected void decryptTest(IEncryptionAlgorithm<AKey> algo) {
+    protected void decryptTest(IEncryptionAlgorithm<? extends AKey> algo) {
         try {
             algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {
@@ -79,13 +79,13 @@ public class EncryptionAlgorithmAbstractTest {
         assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 
-    protected void encryptWrongPath(IEncryptionAlgorithm<AKey> algo) {
+    protected void encryptWrongPath(IEncryptionAlgorithm<? extends AKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
     }
 
-    protected void decryptWrongPath(IEncryptionAlgorithm<AKey> algo) {
+    protected void decryptWrongPath(IEncryptionAlgorithm<? extends AKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = new NormalKey(savePath);

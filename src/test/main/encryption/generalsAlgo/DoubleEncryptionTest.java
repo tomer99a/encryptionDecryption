@@ -19,21 +19,21 @@ class DoubleEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("encrypt and decrypt by using DoublePlus")
     void encryptPlus() {
-        encryptTest(new DoubleEncryption(new ShiftUpEncryption<NormalKey>()));
-        decryptTest(new DoubleEncryption(new ShiftUpEncryption<NormalKey>()));
+        encryptTest(new DoubleEncryption<>(new ShiftUpEncryption<NormalKey>()));
+        decryptTest(new DoubleEncryption<>(new ShiftUpEncryption<NormalKey>()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using DoubleMulti")
     void encryptMulti() {
-        encryptTest(new DoubleEncryption(new ShiftMultiplyEncryption<NormalKey>()));
-        decryptTest(new DoubleEncryption(new ShiftMultiplyEncryption<NormalKey>()));
+        encryptTest(new DoubleEncryption<>(new ShiftMultiplyEncryption<NormalKey>()));
+        decryptTest(new DoubleEncryption<>(new ShiftMultiplyEncryption<NormalKey>()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using DoubleXor")
     void encryptXor() {
-        encryptTest(new DoubleEncryption(new XorEncryption<NormalKey>()));
-        decryptTest(new DoubleEncryption(new XorEncryption<NormalKey>()));
+        encryptTest(new DoubleEncryption<>(new XorEncryption<NormalKey>()));
+        decryptTest(new DoubleEncryption<>(new XorEncryption<NormalKey>()));
     }
 }

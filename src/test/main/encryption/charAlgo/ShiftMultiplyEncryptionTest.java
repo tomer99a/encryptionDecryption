@@ -16,20 +16,20 @@ class ShiftMultiplyEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("encrypt and decrypt by using multi")
     void encrypt() {
-        encryptTest(new ShiftMultiplyEncryption());
-        decryptTest(new ShiftMultiplyEncryption());
+        encryptTest(new ShiftMultiplyEncryption<NormalKey>());
+        decryptTest(new ShiftMultiplyEncryption<NormalKey>());
     }
 
     @Test
     @DisplayName("multi encrypt fail")
     void encryptWrongPathTest() {
-        encryptWrongPath(new ShiftMultiplyEncryption());
+        encryptWrongPath(new ShiftMultiplyEncryption<NormalKey>());
     }
 
     @Test
     @DisplayName("multi encrypt fail")
     void decryptFailTest() throws IOException {
-        new ShiftMultiplyEncryption<NormalKey>().encrypt(originalPath, originalPath, (NormalKey) keyPath);
-        decryptWrongPath(new ShiftMultiplyEncryption());
+        new ShiftMultiplyEncryption<NormalKey>().encrypt(originalPath, originalPath, keyPath);
+        decryptWrongPath(new ShiftMultiplyEncryption<NormalKey>());
     }
 }

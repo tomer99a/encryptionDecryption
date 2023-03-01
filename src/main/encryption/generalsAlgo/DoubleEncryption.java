@@ -3,6 +3,7 @@ package encryption.generalsAlgo;
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
+import keys.AKey;
 import keys.DoubleKey;
 import keys.NormalKey;
 
@@ -25,7 +26,7 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException {
         String[] keys = keyPath.getKey().split("\n");
         if (keys.length != 2) {
             System.err.println(ERROR_MESSAGE_KEYS);
@@ -47,7 +48,7 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void decrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException {
         String[] keys = keyPath.getKey().split("\n");
         if (keys.length != 2) {
             System.err.println(ERROR_MESSAGE_KEYS);

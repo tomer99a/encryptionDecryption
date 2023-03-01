@@ -3,6 +3,7 @@ package encryption.charAlgo;
 import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
 
+import keys.AKey;
 import keys.NormalKey;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
         return keyMaxRange;
     }
 
-    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
         createFile(keyPathStr);
         createFile(outputPath);
@@ -60,7 +61,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPathStr, System.lineSeparator());
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException, InvalidEncryptionKeyException {
+    public void decrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 
