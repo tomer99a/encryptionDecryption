@@ -1,5 +1,6 @@
 package encryption.charAlgo;
 
+import keys.NormalKey;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,10 +11,10 @@ class EncryptionAlgorithmComparatorTest {
 
     @Test
     void compare() {
-        ArrayList<CharEncryptionAlgorithmAbstract> algorithms = new ArrayList<>();
-        algorithms.add(new ShiftMultiplyEncryption());
-        algorithms.add(new XorEncryption());
-        algorithms.add(new ShiftUpEncryption());
+        ArrayList<CharEncryptionAlgorithmAbstract<NormalKey>> algorithms = new ArrayList<>();
+        algorithms.add(new ShiftMultiplyEncryption<NormalKey>());
+        algorithms.add(new XorEncryption<NormalKey>());
+        algorithms.add(new ShiftUpEncryption<NormalKey>());
 
         algorithms.sort(new EncryptionAlgorithmByKeyStrengthComparator());
 

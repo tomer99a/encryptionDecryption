@@ -1,18 +1,16 @@
 import encryption.IEncryptionAlgorithm;
-import keys.IKey;
-import logs.EncryptionLogEventArgs;
-import logs.EncryptionLogger;
+import keys.AKey;
 
 import java.io.IOException;
 
-public class FileEncryptor<K extends IKey> {
-    final private IEncryptionAlgorithm<IKey> encryptionAlgo;
+public class FileEncryptor<T extends AKey> {
+    final private IEncryptionAlgorithm<AKey> encryptionAlgo;
 
-    public FileEncryptor(IEncryptionAlgorithm<IKey> encryptionAlgo) {
+    public FileEncryptor(IEncryptionAlgorithm<AKey> encryptionAlgo) {
         this.encryptionAlgo = encryptionAlgo;
     }
 
-    public void encrypt(final String originalPath, final String outputPath, final K keyPath) {
+    public void encrypt(final String originalPath, final String outputPath, final T keyPath) {
 //        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start encryption"));
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
@@ -23,7 +21,7 @@ public class FileEncryptor<K extends IKey> {
 
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final K keyPath){
+    public void decrypt(final String originalPath, final String outputPath, final T keyPath){
 //        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start decryption"));
         try{
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);

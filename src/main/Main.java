@@ -1,6 +1,5 @@
+import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
-import encryption.generalsAlgo.DoubleEncryption;
-import keys.DoubleKey;
 import keys.NormalKey;
 
 import java.io.File;
@@ -22,11 +21,11 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        ShiftUpEncryption charEncryptionAlgorithm = new ShiftUpEncryption();
+//        CharEncryptionAlgorithmAbstract<NormalKey> charEncryptionAlgorithm = new ShiftUpEncryption<NormalKey>();
 
 //        DoubleEncryption<DoubleKey> encryptionAlgorithm = new DoubleEncryption<DoubleKey>(charEncryptionAlgorithm);
 
-        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<NormalKey>(charEncryptionAlgorithm);
+        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<NormalKey>(new ShiftUpEncryption());
         while (!doneLoop) {
             int choice;
 

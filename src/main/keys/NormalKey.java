@@ -1,7 +1,7 @@
 package keys;
 
-public class NormalKey implements IKey {
-    private String key;
+public class NormalKey extends AKey {
+    private final String key;
 
     public NormalKey(String key) {
         this.key = key;

@@ -1,12 +1,12 @@
 package encryption;
 
-import keys.IKey;
+import keys.AKey;
 
 import java.io.IOException;
 
-public interface IEncryptionAlgorithm<K extends IKey> {
-    void encrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException;
-    void decrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException;
+public interface IEncryptionAlgorithm<T extends AKey> {
+    void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException;
+    void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException;
 
     String getEncryptionMethod();
 }

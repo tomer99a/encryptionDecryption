@@ -5,32 +5,39 @@ import encryption.charAlgo.ShiftUpEncryption;
 import encryption.charAlgo.XorEncryption;
 import encryption.EncryptionAlgorithmAbstractTest;
 
+import keys.NormalKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+
 class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
+    public RepeatEncryptionTest() throws IOException {
+        super(false);
+    }
+
     @ParameterizedTest
-    @ValueSource(ints = {3, 4, 5})
+    @ValueSource(ints = {3, 14, 18})
     @DisplayName("encrypt and decrypt by using RepeatPlus")
     void encryptPlus(int repeatNum) {
-        encryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption()));
-        decryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption<NormalKey>()));
+        decryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption<NormalKey>()));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {3, 5, 9, 15})
     @DisplayName("encrypt and decrypt by using RepeatMulti")
     void encryptMulti(int repeatNum) {
-        encryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
-        decryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption<NormalKey>()));
+        decryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption<NormalKey>()));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {3, 5, 9, 15})
     @DisplayName("encrypt and decrypt by using RepeatXor")
     void encryptXor(int repeatNum) {
-        encryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
-        decryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
+        encryptTest(new RepeatEncryption(repeatNum, new XorEncryption<NormalKey>()));
+        decryptTest(new RepeatEncryption(repeatNum, new XorEncryption<NormalKey>()));
     }
 }

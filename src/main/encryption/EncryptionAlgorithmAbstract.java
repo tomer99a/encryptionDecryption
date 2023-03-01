@@ -1,8 +1,8 @@
 package encryption;
 
-import keys.IKey;
+import keys.AKey;
 
-public abstract class EncryptionAlgorithmAbstract<K extends IKey> implements IEncryptionAlgorithm<K> {
+public abstract class EncryptionAlgorithmAbstract<T extends AKey> implements IEncryptionAlgorithm<T> {
     protected String encryptionMethod;
 
     public EncryptionAlgorithmAbstract(String encryptionMethod) {

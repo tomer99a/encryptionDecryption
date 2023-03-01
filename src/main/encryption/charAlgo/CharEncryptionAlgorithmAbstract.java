@@ -2,7 +2,8 @@ package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
-import keys.IKey;
+
+import keys.NormalKey;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import static utils.IOMethods.writeToFile;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.readFile;
 
-public abstract class CharEncryptionAlgorithmAbstract<K extends IKey> extends EncryptionAlgorithmAbstract<K> {
+public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> extends EncryptionAlgorithmAbstract<T> {
     protected int key;
     protected int keyMaxRange;
 
@@ -48,7 +49,7 @@ public abstract class CharEncryptionAlgorithmAbstract<K extends IKey> extends En
         return keyMaxRange;
     }
 
-    public void encrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
         createFile(keyPathStr);
         createFile(outputPath);
@@ -59,7 +60,7 @@ public abstract class CharEncryptionAlgorithmAbstract<K extends IKey> extends En
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPathStr, System.lineSeparator());
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException, InvalidEncryptionKeyException {
+    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 

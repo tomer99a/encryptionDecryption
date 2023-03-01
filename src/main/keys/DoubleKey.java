@@ -1,8 +1,8 @@
 package keys;
 
-public class DoubleKey implements IKey {
-    private String key1;
-    private String key2;
+public class DoubleKey extends AKey {
+    private final String key1;
+    private final String key2;
 
     public DoubleKey(String key1, String key2) {
         this.key1 = key1;

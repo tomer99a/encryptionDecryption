@@ -2,38 +2,32 @@ package encryption.generalsAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
-import keys.IKey;
+import keys.DoubleKey;
 import keys.NormalKey;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class DoubleEncryption<K extends IKey> extends EncryptionAlgorithmAbstract<K> {
-    final private CharEncryptionAlgorithmAbstract<IKey> algo;
+public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAbstract<T> {
+    final private CharEncryptionAlgorithmAbstract<NormalKey> algo;
+    final private static String ERROR_MESSAGE_KEYS = "You should send two path of key seperated by new line in the double encryption!";
 
-    public DoubleEncryption(CharEncryptionAlgorithmAbstract<IKey> algo) {
+    public DoubleEncryption(CharEncryptionAlgorithmAbstract<NormalKey> algo) {
         super("Double" + algo.getEncryptionMethod());
         this.algo = algo;
     }
 
-    /**
-     * Add suffix only to the file name from the full path
-     * @param path original path
-     * @param suffix thing to add at the end of the file name
-     * @return path with changed name
-     */
-    private String addSuffixToFileNameAtPath(final String path, final String suffix) {
-        File file = new File(path);
-        String fileName = file.getName();
-        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
-    }
-
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+        String[] keys = keyPath.getKey().split("\n");
+        if (keys.length != 2) {
+            System.err.println(ERROR_MESSAGE_KEYS);
+            return;
+        }
 
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath.getKey(), "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath.getKey(), "2");
+        final String keyPath1 = keys[0];
+        final String keyPath2 = keys[1];
 
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
@@ -47,9 +41,15 @@ public class DoubleEncryption<K extends IKey> extends EncryptionAlgorithmAbstrac
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final K keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath.toString(), "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath.toString(), "2");
+    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+        String[] keys = keyPath.getKey().split("\n");
+        if (keys.length != 2) {
+            System.err.println(ERROR_MESSAGE_KEYS);
+            return;
+        }
+
+        final String keyPath1 = keys[0];
+        final String keyPath2 = keys[1];
 
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();

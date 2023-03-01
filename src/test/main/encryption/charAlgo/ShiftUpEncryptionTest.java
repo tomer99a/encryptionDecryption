@@ -1,12 +1,17 @@
 package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstractTest;
+import keys.NormalKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 class ShiftUpEncryptionTest extends EncryptionAlgorithmAbstractTest {
+
+    public ShiftUpEncryptionTest() throws IOException {
+        super(false);
+    }
 
     @Test
     @DisplayName("encrypt and decrypt by using plus")
@@ -24,7 +29,7 @@ class ShiftUpEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("up encrypt fail")
     void decryptFailTest() throws IOException {
-        new ShiftUpEncryption().encrypt(originalPath, originalPath, keyPath);
+        new ShiftUpEncryption().encrypt(originalPath, originalPath, (NormalKey) keyPath);
         decryptWrongPath(new ShiftUpEncryption());
     }
 }

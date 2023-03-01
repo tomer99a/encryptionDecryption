@@ -1,12 +1,17 @@
 package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstractTest;
+import keys.NormalKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 class XorEncryptionTest extends EncryptionAlgorithmAbstractTest {
+    public XorEncryptionTest() throws IOException {
+        super(false);
+    }
+
     @Test
     @DisplayName("encrypt and decrypt by using xor")
     void encrypt(){
@@ -23,7 +28,7 @@ class XorEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("up encrypt fail")
     void decryptFailTest() throws IOException {
-        new XorEncryption().encrypt(originalPath, originalPath, keyPath);
+        new XorEncryption().encrypt(originalPath, originalPath, (NormalKey) keyPath);
         decryptWrongPath(new XorEncryption());
     }
 }

@@ -1,12 +1,13 @@
 package encryption.charAlgo;
 
+import keys.NormalKey;
+
 import java.security.SecureRandom;
 
-public class XorEncryption extends CharEncryptionAlgorithmAbstract {
+public class XorEncryption<T> extends CharEncryptionAlgorithmAbstract<NormalKey> {
     private static final int NUMBERS_NORMAL_ASCII_CHARS = 255;
     public XorEncryption() {
         super("Xor");
-
     }
 
     /**
