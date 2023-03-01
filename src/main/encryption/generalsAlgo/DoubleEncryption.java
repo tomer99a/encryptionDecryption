@@ -2,6 +2,7 @@ package encryption.generalsAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
+import encryption.charAlgo.ShiftUpEncryption;
 import keys.DoubleKey;
 import keys.NormalKey;
 
@@ -15,6 +16,11 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
 
     public DoubleEncryption(CharEncryptionAlgorithmAbstract<NormalKey> algo) {
         super("Double" + algo.getEncryptionMethod());
+        if (algo.getEncryptionMethod().equals("ShiftUp")) {
+            int halfNumberLetters = ((int) 'Z' - 'A' + 1) / 2;
+            while ((algo.getKey() % halfNumberLetters == 0))
+                algo = new ShiftUpEncryption<NormalKey>();
+        }
         this.algo = algo;
     }
 

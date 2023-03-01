@@ -21,8 +21,9 @@ class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @ValueSource(ints = {3, 14, 18})
     @DisplayName("encrypt and decrypt by using RepeatPlus")
     void encryptPlus(int repeatNum) {
-        encryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption<NormalKey>()));
-        decryptTest(new RepeatEncryption(repeatNum, new ShiftUpEncryption<NormalKey>()));
+        RepeatEncryption repeatEncryption = new RepeatEncryption<>(repeatNum, new ShiftUpEncryption<NormalKey>());
+        encryptTest(repeatEncryption);
+        decryptTest(repeatEncryption);
     }
 
     @ParameterizedTest

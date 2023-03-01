@@ -5,7 +5,6 @@ import keys.AKey;
 import keys.DoubleKey;
 import keys.NormalKey;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,13 +79,13 @@ public class EncryptionAlgorithmAbstractTest {
         assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 
-    protected void encryptWrongPath(IEncryptionAlgorithm algo) {
+    protected void encryptWrongPath(IEncryptionAlgorithm<AKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
     }
 
-    protected void decryptWrongPath(IEncryptionAlgorithm algo) {
+    protected void decryptWrongPath(IEncryptionAlgorithm<AKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = new NormalKey(savePath);

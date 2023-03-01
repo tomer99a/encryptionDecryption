@@ -23,13 +23,13 @@ class ShiftMultiplyEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("multi encrypt fail")
     void encryptWrongPathTest() {
-        encryptWrongPath(new ShiftMultiplyEncryption<NormalKey>());
+        encryptWrongPath(new ShiftMultiplyEncryption());
     }
 
     @Test
     @DisplayName("multi encrypt fail")
     void decryptFailTest() throws IOException {
         new ShiftMultiplyEncryption<NormalKey>().encrypt(originalPath, originalPath, (NormalKey) keyPath);
-        decryptWrongPath(new ShiftMultiplyEncryption<NormalKey>());
+        decryptWrongPath(new ShiftMultiplyEncryption());
     }
 }
