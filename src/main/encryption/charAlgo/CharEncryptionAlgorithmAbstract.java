@@ -70,7 +70,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
     }
 
     /**
-     * Extract key value from file
+     * Extract key value from file.
      * @param keyPath the path to the file key
      * @return key value
      */

@@ -16,8 +16,4 @@ public class DoubleKey {
     public String getKey2() {
         return key2;
     }
-
-    public String getKey() {
-        return key1 + "\n" + key2;
-    }
 }
