@@ -24,23 +24,23 @@ public class FileEncryptor<T> {
     }
 
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) {
-        encryptionStart.writeMessage("");
+        encryptionStart.writeMessage();
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        encryptionEnd.writeMessage("");
+        encryptionEnd.writeMessage();
 
     }
 
     public void decrypt(final String originalPath, final String outputPath, final T keyPath){
-        decryptionStart.writeMessage("");
+        decryptionStart.writeMessage();
         try{
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        decryptionEnd.writeMessage("");
+        decryptionEnd.writeMessage();
     }
 }

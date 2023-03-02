@@ -9,4 +9,8 @@ public class LogEnd extends LogDecorator {
     public void writeMessage(String message) {
         super.writeMessage(message + "End ");
     }
+
+    public void writeMessage() {
+        this.writeMessage("");
+    }
 }

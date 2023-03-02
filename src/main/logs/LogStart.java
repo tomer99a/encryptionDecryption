@@ -9,4 +9,8 @@ public class LogStart extends LogDecorator {
     public void writeMessage(String message) {
         super.writeMessage(message + "Start ");
     }
+
+    public void writeMessage() {
+        this.writeMessage("");
+    }
 }
