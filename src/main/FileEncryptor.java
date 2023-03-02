@@ -1,14 +1,14 @@
 import encryption.IEncryptionAlgorithm;
-import keys.AKey;
+
 import logs.EncryptionLogEventArgs;
 import logs.EncryptionLogger;
 
 import java.io.IOException;
 
-public class FileEncryptor<T extends AKey> {
-    final private IEncryptionAlgorithm<AKey> encryptionAlgo;
+public class FileEncryptor<T> {
+    final private IEncryptionAlgorithm<T> encryptionAlgo;
 
-    public FileEncryptor(IEncryptionAlgorithm<AKey> encryptionAlgo) {
+    public FileEncryptor(IEncryptionAlgorithm<T> encryptionAlgo) {
         this.encryptionAlgo = encryptionAlgo;
     }
 

@@ -4,7 +4,7 @@ import keys.NormalKey;
 
 import java.security.SecureRandom;
 
-public class XorEncryption<T> extends CharEncryptionAlgorithmAbstract<NormalKey> {
+public class XorEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
     private static final int NUMBERS_NORMAL_ASCII_CHARS = 255;
     public XorEncryption() {
         super("Xor");

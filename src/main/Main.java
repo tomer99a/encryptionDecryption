@@ -1,12 +1,8 @@
-import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
 import keys.NormalKey;
 
 import java.io.File;
 import java.util.Scanner;
-
-//import org.apache.log4j.Logger;
-//import org.apache.log4j.LogManager;
 
 public class Main {
     private static void menu() {
@@ -21,11 +17,7 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-//        CharEncryptionAlgorithmAbstract<NormalKey> charEncryptionAlgorithm = new ShiftUpEncryption<NormalKey>();
-
-//        DoubleEncryption<DoubleKey> encryptionAlgorithm = new DoubleEncryption<DoubleKey>(charEncryptionAlgorithm);
-
-        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<NormalKey>(new ShiftUpEncryption());
+        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<>(new ShiftUpEncryption<>());
         while (!doneLoop) {
             int choice;
 
@@ -55,9 +47,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        Logger logger = LogManager.getLogger(Main.class);
-//        logger.info("adsfasdfadsf");
-//        logger.error("ERRORRR");
         menu();
         System.out.println("Done program");
     }

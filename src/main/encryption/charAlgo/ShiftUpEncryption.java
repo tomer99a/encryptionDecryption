@@ -4,7 +4,7 @@ import keys.NormalKey;
 
 import java.security.SecureRandom;
 
-public class ShiftUpEncryption<T> extends CharEncryptionAlgorithmAbstract<NormalKey> {
+public class ShiftUpEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
     final private static int NUMBER_OF_LETTERS = 26;
     public ShiftUpEncryption() {
         super("ShiftUp");

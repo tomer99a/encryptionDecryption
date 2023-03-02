@@ -1,6 +1,6 @@
 package keys;
 
-public class DoubleKey extends AKey {
+public class DoubleKey {
     private final String key1;
     private final String key2;
 

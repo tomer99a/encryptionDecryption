@@ -12,9 +12,9 @@ class EncryptionAlgorithmComparatorTest {
     @Test
     void compare() {
         ArrayList<CharEncryptionAlgorithmAbstract<NormalKey>> algorithms = new ArrayList<>();
-        algorithms.add(new ShiftMultiplyEncryption<NormalKey>());
-        algorithms.add(new XorEncryption<NormalKey>());
-        algorithms.add(new ShiftUpEncryption<NormalKey>());
+        algorithms.add(new ShiftMultiplyEncryption<>());
+        algorithms.add(new XorEncryption<>());
+        algorithms.add(new ShiftUpEncryption<>());
 
         algorithms.sort(new EncryptionAlgorithmByKeyStrengthComparator());
 

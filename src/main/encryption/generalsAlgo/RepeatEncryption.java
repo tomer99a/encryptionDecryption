@@ -3,7 +3,6 @@ package encryption.generalsAlgo;
 import encryption.charAlgo.ShiftUpEncryption;
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
-import keys.AKey;
 import keys.NormalKey;
 
 import java.io.File;
@@ -23,13 +22,13 @@ public class RepeatEncryption<T extends NormalKey> extends EncryptionAlgorithmAb
         if (algo.getEncryptionMethod().equals("ShiftUp")) {
             int numberLetters = (int) 'Z' - 'A' + 1;
             while (((repeatNum * algo.getKey()) % numberLetters == 0))
-                algo = new ShiftUpEncryption<NormalKey>();
+                algo = new ShiftUpEncryption<>();
         }
         this.algo = algo;
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
@@ -44,7 +43,7 @@ public class RepeatEncryption<T extends NormalKey> extends EncryptionAlgorithmAb
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final AKey keyPath) throws IOException {
+    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 

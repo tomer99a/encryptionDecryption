@@ -1,8 +1,6 @@
 package encryption;
 
 import exceptions.invalidPathException;
-import keys.AKey;
-import keys.DoubleKey;
 import keys.NormalKey;
 import org.junit.jupiter.api.AfterAll;
 
@@ -20,18 +18,14 @@ public class EncryptionAlgorithmAbstractTest {
     static protected String originalPath;
     static protected String encryptedPath;
     static protected String decryptedPath;
-    static protected AKey keyPath;
+    static protected NormalKey keyPath;
 
-    public EncryptionAlgorithmAbstractTest(boolean isDoubleKey) throws IOException {
+    public EncryptionAlgorithmAbstractTest() throws IOException {
         originalPath = Files.createTempFile("input_text", ".txt").toString();
         encryptedPath = Files.createTempFile("input_text_encrypted", ".txt").toString();
         decryptedPath = Files.createTempFile("input_text_decrypted", ".txt").toString();
         keyPath = new NormalKey(Files.createTempFile("key", ".txt").toString());
-        if (isDoubleKey) {
-            String keyPath1 = addSuffixToFileNameAtPath(keyPath.getKey(), "1");
-            String keyPath2 = addSuffixToFileNameAtPath(keyPath.getKey(), "2");
-            keyPath = new DoubleKey(keyPath1, keyPath2);
-        }
+
         createFile(originalPath);
         String message = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + System.lineSeparator() +
                 "abcdefghijklmnopqrstuvwxyz" + System.lineSeparator() +
@@ -54,12 +48,12 @@ public class EncryptionAlgorithmAbstractTest {
         String[] allPathToDelete = new String[]{originalPath, encryptedPath, decryptedPath, keyPath.getKey()};
         for (String path : allPathToDelete) {
             System.out.println(path);
-//            if (!(new File(path).delete()))
-//                System.err.println("the file " + path + " didn't deleted!!!");
+            if (!(new File(path).delete()))
+                System.err.println("the file " + path + " didn't deleted!!!");
         }
     }
 
-    protected void encryptTest(IEncryptionAlgorithm<? extends AKey> algo){
+    protected void encryptTest(IEncryptionAlgorithm<NormalKey> algo){
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
@@ -69,23 +63,23 @@ public class EncryptionAlgorithmAbstractTest {
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
     }
 
-    protected void decryptTest(IEncryptionAlgorithm<? extends AKey> algo) {
+    protected void decryptTest(IEncryptionAlgorithm<NormalKey> algo) {
         try {
             algo.decrypt(encryptedPath, decryptedPath, keyPath);
         } catch (IOException e) {
-            fail(String.format("The %s decryption failed", algo.getEncryptionMethod()));
+            fail(String.format("The %s decryption failed\nError message - %s", algo.getEncryptionMethod(), e.getMessage()));
         }
         assertFalse(compareTwoFiles(encryptedPath, decryptedPath));
         assertTrue(compareTwoFiles(originalPath, decryptedPath));
     }
 
-    protected void encryptWrongPath(IEncryptionAlgorithm<? extends AKey> algo) {
+    protected void encryptWrongPath(IEncryptionAlgorithm<NormalKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.encrypt(originalPath, encryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
     }
 
-    protected void decryptWrongPath(IEncryptionAlgorithm<? extends AKey> algo) {
+    protected void decryptWrongPath(IEncryptionAlgorithm<NormalKey> algo) {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
