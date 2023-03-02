@@ -31,7 +31,6 @@ public class FileEncryptor<T> {
             System.err.println(e.getMessage());
         }
         encryptionEnd.writeMessage();
-
     }
 
     public void decrypt(final String originalPath, final String outputPath, final T keyPath){
