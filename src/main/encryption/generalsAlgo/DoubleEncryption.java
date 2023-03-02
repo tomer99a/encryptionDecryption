@@ -25,14 +25,11 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
 
     @Override
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
-        final String keyPath1 = keyPath.getKey1();
-        final String keyPath2 = keyPath.getKey2();
-
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
-        algo.encrypt(originalPath, tmpPath, new NormalKey(keyPath1));
-        algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath2));
+        algo.encrypt(originalPath, tmpPath, new NormalKey(keyPath.getKey1()));
+        algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey2()));
         
         if (!(new File(tmpPath).delete())) {
             System.err.println("The tmp file didn't auto delete");
@@ -41,14 +38,11 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
 
     @Override
     public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
-        final String keyPath1 = keyPath.getKey1();
-        final String keyPath2 = keyPath.getKey2();
-
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
-        algo.decrypt(originalPath, tmpPath, new NormalKey(keyPath2));
-        algo.decrypt(tmpPath, outputPath, new NormalKey(keyPath1));
+        algo.decrypt(originalPath, tmpPath, new NormalKey(keyPath.getKey2()));
+        algo.decrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey1()));
 
         if (!(new File(tmpPath).delete())) {
             System.err.println("The tmp file didn't auto delete");

@@ -1,35 +1,38 @@
 import encryption.IEncryptionAlgorithm;
 
-import logs.EncryptionLogEventArgs;
-import logs.EncryptionLogger;
+import logs.*;
 
 import java.io.IOException;
 
 public class FileEncryptor<T> {
     final private IEncryptionAlgorithm<T> encryptionAlgo;
+    final private LogBasic logBasic;
 
     public FileEncryptor(IEncryptionAlgorithm<T> encryptionAlgo) {
         this.encryptionAlgo = encryptionAlgo;
+        logBasic = new LogBasic(encryptionAlgo.getClass());
     }
 
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) {
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start encryption"));
+        LogEncrypt logEncrypt = new LogEncrypt(logBasic);
+        new LogStart(logEncrypt).writeMessage("");
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end encryption"));
+        new LogEnd(logEncrypt).writeMessage("");
 
     }
 
     public void decrypt(final String originalPath, final String outputPath, final T keyPath){
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("start decryption"));
+        LogDecrypt logDecrypt = new LogDecrypt(logBasic);
+        new LogStart(logDecrypt).writeMessage("");
         try{
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        EncryptionLogger.writeToLog(EncryptionLogEventArgs.getMessage("end decryption"));
+        new LogEnd(logDecrypt).writeMessage("");
     }
 }

@@ -1,5 +1,7 @@
-import encryption.charAlgo.ShiftUpEncryption;
-import keys.NormalKey;
+import encryption.IEncryptionAlgorithm;
+import encryption.charAlgo.ShiftMultiplyEncryption;
+import encryption.generalsAlgo.DoubleEncryption;
+import keys.DoubleKey;
 
 import java.io.File;
 import java.util.Scanner;
@@ -11,13 +13,17 @@ public class Main {
         String originalPath = basePath + fileName + ".txt";
         String encryptedPath = basePath + fileName + "_encrypted.txt";
         String decryptedPath = basePath + fileName + "_decrypted.txt";
-        String keyPath = basePath + "key.txt";
+        String keyPath1 = basePath + "key1.txt";
+        String keyPath2 = basePath + "key2.txt";
+        DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
 
         String invalidChoiceErrorMessage = "You should write 1, 2 or 3 only!!!";
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        FileEncryptor<NormalKey> fileEncryptor = new FileEncryptor<>(new ShiftUpEncryption<>());
+        IEncryptionAlgorithm<DoubleKey> iEncryptionAlgorithm = new DoubleEncryption<>(new ShiftMultiplyEncryption<>());
+
+        FileEncryptor<DoubleKey> fileEncryptor = new FileEncryptor<>(iEncryptionAlgorithm);
         while (!doneLoop) {
             int choice;
 
@@ -31,10 +37,10 @@ public class Main {
             }
             switch (choice) {
                 case 1:
-                    fileEncryptor.encrypt(originalPath, encryptedPath, new NormalKey(keyPath));
+                    fileEncryptor.encrypt(originalPath, encryptedPath, doubleKey);
                     break;
                 case 2:
-                    fileEncryptor.decrypt(encryptedPath, decryptedPath, new NormalKey(keyPath));
+                    fileEncryptor.decrypt(encryptedPath, decryptedPath, doubleKey);
                     break;
                 case 3:
                     doneLoop = true;
