@@ -9,7 +9,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
 
     public DirectoryProcessorAbstract(String dirPath) throws invalidPathException {
         File dirFile = new File(dirPath);
-        if (dirFile.isDirectory()) {
+        if (!dirFile.isDirectory()) {
            throw new invalidPathException("The path givven isnt a directory");
         }
         this.dirPath = dirPath;
