@@ -66,6 +66,7 @@ public class Main {
 
         try {
             new SyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption<>(), normalKey);
+            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption<>(), normalKey);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
