@@ -7,7 +7,9 @@ public class LogEnd extends LogDecorator {
 
     @Override
     public void writeMessage(String message) {
-        super.writeMessage(message + "End ");
+        String messageToAdd = message.equals("") ? "E" : " e";
+        messageToAdd += "nd";
+        super.writeMessage(message + messageToAdd);
     }
 
     public void writeMessage() {

@@ -7,7 +7,9 @@ public class LogStart extends LogDecorator {
 
     @Override
     public void writeMessage(String message) {
-        super.writeMessage(message + "Start ");
+        String messageToAdd = message.equals("") ? "S" : " s";
+        messageToAdd += "tart";
+        super.writeMessage(message + messageToAdd);
     }
 
     public void writeMessage() {

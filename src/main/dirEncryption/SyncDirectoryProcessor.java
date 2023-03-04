@@ -36,12 +36,15 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     continue;
                 }
                 String encryptPath = encryptDir.getPath() + File.separator + fileName;
+                encryptionStart.writeMessage();
                 try {
                     algo.encrypt(file.getPath(), encryptPath, key);
                 } catch (IOException e) {
                     System.err.println(e.getMessage() + "\nThe file %s didnt encrypt"); //TODO: change %s
                 }
+                encryptionEnd.writeMessage();
             }
         }
+        encryptionEnd.writeMessage("All the files");
     }
 }

@@ -7,6 +7,8 @@ public class LogEncrypt extends LogDecorator {
 
     @Override
     public void writeMessage(String message) {
-        super.writeMessage(message + "encryption");
+        String messageToAdd = message.equals("") ? "E" : " e";
+        messageToAdd += "ncryption";
+        super.writeMessage(message + messageToAdd);
     }
 }
