@@ -74,7 +74,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        dirEncrypt();
+//        dirEncrypt();
         System.out.println("Done program");
     }
 }

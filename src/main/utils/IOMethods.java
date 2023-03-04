@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import exceptions.invalidPathException;
+import keys.NormalKey;
 
 public class IOMethods {
     /**
@@ -14,7 +15,7 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key) throws IOException {
+    public static <T extends NormalKey> void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract<T> encryptsDecrypt, int key) throws IOException {
         Scanner sc = new Scanner(new FileInputStream(inputPath));
         while (sc.hasNextLine()){
             StringBuilder lineToWrite = new StringBuilder();
