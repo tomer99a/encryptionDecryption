@@ -21,7 +21,7 @@ public class Main {
         boolean doneLoop = false;
         Scanner myScanner = new Scanner(System.in);
 
-        IEncryptionAlgorithm<DoubleKey> iEncryptionAlgorithm = new DoubleEncryption<>(new ShiftMultiplyEncryption<>());
+        IEncryptionAlgorithm<DoubleKey> iEncryptionAlgorithm = new DoubleEncryption(new ShiftMultiplyEncryption());
 
         FileEncryptor<DoubleKey> fileEncryptor = new FileEncryptor<>(iEncryptionAlgorithm);
         while (!doneLoop) {

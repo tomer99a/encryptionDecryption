@@ -13,20 +13,20 @@ class XorEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("encrypt and decrypt by using xor")
     void encrypt(){
-        encryptTest(new XorEncryption<>());
-        decryptTest(new XorEncryption<>());
+        encryptTest(new XorEncryption());
+        decryptTest(new XorEncryption());
     }
 
     @Test
     @DisplayName("xor encrypt fail")
     void encryptWrongPathTest() {
-        encryptWrongPath(new XorEncryption<>());
+        encryptWrongPath(new XorEncryption());
     }
 
     @Test
     @DisplayName("up encrypt fail")
     void decryptFailTest() throws IOException {
-        new XorEncryption<>().encrypt(originalPath, originalPath, keyPath);
-        decryptWrongPath(new XorEncryption<>());
+        new XorEncryption().encrypt(originalPath, originalPath, keyPath);
+        decryptWrongPath(new XorEncryption());
     }
 }

@@ -1,10 +1,8 @@
 package encryption.charAlgo;
 
-import keys.NormalKey;
-
 import java.security.SecureRandom;
 
-public class ShiftMultiplyEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
+public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
     final static private int GAP_BETWEEN_UPPER_AND_LOWER_LETTERS = SMALL_A - BIG_Z - 1;
     final static private int NUMBER_OF_LETTERS = 52;
     final static private int MY_PRIME_NUMBER = 53;

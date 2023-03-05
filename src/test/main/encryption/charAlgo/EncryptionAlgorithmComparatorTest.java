@@ -11,10 +11,10 @@ class EncryptionAlgorithmComparatorTest {
 
     @Test
     void compare() {
-        ArrayList<CharEncryptionAlgorithmAbstract<NormalKey>> algorithms = new ArrayList<>();
-        algorithms.add(new ShiftMultiplyEncryption<>());
-        algorithms.add(new XorEncryption<>());
-        algorithms.add(new ShiftUpEncryption<>());
+        ArrayList<CharEncryptionAlgorithmAbstract> algorithms = new ArrayList<>();
+        algorithms.add(new ShiftMultiplyEncryption());
+        algorithms.add(new XorEncryption());
+        algorithms.add(new ShiftUpEncryption());
 
         algorithms.sort(new EncryptionAlgorithmByKeyStrengthComparator());
 

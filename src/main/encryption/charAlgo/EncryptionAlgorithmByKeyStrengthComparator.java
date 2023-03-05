@@ -4,7 +4,7 @@ import keys.NormalKey;
 
 import java.util.Comparator;
 
-public class EncryptionAlgorithmByKeyStrengthComparator implements Comparator<CharEncryptionAlgorithmAbstract<NormalKey>> {
+public class EncryptionAlgorithmByKeyStrengthComparator implements Comparator<CharEncryptionAlgorithmAbstract> {
     /**
      * Compare two encryption's algorithms by there key strength.
      * @param algo1 first algorithms to compare

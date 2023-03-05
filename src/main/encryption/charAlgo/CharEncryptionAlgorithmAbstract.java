@@ -12,7 +12,7 @@ import static utils.IOMethods.writeToFile;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.readFile;
 
-public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> extends EncryptionAlgorithmAbstract<T> {
+public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
     protected int key;
     protected int keyMaxRange;
 
@@ -49,7 +49,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
         return keyMaxRange;
     }
 
-    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
         createFile(keyPathStr);
         createFile(outputPath);
@@ -60,7 +60,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPathStr, System.lineSeparator());
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException, InvalidEncryptionKeyException {
+    public void decrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 

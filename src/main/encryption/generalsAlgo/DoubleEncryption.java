@@ -10,21 +10,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAbstract<T> {
-    final private CharEncryptionAlgorithmAbstract<NormalKey> algo;
+public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
+    final private CharEncryptionAlgorithmAbstract algo;
 
-    public DoubleEncryption(CharEncryptionAlgorithmAbstract<NormalKey> algo) {
+    public DoubleEncryption(CharEncryptionAlgorithmAbstract algo) {
         super("Double" + algo.getEncryptionMethod());
         if (algo.getEncryptionMethod().equals("ShiftUp")) {
             int halfNumberLetters = ((int) 'Z' - 'A' + 1) / 2;
             while ((algo.getKey() % halfNumberLetters == 0))
-                algo = new ShiftUpEncryption<>();
+                algo = new ShiftUpEncryption();
         }
         this.algo = algo;
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void encrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
@@ -37,7 +37,7 @@ public class DoubleEncryption<T extends DoubleKey> extends EncryptionAlgorithmAb
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
+    public void decrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 

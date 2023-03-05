@@ -25,7 +25,7 @@ class DoubleEncryptionTest extends EncryptionAlgorithmAbstractTest {
         doubleKeyPath = new DoubleKey(keyPath1, keyPath2);
     }
 
-    private void encryptDoubleTest(DoubleEncryption<DoubleKey> doubleEncryption) {
+    private void encryptDoubleTest(DoubleEncryption doubleEncryption) {
         try {
             doubleEncryption.encrypt(originalPath, encryptedPath, doubleKeyPath);
         } catch (IOException e) {
@@ -35,7 +35,7 @@ class DoubleEncryptionTest extends EncryptionAlgorithmAbstractTest {
         assertFalse(compareTwoFiles(originalPath, encryptedPath));
     }
 
-    private void decryptDoubleTest(DoubleEncryption<DoubleKey> doubleEncryption) {
+    private void decryptDoubleTest(DoubleEncryption doubleEncryption) {
         try {
             doubleEncryption.decrypt(encryptedPath, decryptedPath, doubleKeyPath);
         } catch (IOException e) {
@@ -48,21 +48,21 @@ class DoubleEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("encrypt and decrypt by using DoublePlus")
     void encryptPlus() {
-        encryptDoubleTest(new DoubleEncryption<>(new ShiftUpEncryption<>()));
-        decryptDoubleTest(new DoubleEncryption<>(new ShiftUpEncryption<>()));
+        encryptDoubleTest(new DoubleEncryption(new ShiftUpEncryption()));
+        decryptDoubleTest(new DoubleEncryption(new ShiftUpEncryption()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using DoubleMulti")
     void encryptMulti() {
-        encryptDoubleTest(new DoubleEncryption<>(new ShiftMultiplyEncryption<>()));
-        decryptDoubleTest(new DoubleEncryption<>(new ShiftMultiplyEncryption<>()));
+        encryptDoubleTest(new DoubleEncryption(new ShiftMultiplyEncryption()));
+        decryptDoubleTest(new DoubleEncryption(new ShiftMultiplyEncryption()));
     }
 
     @Test
     @DisplayName("encrypt and decrypt by using DoubleXor")
     void encryptXor() {
-        encryptDoubleTest(new DoubleEncryption<>(new XorEncryption<>()));
-        decryptDoubleTest(new DoubleEncryption<>(new XorEncryption<>()));
+        encryptDoubleTest(new DoubleEncryption(new XorEncryption()));
+        decryptDoubleTest(new DoubleEncryption(new XorEncryption()));
     }
 }

@@ -15,20 +15,20 @@ class ShiftUpEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @Test
     @DisplayName("encrypt and decrypt by using plus")
     void encrypt() {
-        encryptTest(new ShiftUpEncryption<>());
-        decryptTest(new ShiftUpEncryption<>());
+        encryptTest(new ShiftUpEncryption());
+        decryptTest(new ShiftUpEncryption());
     }
 
     @Test
     @DisplayName("up encrypt fail")
     void encryptWrongPathTest() {
-        encryptWrongPath(new ShiftUpEncryption<>());
+        encryptWrongPath(new ShiftUpEncryption());
     }
 
     @Test
     @DisplayName("up encrypt fail")
     void decryptFailTest() throws IOException {
-        new ShiftUpEncryption<>().encrypt(originalPath, originalPath, keyPath);
-        decryptWrongPath(new ShiftUpEncryption<>());
+        new ShiftUpEncryption().encrypt(originalPath, originalPath, keyPath);
+        decryptWrongPath(new ShiftUpEncryption());
     }
 }

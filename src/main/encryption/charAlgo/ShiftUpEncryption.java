@@ -1,10 +1,8 @@
 package encryption.charAlgo;
 
-import keys.NormalKey;
-
 import java.security.SecureRandom;
 
-public class ShiftUpEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
+public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
     final private static int NUMBER_OF_LETTERS = 26;
     public ShiftUpEncryption() {
         super("ShiftUp");

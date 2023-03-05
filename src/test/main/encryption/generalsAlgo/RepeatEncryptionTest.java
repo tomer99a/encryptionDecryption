@@ -20,7 +20,7 @@ class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @ValueSource(ints = {3, 14, 18})
     @DisplayName("encrypt and decrypt by using RepeatPlus")
     void encryptPlus(int repeatNum) {
-        RepeatEncryption<NormalKey> repeatEncryption = new RepeatEncryption<>(repeatNum, new ShiftUpEncryption<>());
+        RepeatEncryption repeatEncryption = new RepeatEncryption(repeatNum, new ShiftUpEncryption());
         encryptTest(repeatEncryption);
         decryptTest(repeatEncryption);
     }
@@ -29,15 +29,15 @@ class RepeatEncryptionTest extends EncryptionAlgorithmAbstractTest {
     @ValueSource(ints = {3, 5, 9, 15})
     @DisplayName("encrypt and decrypt by using RepeatMulti")
     void encryptMulti(int repeatNum) {
-        encryptTest(new RepeatEncryption<>(repeatNum, new ShiftMultiplyEncryption<>()));
-        decryptTest(new RepeatEncryption<>(repeatNum, new ShiftMultiplyEncryption<>()));
+        encryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
+        decryptTest(new RepeatEncryption(repeatNum, new ShiftMultiplyEncryption()));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {3, 5, 9, 15})
     @DisplayName("encrypt and decrypt by using RepeatXor")
     void encryptXor(int repeatNum) {
-        encryptTest(new RepeatEncryption<>(repeatNum, new XorEncryption<>()));
-        decryptTest(new RepeatEncryption<>(repeatNum, new XorEncryption<>()));
+        encryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
+        decryptTest(new RepeatEncryption(repeatNum, new XorEncryption()));
     }
 }
