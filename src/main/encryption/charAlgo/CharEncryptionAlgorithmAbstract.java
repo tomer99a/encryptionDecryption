@@ -9,14 +9,13 @@ import java.io.IOException;
 import static utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
-    protected int key;
-    protected int keyMaxRange;
-
     final static protected char SMALL_A = 'a';
     final static protected char SMALL_Z = 'z';
     final static protected char BIG_A = 'A';
     final static protected char BIG_Z = 'Z';
     final static protected int BOUND_RANDOM_NUMBER = 1000;
+    protected int key;
+    protected int keyMaxRange;
 
     public CharEncryptionAlgorithmAbstract(final String encryptionMethod) {
         super(encryptionMethod);

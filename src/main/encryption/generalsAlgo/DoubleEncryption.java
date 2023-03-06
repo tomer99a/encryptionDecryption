@@ -30,7 +30,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
 
         algo.encrypt(originalPath, tmpPath, new NormalKey(keyPath.getKey1()));
         algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey2()));
-        
+
         if (!(new File(tmpPath).delete())) {
             System.err.println("The tmp file didn't auto delete");
         }

@@ -20,7 +20,8 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
 
     /**
      * Encrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
      */
@@ -50,7 +51,8 @@ public class ShiftMultiplyEncryption extends CharEncryptionAlgorithmAbstract {
 
     /**
      * decrypt the char by key.
-     * @param c char to decrypt
+     *
+     * @param c   char to decrypt
      * @param key key to use for decrypt
      * @return the decryption char that you're looking for
      */

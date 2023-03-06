@@ -1,8 +1,8 @@
 package encryption.generalsAlgo;
 
-import encryption.charAlgo.ShiftUpEncryption;
 import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
+import encryption.charAlgo.ShiftUpEncryption;
 import keys.NormalKey;
 
 import java.io.File;
@@ -33,7 +33,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
         algo.encrypt(originalPath, tmpPath, keyPath);
-        for(int i=1; i < repeatNum; i++){
+        for (int i = 1; i < repeatNum; i++) {
             algo.encrypt(tmpPath, outputPath, keyPath);
             copyFile(outputPath, tmpPath);
         }
@@ -48,7 +48,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
         algo.decrypt(originalPath, tmpPath, keyPath);
-        for(int i=1; i < repeatNum; i++){
+        for (int i = 1; i < repeatNum; i++) {
             algo.decrypt(tmpPath, outputPath, keyPath);
             copyFile(outputPath, tmpPath);
         }
