@@ -1,4 +1,4 @@
-import dirEncryption.SyncDirectoryProcessor;
+import dirEncryption.AsyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.XorEncryption;
@@ -65,8 +65,8 @@ public class Main {
         DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
 
         try {
-            new SyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption<>(), normalKey);
-            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption<>(), normalKey);
+            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption<>(), normalKey);
+//            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption<>(), normalKey);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -74,7 +74,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        dirEncrypt();
+        dirEncrypt();
         System.out.println("Done program");
     }
 }

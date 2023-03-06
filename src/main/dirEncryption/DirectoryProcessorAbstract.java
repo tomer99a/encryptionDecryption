@@ -1,5 +1,6 @@
 package dirEncryption;
 
+import encryption.IEncryptionAlgorithm;
 import exceptions.invalidPathException;
 import logs.*;
 
@@ -46,5 +47,16 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         } else if (!file.mkdir()) {
             throw new IOException();
         }
+    }
+
+    protected void handelEncrypt(String fileName, File file, IEncryptionAlgorithm<T> algo, T key) {
+        String encryptPath = encryptDir.getPath() + File.separator + fileName;
+        encryptionStart.writeMessage(fileName + " is");
+        try {
+            algo.encrypt(file.getPath(), encryptPath, key);
+        } catch (IOException e) {
+            System.err.println(e.getMessage() + "\nThe file " + fileName + " didn't encrypt");
+        }
+        encryptionEnd.writeMessage(fileName + " is");
     }
 }

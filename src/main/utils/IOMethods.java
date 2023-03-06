@@ -62,10 +62,23 @@ public class IOMethods {
         final File myObj = new File(path);
         if (!myObj.getParentFile().exists())
             throw new invalidPathException("The path given is invalid");
-        if (myObj.exists())
-            if (!myObj.delete())
-                throw new IOException("unable to delete existing file" + System.lineSeparator());
-        boolean didCreat = myObj.createNewFile();
+        if (!myObj.exists()) {
+            boolean didCreat = myObj.createNewFile();
+        }
+    }
+
+    /**
+     * delete file if was existed.
+     *
+     * @param path file path and name
+     */
+    public static void deleteFile(String path) throws IOException {
+        final File myObj = new File(path);
+        if (!myObj.getParentFile().exists())
+            throw new invalidPathException("The path given is invalid");
+        if (myObj.exists()) {
+            boolean didCreat = myObj.delete();
+        }
     }
 
     /**

@@ -24,14 +24,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 if (fileName.contains("key")) {
                     continue;
                 }
-                String encryptPath = encryptDir.getPath() + File.separator + fileName;
-                encryptionStart.writeMessage();
-                try {
-                    algo.encrypt(file.getPath(), encryptPath, key);
-                } catch (IOException e) {
-                    System.err.println(e.getMessage() + "\nThe file %s didnt encrypt"); //TODO: change %s
-                }
-                encryptionEnd.writeMessage();
+                handelEncrypt(fileName, file, algo, key);
             }
         }
         encryptionEnd.writeMessage("All the files");
