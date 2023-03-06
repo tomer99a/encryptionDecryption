@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.writeToFile;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class EncryptionAlgorithmAbstractTest {
     static protected String originalPath;
@@ -36,15 +36,8 @@ public class EncryptionAlgorithmAbstractTest {
         writeToFile(originalPath, message);
     }
 
-    private String fuckThePath() {
-        String savePath = keyPath.getKey();
-        int randNum = new SecureRandom().nextInt(1000000000);
-        keyPath = new NormalKey(randNum+savePath);
-        return savePath;
-    }
-
     @AfterAll
-    static void cleanFiles(){
+    static void cleanFiles() {
         String[] allPathToDelete = new String[]{originalPath, encryptedPath, decryptedPath, keyPath.getKey()};
         for (String path : allPathToDelete) {
             System.out.println(path);
@@ -53,7 +46,51 @@ public class EncryptionAlgorithmAbstractTest {
         }
     }
 
-    protected void encryptTest(IEncryptionAlgorithm<NormalKey> algo){
+    public static boolean compareTwoFiles(String path1, String path2) {
+        if (path1.equals(path2))
+            return true;
+        File file1 = new File(path1);
+        File file2 = new File(path2);
+
+        try (FileInputStream in1 = new FileInputStream(file1); FileInputStream in2 = new FileInputStream(file2)) {
+            int tmpChar1, tmpChar2;
+
+            while ((tmpChar1 = in1.read()) != -1) {
+                tmpChar2 = in2.read();
+                if (tmpChar2 == -1)
+                    return false;
+                if (tmpChar1 != tmpChar2)
+                    return false;
+            }
+            tmpChar2 = in2.read();
+            return tmpChar2 == -1;
+        } catch (IOException e) {
+            System.err.println("fail at compare two files");
+            return false;
+        }
+    }
+
+    /**
+     * Add suffix only to the file name from the full path
+     *
+     * @param path   original path
+     * @param suffix thing to add at the end of the file name
+     * @return path with changed name
+     */
+    public static String addSuffixToFileNameAtPath(final String path, final String suffix) {
+        File file = new File(path);
+        String fileName = file.getName();
+        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    private String fuckThePath() {
+        String savePath = keyPath.getKey();
+        int randNum = new SecureRandom().nextInt(1000000000);
+        keyPath = new NormalKey(randNum + savePath);
+        return savePath;
+    }
+
+    protected void encryptTest(IEncryptionAlgorithm<NormalKey> algo) {
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
@@ -83,41 +120,5 @@ public class EncryptionAlgorithmAbstractTest {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
-    }
-
-    public static boolean compareTwoFiles(String path1, String path2){
-        if(path1.equals(path2))
-            return true;
-        File file1 = new File(path1);
-        File file2 = new File(path2);
-
-        try (FileInputStream in1 = new FileInputStream(file1); FileInputStream in2 = new FileInputStream(file2)) {
-            int tmpChar1, tmpChar2;
-
-            while ((tmpChar1 = in1.read()) != -1) {
-                tmpChar2 = in2.read();
-                if(tmpChar2 == -1)
-                    return false;
-                if(tmpChar1 != tmpChar2)
-                    return false;
-            }
-            tmpChar2 = in2.read();
-            return tmpChar2 == -1;
-        } catch (IOException e) {
-            System.err.println("fail at compare two files");
-            return false;
-        }
-    }
-
-    /**
-     * Add suffix only to the file name from the full path
-     * @param path original path
-     * @param suffix thing to add at the end of the file name
-     * @return path with changed name
-     */
-    public static String addSuffixToFileNameAtPath(final String path, final String suffix) {
-        File file = new File(path);
-        String fileName = file.getName();
-        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
     }
 }
