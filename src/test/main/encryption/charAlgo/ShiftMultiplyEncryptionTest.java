@@ -1,7 +1,6 @@
 package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstractTest;
-import keys.NormalKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

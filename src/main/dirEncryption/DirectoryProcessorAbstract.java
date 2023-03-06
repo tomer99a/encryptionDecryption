@@ -20,7 +20,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         // make sour that we get a dir path and save it
         File dirFile = new File(dirPath);
         if (!dirFile.isDirectory()) {
-           throw new invalidPathException("The path given isn't a directory");
+            throw new invalidPathException("The path given isn't a directory");
         }
         this.dirPath = dirPath;
 
@@ -40,7 +40,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
 
     protected void addDirSafe(File file) throws IOException {
         if (file.exists()) {
-            for (String s: Objects.requireNonNull(file.list())) {
+            for (String s : Objects.requireNonNull(file.list())) {
                 boolean didDelete = new File(file.getPath(), s).delete();
             }
         } else if (!file.mkdir()) {

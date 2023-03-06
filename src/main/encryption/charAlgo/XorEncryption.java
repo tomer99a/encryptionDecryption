@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 
 public class XorEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
     private static final int NUMBERS_NORMAL_ASCII_CHARS = 255;
+
     public XorEncryption() {
         super("Xor");
     }
@@ -24,7 +25,8 @@ public class XorEncryption<T extends NormalKey> extends CharEncryptionAlgorithmA
 
     /**
      * Encrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
      */
@@ -39,7 +41,8 @@ public class XorEncryption<T extends NormalKey> extends CharEncryptionAlgorithmA
 
     /**
      * Decrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the decryption char that you're looking for
      */

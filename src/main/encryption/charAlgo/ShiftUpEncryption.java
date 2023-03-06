@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 
 public class ShiftUpEncryption<T extends NormalKey> extends CharEncryptionAlgorithmAbstract<T> {
     final private static int NUMBER_OF_LETTERS = 26;
+
     public ShiftUpEncryption() {
         super("ShiftUp");
     }
@@ -31,7 +32,8 @@ public class ShiftUpEncryption<T extends NormalKey> extends CharEncryptionAlgori
 
     /**
      * Encrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
      */
@@ -51,7 +53,8 @@ public class ShiftUpEncryption<T extends NormalKey> extends CharEncryptionAlgori
 
     /**
      * Decrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the decryption char that you're looking for
      */

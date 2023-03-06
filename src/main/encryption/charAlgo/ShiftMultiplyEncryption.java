@@ -22,7 +22,8 @@ public class ShiftMultiplyEncryption<T extends NormalKey> extends CharEncryption
 
     /**
      * Encrypt the char by key.
-     * @param c char to encrypt
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
      */
@@ -52,7 +53,8 @@ public class ShiftMultiplyEncryption<T extends NormalKey> extends CharEncryption
 
     /**
      * decrypt the char by key.
-     * @param c char to decrypt
+     *
+     * @param c   char to decrypt
      * @param key key to use for decrypt
      * @return the decryption char that you're looking for
      */

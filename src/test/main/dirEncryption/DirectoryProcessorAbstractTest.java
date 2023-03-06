@@ -1,7 +1,6 @@
 package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
-
 import keys.NormalKey;
 import org.junit.jupiter.api.AfterAll;
 
@@ -53,7 +52,7 @@ abstract class DirectoryProcessorAbstractTest {
     }
 
     @AfterAll
-    static void cleanFile(){
+    static void cleanFile() {
         deleteDirectory(dataFile);
     }
 
@@ -78,7 +77,8 @@ abstract class DirectoryProcessorAbstractTest {
         try {
             directoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
         } catch (IOException e) {
-            String message = String.format("The folder encryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(), e.getMessage());
+            String message = String.format("The folder encryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(),
+                    e.getMessage());
             fail(message);
         }
         for (int i = 1; i <= numberFiles; i++) {
@@ -92,7 +92,8 @@ abstract class DirectoryProcessorAbstractTest {
         try {
             directoryProcessor.decryptDir(encryptionAlgorithm, normalKey);
         } catch (IOException e) {
-            String message = String.format("The folder decryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(), e.getMessage());
+            String message = String.format("The folder decryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(),
+                    e.getMessage());
             fail(message);
         }
         for (int i = 1; i <= numberFiles; i++) {

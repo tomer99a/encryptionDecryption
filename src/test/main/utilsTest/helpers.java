@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class helpers {
     public static boolean compareTwoFiles(String path1, String path2) {
-        if(path1.equals(path2))
+        if (path1.equals(path2))
             return true;
         File file1 = new File(path1);
         File file2 = new File(path2);

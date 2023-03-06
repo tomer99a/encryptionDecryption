@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.writeToFile;
-import static org.junit.jupiter.api.Assertions.*;
 import static utilsTest.helpers.compareTwoFiles;
 
 public abstract class EncryptionAlgorithmAbstractTest {
@@ -36,15 +36,8 @@ public abstract class EncryptionAlgorithmAbstractTest {
         writeToFile(originalPath, message);
     }
 
-    private String fuckThePath() {
-        String savePath = keyPath.getKey();
-        int randNum = new SecureRandom().nextInt(1000000000);
-        keyPath = new NormalKey(randNum+savePath);
-        return savePath;
-    }
-
     @AfterAll
-    static void cleanFiles(){
+    static void cleanFiles() {
         String[] allPathToDelete = new String[]{originalPath, encryptedPath, decryptedPath, keyPath.getKey()};
         for (String path : allPathToDelete) {
             if (!(new File(path).delete()))
@@ -52,7 +45,27 @@ public abstract class EncryptionAlgorithmAbstractTest {
         }
     }
 
-    protected void encryptTest(IEncryptionAlgorithm<NormalKey> algo){
+    /**
+     * Add suffix only to the file name from the full path
+     *
+     * @param path   original path
+     * @param suffix thing to add at the end of the file name
+     * @return path with changed name
+     */
+    public static String addSuffixToFileNameAtPath(final String path, final String suffix) {
+        File file = new File(path);
+        String fileName = file.getName();
+        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    private String fuckThePath() {
+        String savePath = keyPath.getKey();
+        int randNum = new SecureRandom().nextInt(1000000000);
+        keyPath = new NormalKey(randNum + savePath);
+        return savePath;
+    }
+
+    protected void encryptTest(IEncryptionAlgorithm<NormalKey> algo) {
         try {
             algo.encrypt(originalPath, encryptedPath, keyPath);
         } catch (IOException e) {
@@ -82,18 +95,5 @@ public abstract class EncryptionAlgorithmAbstractTest {
         String savePath = fuckThePath();
         assertThrows(invalidPathException.class, () -> algo.decrypt(encryptedPath, decryptedPath, keyPath));
         keyPath = new NormalKey(savePath);
-    }
-
-
-    /**
-     * Add suffix only to the file name from the full path
-     * @param path original path
-     * @param suffix thing to add at the end of the file name
-     * @return path with changed name
-     */
-    public static String addSuffixToFileNameAtPath(final String path, final String suffix) {
-        File file = new File(path);
-        String fileName = file.getName();
-        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
     }
 }

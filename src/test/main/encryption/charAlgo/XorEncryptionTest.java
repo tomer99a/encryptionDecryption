@@ -12,7 +12,7 @@ class XorEncryptionTest extends EncryptionAlgorithmAbstractTest {
 
     @Test
     @DisplayName("encrypt and decrypt by using xor")
-    void encrypt(){
+    void encrypt() {
         encryptTest(new XorEncryption<>());
         decryptTest(new XorEncryption<>());
     }

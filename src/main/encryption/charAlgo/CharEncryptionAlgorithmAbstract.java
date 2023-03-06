@@ -2,25 +2,20 @@ package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
-
 import keys.NormalKey;
 
 import java.io.IOException;
 
-import static utils.IOMethods.scanAndSubmitFile;
-import static utils.IOMethods.writeToFile;
-import static utils.IOMethods.createFile;
-import static utils.IOMethods.readFile;
+import static utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> extends EncryptionAlgorithmAbstract<T> {
-    protected int key;
-    protected int keyMaxRange;
-
     final static protected char SMALL_A = 'a';
     final static protected char SMALL_Z = 'z';
     final static protected char BIG_A = 'A';
     final static protected char BIG_Z = 'Z';
     final static protected int BOUND_RANDOM_NUMBER = 1000;
+    protected int key;
+    protected int keyMaxRange;
 
     public CharEncryptionAlgorithmAbstract(final String encryptionMethod) {
         super(encryptionMethod);
@@ -33,12 +28,16 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
     }
 
     abstract public char encryptChar(char c, int key);
+
     abstract public char decryptChar(char c, int key);
+
     abstract protected void generateKey();
+
     abstract protected void setKeyMaxRange();
 
     /**
      * Get the key strength - maximal length (number of digits) of the encryption methods.
+     *
      * @return key strength
      */
     public int getKeyStrength() {
@@ -71,6 +70,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
 
     /**
      * Extract key value from file.
+     *
      * @param keyPath the path to the file key
      * @return key value
      */

@@ -1,5 +1,4 @@
 import encryption.IEncryptionAlgorithm;
-
 import logs.*;
 
 import java.io.IOException;
@@ -33,9 +32,9 @@ public class FileEncryptor<T> {
         encryptionEnd.writeMessage();
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final T keyPath){
+    public void decrypt(final String originalPath, final String outputPath, final T keyPath) {
         decryptionStart.writeMessage();
-        try{
+        try {
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
