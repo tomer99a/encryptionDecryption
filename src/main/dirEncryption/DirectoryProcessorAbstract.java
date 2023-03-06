@@ -24,8 +24,8 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         }
         this.dirPath = dirPath;
 
-        encryptDir = new File(dirPath + File.separator + "encrypted");
-        decryptDir = new File(dirPath + File.separator + "decrypted");
+        encryptDir = new File(dirPath, "encrypted");
+        decryptDir = new File(dirPath, "decrypted");
 
         // save logs to help.
         LogBasic logBasic = new LogBasic(this.getClass());
