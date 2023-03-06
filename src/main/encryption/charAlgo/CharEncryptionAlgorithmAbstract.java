@@ -2,15 +2,11 @@ package encryption.charAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
-
 import keys.NormalKey;
 
 import java.io.IOException;
 
-import static utils.IOMethods.scanAndSubmitFile;
-import static utils.IOMethods.writeToFile;
-import static utils.IOMethods.createFile;
-import static utils.IOMethods.readFile;
+import static utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
     protected int key;
@@ -33,12 +29,16 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
     }
 
     abstract public char encryptChar(char c, int key);
+
     abstract public char decryptChar(char c, int key);
+
     abstract protected void generateKey();
+
     abstract protected void setKeyMaxRange();
 
     /**
      * Get the key strength - maximal length (number of digits) of the encryption methods.
+     *
      * @return key strength
      */
     public int getKeyStrength() {
@@ -71,6 +71,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
 
     /**
      * Extract key value from file.
+     *
      * @param keyPath the path to the file key
      * @return key value
      */

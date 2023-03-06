@@ -1,7 +1,5 @@
 package encryption.charAlgo;
 
-import keys.NormalKey;
-
 import java.util.Comparator;
 
 public class EncryptionAlgorithmByKeyStrengthComparator implements Comparator<CharEncryptionAlgorithmAbstract> {
