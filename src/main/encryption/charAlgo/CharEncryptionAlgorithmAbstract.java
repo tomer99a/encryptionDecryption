@@ -51,6 +51,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
         createFile(keyPathStr);
+        deleteFile(outputPath);
         createFile(outputPath);
 
         scanAndSubmitFile(true, originalPath, outputPath, this, key);
@@ -63,6 +64,7 @@ public abstract class CharEncryptionAlgorithmAbstract<T extends NormalKey> exten
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 
+        deleteFile(outputPath);
         createFile(outputPath);
         scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey);
         System.out.println("Location of the decrypted file is - " + outputPath);
