@@ -65,8 +65,8 @@ public class Main {
         DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
 
         try {
-            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption<>(), normalKey);
-//            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption<>(), normalKey);
+            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption(), normalKey);
+//            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption(), normalKey);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

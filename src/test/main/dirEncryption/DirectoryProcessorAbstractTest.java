@@ -25,7 +25,6 @@ abstract class DirectoryProcessorAbstractTest {
     public DirectoryProcessorAbstractTest() throws IOException {
         boolean didCreate;
         dataFile = new File(Files.createTempDirectory("data").toString());
-//        dataFile = new File("C:\\Users\\Tomer\\AppData\\Local\\Temp\\data2706900781986731736");
         for (int i = 1; i <= numberFiles; i++) {
             File file = new File(dataFile, "file" + i + ".txt");
             didCreate = file.createNewFile();
@@ -53,7 +52,7 @@ abstract class DirectoryProcessorAbstractTest {
 
     @AfterAll
     static void cleanFile() {
-        deleteDirectory(dataFile);
+//        deleteDirectory(dataFile);
     }
 
     private String buildBigText() {
@@ -100,6 +99,7 @@ abstract class DirectoryProcessorAbstractTest {
             String file1 = dataFile.getPath() + File.separator + "file" + i + ".txt";
             String file2 = decryptFile.getPath() + File.separator + "file" + i + ".txt";
             assertTrue(compareTwoFiles(file1, file2));
+            System.out.println(new File(file1).getName() + " is good");
         }
     }
 }

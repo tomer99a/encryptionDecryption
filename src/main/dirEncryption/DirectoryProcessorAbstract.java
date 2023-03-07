@@ -2,7 +2,7 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import exceptions.invalidPathException;
-import logs.*;
+import log.HandlerEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +12,6 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
     protected final String dirPath;
     protected final File encryptDir;
     protected final File decryptDir;
-    protected final LogStart encryptionStart;
-    protected final LogEnd encryptionEnd;
-    protected final LogStart decryptionStart;
-    protected final LogEnd decryptionEnd;
 
     public DirectoryProcessorAbstract(String dirPath) throws IOException {
         // make sour that we get a dir path and save it
@@ -27,16 +23,6 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
 
         encryptDir = new File(dirPath, "encrypted");
         decryptDir = new File(dirPath, "decrypted");
-
-        // save logs to help.
-        LogBasic logBasic = new LogBasic(this.getClass());
-        LogEncrypt logEncrypt = new LogEncrypt(logBasic);
-        LogDecrypt logDecrypt = new LogDecrypt(logBasic);
-
-        encryptionStart = new LogStart(logEncrypt);
-        encryptionEnd = new LogEnd(logEncrypt);
-        decryptionStart = new LogStart(logDecrypt);
-        decryptionEnd = new LogEnd(logDecrypt);
     }
 
     protected void addDirSafe(File file) throws IOException {
@@ -50,13 +36,14 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
     }
 
     protected void handelEncrypt(String fileName, File file, IEncryptionAlgorithm<T> algo, T key) {
+        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
+        handlerEvent.encrypt(true);
         String encryptPath = encryptDir.getPath() + File.separator + fileName;
-        encryptionStart.writeMessage(fileName + " is");
         try {
             algo.encrypt(file.getPath(), encryptPath, key);
         } catch (IOException e) {
             System.err.println(e.getMessage() + "\nThe file " + fileName + " didn't encrypt");
         }
-        encryptionEnd.writeMessage(fileName + " is");
+        handlerEvent.encrypt(false);
     }
 }

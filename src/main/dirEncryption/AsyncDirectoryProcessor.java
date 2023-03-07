@@ -44,7 +44,6 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-        encryptionEnd.writeMessage("All the files");
     }
 
     @Override

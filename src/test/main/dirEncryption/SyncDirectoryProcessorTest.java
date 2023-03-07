@@ -21,7 +21,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
     void encryptDirXor() {
         try {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
-            encryptDirTest(syncDirectoryProcessor, new XorEncryption<>());
+            encryptDirTest(syncDirectoryProcessor, new XorEncryption());
         } catch (IOException e) {
             String message = String.format("The folder encryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
             fail(message);
@@ -33,7 +33,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
     void encryptDirPlus() {
         try {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
-            encryptDirTest(syncDirectoryProcessor, new ShiftUpEncryption<>());
+            encryptDirTest(syncDirectoryProcessor, new ShiftUpEncryption());
         } catch (IOException e) {
             String message = String.format("The folder encryption failed\nAlgo - plus\nError message - %s", e.getMessage());
             fail(message);
@@ -45,7 +45,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
     void encryptDirMulti() {
         try {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
-            encryptDirTest(syncDirectoryProcessor, new ShiftMultiplyEncryption<>());
+            encryptDirTest(syncDirectoryProcessor, new ShiftMultiplyEncryption());
         } catch (IOException e) {
             String message = String.format("The folder encryption failed\nAlgo - multi\nError message - %s", e.getMessage());
             fail(message);
@@ -57,11 +57,25 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
     void decryptDirXor() {
         try {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
-            IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new XorEncryption<>();
+            IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new XorEncryption();
             syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
         } catch (IOException e) {
             String message = String.format("The folder decryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
+            fail(message);
+        }
+    }
+
+    @Test
+    @DisplayName("check decryption of dir in a sync with plus")
+    void decryptDirPlus() {
+        try {
+            SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
+            IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new ShiftUpEncryption();
+            syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
+            decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
+        } catch (IOException e) {
+            String message = String.format("The folder decryption failed\nAlgo - Plus\nError message - %s", e.getMessage());
             fail(message);
         }
     }

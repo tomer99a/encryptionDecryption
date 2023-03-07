@@ -1,6 +1,7 @@
 package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
+import log.HandlerEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +28,11 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 handelEncrypt(fileName, file, algo, key);
             }
         }
-        encryptionEnd.writeMessage("All the files");
     }
 
     @Override
     public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
+        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
         addDirSafe(decryptDir);
         File[] listOfFiles = encryptDir.listFiles();
 
@@ -43,15 +44,14 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     continue;
                 }
                 String decryptPath = decryptDir.getPath() + File.separator + fileName;
-                decryptionStart.writeMessage();
+                handlerEvent.decrypt(true);
                 try {
                     algo.decrypt(file.getPath(), decryptPath, key);
                 } catch (IOException e) {
                     System.err.println(e.getMessage() + "\nThe file %s didnt decrypt"); //TODO: change %s
                 }
-                decryptionEnd.writeMessage();
+                handlerEvent.decrypt(false);
             }
         }
-        decryptionEnd.writeMessage("All the files");
     }
 }

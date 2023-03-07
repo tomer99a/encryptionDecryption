@@ -23,7 +23,7 @@ public class ShiftUpEncryption extends CharEncryptionAlgorithmAbstract {
 
         // if the random number is divided by The number of letters that
         // we encrypt the encryption won't do anything's
-        while (key % (BIG_Z - BIG_A) == 0) {
+        while (key % (BIG_Z - BIG_A + 1) == 0) {
             key = new SecureRandom().nextInt(BOUND_RANDOM_NUMBER);
         }
     }
