@@ -1,9 +1,13 @@
+import dirEncryption.AsyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
+import encryption.charAlgo.XorEncryption;
 import encryption.generalsAlgo.DoubleEncryption;
 import keys.DoubleKey;
+import keys.NormalKey;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -52,8 +56,25 @@ public class Main {
         }
     }
 
+    private static void dirEncrypt() {
+        String basePath = "src" + File.separator + "main" + File.separator + "data";
+        String keyPath = basePath + File.separator + "key.txt";
+        String keyPath1 = basePath + File.separator + "key1.txt";
+        String keyPath2 = basePath + File.separator + "key2.txt";
+        NormalKey normalKey = new NormalKey(keyPath);
+        DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
+
+        try {
+            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption<>(), normalKey);
+//            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption<>(), normalKey);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
     public static void main(String[] args) {
-        menu();
+        dirEncrypt();
         System.out.println("Done program");
     }
 }

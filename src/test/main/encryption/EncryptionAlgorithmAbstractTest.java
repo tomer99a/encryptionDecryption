@@ -5,7 +5,6 @@ import keys.NormalKey;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
@@ -13,8 +12,9 @@ import java.security.SecureRandom;
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.writeToFile;
+import static utilsTest.helpers.compareTwoFiles;
 
-public class EncryptionAlgorithmAbstractTest {
+public abstract class EncryptionAlgorithmAbstractTest {
     static protected String originalPath;
     static protected String encryptedPath;
     static protected String decryptedPath;
@@ -40,7 +40,6 @@ public class EncryptionAlgorithmAbstractTest {
     static void cleanFiles() {
         String[] allPathToDelete = new String[]{originalPath, encryptedPath, decryptedPath, keyPath.getKey()};
         for (String path : allPathToDelete) {
-            System.out.println(path);
             if (!(new File(path).delete()))
                 System.err.println("the file " + path + " didn't deleted!!!");
         }
