@@ -52,7 +52,7 @@ abstract class DirectoryProcessorAbstractTest {
 
     @AfterAll
     static void cleanFile() {
-//        deleteDirectory(dataFile);
+        deleteDirectory(dataFile);
     }
 
     private String buildBigText() {

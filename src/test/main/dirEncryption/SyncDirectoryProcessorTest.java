@@ -23,7 +23,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
             encryptDirTest(syncDirectoryProcessor, new XorEncryption());
         } catch (IOException e) {
-            String message = String.format("The folder encryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder encryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
             fail(message);
         }
     }
@@ -35,7 +35,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
             encryptDirTest(syncDirectoryProcessor, new ShiftUpEncryption());
         } catch (IOException e) {
-            String message = String.format("The folder encryption failed\nAlgo - plus\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder encryption failed\nAlgo - plus\nError message - %s", e.getMessage());
             fail(message);
         }
     }
@@ -47,7 +47,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
             encryptDirTest(syncDirectoryProcessor, new ShiftMultiplyEncryption());
         } catch (IOException e) {
-            String message = String.format("The folder encryption failed\nAlgo - multi\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder encryption failed\nAlgo - multi\nError message - %s", e.getMessage());
             fail(message);
         }
     }
@@ -61,7 +61,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
         } catch (IOException e) {
-            String message = String.format("The folder decryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder decryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
             fail(message);
         }
     }
@@ -75,7 +75,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
         } catch (IOException e) {
-            String message = String.format("The folder decryption failed\nAlgo - Plus\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder decryption failed\nAlgo - Plus\nError message - %s", e.getMessage());
             fail(message);
         }
     }
@@ -89,7 +89,7 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
         } catch (IOException e) {
-            String message = String.format("The folder decryption failed\nAlgo - Multi\nError message - %s", e.getMessage());
+            String message = String.format("The sync folder decryption failed\nAlgo - Multi\nError message - %s", e.getMessage());
             fail(message);
         }
     }
