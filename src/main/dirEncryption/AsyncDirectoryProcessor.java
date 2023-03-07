@@ -1,6 +1,7 @@
 package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
+import log.HandlerEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,10 +45,43 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
+
+        System.out.println("END ENCRYPTION ALL");
     }
 
     @Override
     public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
+        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
+        addDirSafe(decryptDir);
+        File[] listOfFiles = encryptDir.listFiles();
 
+        assert listOfFiles != null;
+        ArrayList<Thread> threads = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile() && file.getName().endsWith(".txt")) {
+                String fileName = file.getName();
+                if (fileName.contains("key")) {
+                    continue;
+                }
+                Runnable myThread = () -> {
+                    handelDecrypt(fileName, file, algo, key);
+                    Thread.currentThread().setName(fileName);
+                };
+
+                Thread run = new Thread(myThread);
+                threads.add(run);
+                run.start();
+            }
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+        System.out.println("END DECRYPTION ALL");
     }
 }

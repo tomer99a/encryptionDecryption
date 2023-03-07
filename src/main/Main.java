@@ -1,7 +1,7 @@
 import dirEncryption.AsyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
-import encryption.charAlgo.XorEncryption;
+import encryption.charAlgo.ShiftUpEncryption;
 import encryption.generalsAlgo.DoubleEncryption;
 import keys.DoubleKey;
 import keys.NormalKey;
@@ -65,8 +65,8 @@ public class Main {
         DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
 
         try {
-            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new XorEncryption(), normalKey);
-//            new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new XorEncryption(), normalKey);
+            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new ShiftUpEncryption(), normalKey);
+            new AsyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new ShiftUpEncryption(), normalKey);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

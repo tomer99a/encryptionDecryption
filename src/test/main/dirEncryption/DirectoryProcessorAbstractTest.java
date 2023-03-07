@@ -23,12 +23,12 @@ abstract class DirectoryProcessorAbstractTest {
     final protected int numberFiles = 5;
 
     public DirectoryProcessorAbstractTest() throws IOException {
-        boolean didCreate;
         dataFile = new File(Files.createTempDirectory("data").toString());
         for (int i = 1; i <= numberFiles; i++) {
             File file = new File(dataFile, "file" + i + ".txt");
-            didCreate = file.createNewFile();
-            writeToFile(file.getPath(), buildBigText());
+            if (file.createNewFile()) {
+                writeToFile(file.getPath(), buildBigText());
+            }
         }
         System.out.println("make files:");
         System.out.println(dataFile.getAbsolutePath());

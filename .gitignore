@@ -1,5 +1,6 @@
 /src/main/data/key*.txt
 /src/main/data/encrypted
+/src/main/data/decrypted
 /*.iml
 /.idea
 /target/

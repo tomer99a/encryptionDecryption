@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
-import static utilsTest.helpers.compareTwoFiles;
 
 class DoubleEncryptionTest extends EncryptionAlgorithmAbstractTest {
     private final DoubleKey doubleKeyPath;

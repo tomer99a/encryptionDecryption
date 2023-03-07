@@ -46,4 +46,16 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         }
         handlerEvent.encrypt(false);
     }
+
+    protected void handelDecrypt(String fileName, File file, IEncryptionAlgorithm<T> algo, T key) {
+        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
+        handlerEvent.decrypt(true);
+        String decryptPath = decryptDir.getPath() + File.separator + fileName;
+        try {
+            algo.decrypt(file.getPath(), decryptPath, key);
+        } catch (IOException e) {
+            System.err.println(e.getMessage() + "\nThe file " + fileName + " didn't decrypt");
+        }
+        handlerEvent.decrypt(false);
+    }
 }

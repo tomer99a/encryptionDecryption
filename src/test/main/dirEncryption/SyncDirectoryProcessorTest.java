@@ -79,4 +79,18 @@ class SyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             fail(message);
         }
     }
+
+    @Test
+    @DisplayName("check decryption of dir in a sync with multi")
+    void decryptDirMulti() {
+        try {
+            SyncDirectoryProcessor<NormalKey> syncDirectoryProcessor = new SyncDirectoryProcessor<>(dataFile.getPath());
+            IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new ShiftMultiplyEncryption();
+            syncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
+            decryptDirTest(syncDirectoryProcessor, encryptionAlgorithm);
+        } catch (IOException e) {
+            String message = String.format("The folder decryption failed\nAlgo - Multi\nError message - %s", e.getMessage());
+            fail(message);
+        }
+    }
 }

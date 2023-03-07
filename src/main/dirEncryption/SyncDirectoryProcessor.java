@@ -43,14 +43,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 if (fileName.contains("key")) {
                     continue;
                 }
-                String decryptPath = decryptDir.getPath() + File.separator + fileName;
-                handlerEvent.decrypt(true);
-                try {
-                    algo.decrypt(file.getPath(), decryptPath, key);
-                } catch (IOException e) {
-                    System.err.println(e.getMessage() + "\nThe file %s didnt decrypt"); //TODO: change %s
-                }
-                handlerEvent.decrypt(false);
+                handelDecrypt(fileName, file, algo, key);
             }
         }
     }
