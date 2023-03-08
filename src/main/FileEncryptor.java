@@ -13,23 +13,23 @@ public class FileEncryptor<T> {
     }
 
     public final void encrypt(final String originalPath, final String outputPath, final T keyPath) {
-        this.handlerEvent.encrypt(true);
+        this.handlerEvent.encrypt(true, true);
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        this.handlerEvent.encrypt(false);
+        this.handlerEvent.encrypt(false, true);
 
     }
 
     public final void decrypt(final String originalPath, final String outputPath, final T keyPath) {
-        this.handlerEvent.encrypt(true);
+        this.handlerEvent.encrypt(true, true);
         try {
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        this.handlerEvent.decrypt(false);
+        this.handlerEvent.decrypt(false, true);
     }
 }

@@ -14,8 +14,9 @@ public abstract class EventAbstract {
     /**
      * build good message depend on the param
      * @param startStatus say if the event start (true) or end (false)
+     * @param single say if the event occur on single thing or all of them
      */
-    abstract void writeMessage(boolean startStatus);
+    abstract void writeMessage(boolean startStatus, boolean single);
 
     /**
      * write the message to the logger.

@@ -10,9 +10,13 @@ public class Register {
         subscribers.add(eventAbstract);
     }
 
-    public void publish(boolean startStatus) {
+    /**
+     * @param startStatus say if the event start (true) or end (false)
+     * @param single say if the event occur on single thing or all of them
+     */
+    public void publish(boolean startStatus, boolean single) {
         for (EventAbstract eventAbstract : subscribers) {
-            eventAbstract.writeMessage(startStatus);
+            eventAbstract.writeMessage(startStatus, single);
         }
     }
 }

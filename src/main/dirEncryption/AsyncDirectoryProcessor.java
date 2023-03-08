@@ -45,8 +45,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-
-        System.out.println("END ENCRYPTION ALL");
+        new HandlerEvent(algo.getClass()).encrypt(false, false);
     }
 
     @Override
@@ -80,7 +79,6 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-
-        System.out.println("END DECRYPTION ALL");
+        new HandlerEvent(algo.getClass()).decrypt(false, false);
     }
 }

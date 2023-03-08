@@ -28,6 +28,8 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 handelEncrypt(fileName, file, algo, key);
             }
         }
+
+        new HandlerEvent(algo.getClass()).encrypt(false, false);
     }
 
     @Override
@@ -46,5 +48,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 handelDecrypt(fileName, file, algo, key);
             }
         }
+
+        new HandlerEvent(algo.getClass()).decrypt(false, false);
     }
 }

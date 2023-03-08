@@ -12,16 +12,18 @@ public class HandlerEvent {
     /**
      * build good message depend on the param
      * @param startStatus say if the event start (true) or end (false)
+     * @param single say if the event occur on single thing or all of them
      */
-    public void encrypt(boolean startStatus) {
-        encryption.publish(startStatus);
+    public void encrypt(boolean startStatus, boolean single) {
+        encryption.publish(startStatus, single);
     }
 
     /**
      * build good message depend on the param
      * @param startStatus say if the event start (true) or end (false)
+     * @param single say if the event occur on single thing or all of them
      */
-    public void decrypt(boolean startStatus) {
-        decryption.publish(startStatus);
+    public void decrypt(boolean startStatus, boolean single) {
+        decryption.publish(startStatus, single);
     }
 }
