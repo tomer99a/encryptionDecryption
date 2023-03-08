@@ -21,6 +21,8 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
         assert listOfFiles != null;
         ArrayList<Thread> threads = new ArrayList<>();
+
+        startTimeMillis = System.currentTimeMillis();
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
@@ -46,6 +48,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
             }
         }
         new HandlerEvent(algo.getClass()).encrypt(false, false);
+        calculateTime("encrypt");
     }
 
     @Override
@@ -55,6 +58,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
         assert listOfFiles != null;
         ArrayList<Thread> threads = new ArrayList<>();
+        startTimeMillis = System.currentTimeMillis();
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
@@ -80,5 +84,6 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
             }
         }
         new HandlerEvent(algo.getClass()).decrypt(false, false);
+        calculateTime("decrypt");
     }
 }

@@ -1,4 +1,5 @@
 import dirEncryption.AsyncDirectoryProcessor;
+import dirEncryption.SyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.ShiftUpEncryption;
@@ -64,11 +65,50 @@ public class Main {
         NormalKey normalKey = new NormalKey(keyPath);
         DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
 
-        try {
-            new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new ShiftUpEncryption(), normalKey);
-            new AsyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new ShiftUpEncryption(), normalKey);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        String invalidChoiceErrorMessage = "You should write only number between 1 to 5!!!";
+        boolean doneLoop = false;
+        Scanner myScanner = new Scanner(System.in);
+
+        while (!doneLoop) {
+            int choice;
+
+            System.out.println("Hello user! please choose number:" +
+                    "\n1 - Encryption folder async (with threads)" +
+                    "\n2 - Decryption folder async (with threads)" +
+                    "\n3 - Encryption folder sync (without threads)" +
+                    "\n4 - Encryption folder sync (without threads)" +
+                    "\n5 - Exit");
+
+            try {
+                choice = Integer.parseInt(myScanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println(invalidChoiceErrorMessage);
+                continue;
+            }
+            try {
+                switch (choice) {
+                    case 1:
+                        new AsyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new ShiftUpEncryption(), normalKey);
+                        break;
+                    case 2:
+                        new AsyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new ShiftUpEncryption(), normalKey);
+                        break;
+                    case 3:
+                        new SyncDirectoryProcessor<NormalKey>(basePath).encryptDir(new ShiftUpEncryption(), normalKey);
+                        break;
+                    case 4:
+                        new SyncDirectoryProcessor<NormalKey>(basePath).decryptDir(new ShiftUpEncryption(), normalKey);
+                        break;
+                    case 5:
+                        doneLoop = true;
+                        break;
+                    default:
+                        System.err.println(invalidChoiceErrorMessage);
+                        break;
+                }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 

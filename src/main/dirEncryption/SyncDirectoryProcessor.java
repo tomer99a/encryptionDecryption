@@ -19,6 +19,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         File[] listOfFiles = folder.listFiles();
 
         assert listOfFiles != null;
+        startTimeMillis = System.currentTimeMillis();
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
@@ -30,6 +31,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         }
 
         new HandlerEvent(algo.getClass()).encrypt(false, false);
+        calculateTime("encrypt");
     }
 
     @Override
@@ -39,6 +41,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         File[] listOfFiles = encryptDir.listFiles();
 
         assert listOfFiles != null;
+        startTimeMillis = System.currentTimeMillis();
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
@@ -50,5 +53,6 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         }
 
         new HandlerEvent(algo.getClass()).decrypt(false, false);
+        calculateTime("encrypt");
     }
 }

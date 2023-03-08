@@ -12,6 +12,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
     protected final String dirPath;
     protected final File encryptDir;
     protected final File decryptDir;
+    protected long startTimeMillis;
 
     public DirectoryProcessorAbstract(String dirPath) throws IOException {
         // make sour that we get a dir path and save it
@@ -23,6 +24,18 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
 
         encryptDir = new File(dirPath, "encrypted");
         decryptDir = new File(dirPath, "decrypted");
+    }
+
+    protected void calculateTime(String action) {
+        long end = System.currentTimeMillis();
+        float msec = end - startTimeMillis;
+        // converting it into seconds
+        float sec= msec/1000F;
+        // converting it into minutes
+        float minutes=sec/60F;
+        System.out.printf("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec);
+        System.out.println();
+
     }
 
     protected void addDirSafe(File file) throws IOException {
