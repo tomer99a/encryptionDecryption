@@ -51,7 +51,6 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
     @Override
     public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
         addDirSafe(decryptDir);
         File[] listOfFiles = encryptDir.listFiles();
 

@@ -13,7 +13,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
     }
 
     @Override
-    public void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
+    public final void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
         addDirSafe(encryptDir);
         File folder = new File(dirPath);
         File[] listOfFiles = folder.listFiles();
@@ -31,7 +31,7 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
     }
 
     @Override
-    public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
+    public final void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
         HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
         addDirSafe(decryptDir);
         File[] listOfFiles = encryptDir.listFiles();

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +21,7 @@ abstract class DirectoryProcessorAbstractTest {
     final protected File decryptFile;
     final protected NormalKey normalKey;
 
-    final protected int numberFiles = 5;
+    final protected int numberFiles = 25;
 
     public DirectoryProcessorAbstractTest() throws IOException {
         dataFile = new File(Files.createTempDirectory("data").toString());
@@ -58,7 +59,7 @@ abstract class DirectoryProcessorAbstractTest {
     private String buildBigText() {
         StringBuilder str = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i < 2000000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             if (secureRandom.nextInt(6) == 3) {
                 str.append(" ");
                 continue;
@@ -69,6 +70,7 @@ abstract class DirectoryProcessorAbstractTest {
             }
             str.append((char) (secureRandom.nextInt(94) + 33));
         }
+        str.append("TOMER!!!");
         return str.toString();
     }
 
@@ -95,11 +97,27 @@ abstract class DirectoryProcessorAbstractTest {
                     e.getMessage());
             fail(message);
         }
+        ArrayList<Thread> threads = new ArrayList<>();
         for (int i = 1; i <= numberFiles; i++) {
             String file1 = dataFile.getPath() + File.separator + "file" + i + ".txt";
             String file2 = decryptFile.getPath() + File.separator + "file" + i + ".txt";
-            assertTrue(compareTwoFiles(file1, file2));
-            System.out.println(new File(file1).getName() + " is good");
+            Runnable myThread = () -> {
+                Thread.currentThread().setName(new File(file1).getName());
+                assertTrue(compareTwoFiles(file1, file2));
+                System.out.println(new File(file1).getName() + " is good");
+            };
+
+            Thread run = new Thread(myThread);
+            threads.add(run);
+            run.start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 }
