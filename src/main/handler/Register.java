@@ -1,15 +1,15 @@
 package handler;
 
-import log.EventLoggerAbstract;
+import log.Subscriber;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Register {
-    List<EventLoggerAbstract> subscribers = new LinkedList<>();
+    List<Subscriber> subscribers = new LinkedList<>();
 
-    public void logRegister(EventLoggerAbstract eventLoggerAbstract) {
-        subscribers.add(eventLoggerAbstract);
+    public void eventLogRegister(Subscriber subscriber) {
+        subscribers.add(subscriber);
     }
 
     /**
@@ -17,8 +17,8 @@ public class Register {
      * @param single say if the event occur on single thing or all of them
      */
     public void publish(boolean startStatus, boolean single) {
-        for (EventLoggerAbstract eventLoggerAbstract : subscribers) {
-            eventLoggerAbstract.writeMessage(startStatus, single);
+        for (Subscriber subscriber : subscribers) {
+            subscriber.eventAction(startStatus, single);
         }
     }
 }

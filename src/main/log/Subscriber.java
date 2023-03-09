@@ -4,11 +4,11 @@ import handler.Register;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public abstract class EventLoggerAbstract {
+public abstract class Subscriber {
 
     private final Logger logger;
 
-    public EventLoggerAbstract(final Class<?> clazz) {
+    public Subscriber(final Class<?> clazz) {
         logger = LogManager.getLogger(clazz);
     }
 
@@ -17,7 +17,7 @@ public abstract class EventLoggerAbstract {
      * @param startStatus say if the event start (true) or end (false)
      * @param single say if the event occur on single thing or all of them
      */
-    public abstract void writeMessage(boolean startStatus, boolean single);
+    public abstract void eventAction(boolean startStatus, boolean single);
 
     /**
      * write the message to the logger.
@@ -28,6 +28,6 @@ public abstract class EventLoggerAbstract {
     }
 
     public void subscribe(Register register) {
-        register.logRegister(this);
+        register.eventLogRegister(this);
     }
 }

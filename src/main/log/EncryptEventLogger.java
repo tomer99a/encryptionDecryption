@@ -1,6 +1,6 @@
 package log;
 
-public class EncryptEventLogger extends EventLoggerAbstract {
+public class EncryptEventLogger extends Subscriber {
     public EncryptEventLogger(Class<?> clazz) {
         super(clazz);
     }
@@ -11,7 +11,7 @@ public class EncryptEventLogger extends EventLoggerAbstract {
      * @param single say if the event occur on single thing or all of them
      */
     @Override
-    public void writeMessage(boolean startStatus, boolean single) {
+    public void eventAction(boolean startStatus, boolean single) {
         String message = startStatus ? "Start " : "End ";
         if (!single) {
             message = "All the files " + message.toLowerCase();
