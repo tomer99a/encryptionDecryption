@@ -36,7 +36,6 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
     @Override
     public final void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        EventHandler eventHandler = new EventHandler(algo.getClass());
         addDirSafe(decryptDir);
         File[] listOfFiles = encryptDir.listFiles();
 

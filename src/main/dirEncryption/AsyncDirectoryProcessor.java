@@ -15,50 +15,23 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
     @Override
     public void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        addDirSafe(encryptDir);
-        File folder = new File(dirPath);
-        File[] listOfFiles = folder.listFiles();
-
-        assert listOfFiles != null;
-        ArrayList<Thread> threads = new ArrayList<>();
-
-        startTimeMillis = System.currentTimeMillis();
-        for (File file : listOfFiles) {
-            if (file.isFile() && file.getName().endsWith(".txt")) {
-                String fileName = file.getName();
-                if (fileName.contains("key")) {
-                    continue;
-                }
-                Runnable myThread = () -> {
-                    handleEncrypt(fileName, file, algo, key);
-                    Thread.currentThread().setName(fileName);
-                };
-
-                Thread run = new Thread(myThread);
-                threads.add(run);
-                run.start();
-            }
-        }
-
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.err.println(e.getMessage());
-            }
-        }
+        help(algo, key, new File(dirPath), encryptDir, true);
         new EventHandler(algo.getClass()).encrypt(false, false);
-        calculateTime("encrypt");
     }
 
     @Override
     public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        addDirSafe(decryptDir);
-        File[] listOfFiles = encryptDir.listFiles();
+        help(algo, key, encryptDir, decryptDir, false);
+        new EventHandler(algo.getClass()).decrypt(false, false);
+    }
 
+    private void help(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException {
+        addDirSafe(outputFolder);
+        File[] listOfFiles = inputFolder.listFiles();
         assert listOfFiles != null;
         ArrayList<Thread> threads = new ArrayList<>();
         startTimeMillis = System.currentTimeMillis();
+
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
@@ -66,10 +39,19 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     continue;
                 }
                 Runnable myThread = () -> {
-                    handleDecrypt(fileName, file, algo, key);
                     Thread.currentThread().setName(fileName);
+                    String outputPath = outputFolder.getPath() + File.separator + fileName;
+                    try {
+                        if (outputFolder.getPath().contains("encrypted")) {
+                            algo.encrypt(file.getPath(), outputPath, key);
+                        } else {
+                            algo.decrypt(file.getPath(), outputPath, key);
+                        }
+                    } catch (IOException e) {
+                        String action = isEncrypt ? "encryption" : "decryption";
+                        System.err.println(e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
+                    }
                 };
-
                 Thread run = new Thread(myThread);
                 threads.add(run);
                 run.start();
@@ -83,7 +65,6 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-        new EventHandler(algo.getClass()).decrypt(false, false);
-        calculateTime("decrypt");
+        calculateTime(isEncrypt ? "encrypt" : "decrypt");
     }
 }
