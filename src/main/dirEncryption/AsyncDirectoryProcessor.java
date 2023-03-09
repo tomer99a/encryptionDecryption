@@ -40,17 +40,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 }
                 Runnable myThread = () -> {
                     Thread.currentThread().setName(fileName);
-                    String outputPath = outputFolder.getPath() + File.separator + fileName;
-                    try {
-                        if (outputFolder.getPath().contains("encrypted")) {
-                            algo.encrypt(file.getPath(), outputPath, key);
-                        } else {
-                            algo.decrypt(file.getPath(), outputPath, key);
-                        }
-                    } catch (IOException e) {
-                        String action = isEncrypt ? "encryption" : "decryption";
-                        System.err.println(e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
-                    }
+                    useAlgo(algo, key, fileName, outputFolder, file, isEncrypt);
                 };
                 Thread run = new Thread(myThread);
                 threads.add(run);

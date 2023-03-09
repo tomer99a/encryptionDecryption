@@ -28,7 +28,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void actualEncrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
@@ -43,7 +43,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void actualDecrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 

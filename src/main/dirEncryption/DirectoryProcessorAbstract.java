@@ -34,8 +34,6 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         // converting it into minutes
         float minutes=sec/60F;
         System.out.printf("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec);
-        System.out.println();
-
     }
 
     protected void addDirSafe(File file) throws IOException {
@@ -45,6 +43,20 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
             }
         } else if (!file.mkdir()) {
             throw new IOException();
+        }
+    }
+
+    protected void useAlgo(IEncryptionAlgorithm<T> algo, T key, String fileName, File outputFolder, File file, boolean isEncrypt) {
+        String outputPath = outputFolder.getPath() + File.separator + fileName;
+        try {
+            if (outputFolder.getPath().contains("encrypted")) {
+                algo.encrypt(file.getPath(), outputPath, key);
+            } else {
+                algo.decrypt(file.getPath(), outputPath, key);
+            }
+        } catch (IOException e) {
+            String action = isEncrypt ? "encryption" : "decryption";
+            System.err.println(e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
         }
     }
 

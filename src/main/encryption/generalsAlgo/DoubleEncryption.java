@@ -24,7 +24,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
     }
 
     @Override
-    public void encrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
+    public void actualEncrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
@@ -37,7 +37,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
     }
 
     @Override
-    public void decrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
+    public void actualDecrypt(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 

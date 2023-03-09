@@ -14,44 +14,33 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
     @Override
     public final void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        addDirSafe(encryptDir);
-        File folder = new File(dirPath);
-        File[] listOfFiles = folder.listFiles();
-
-        assert listOfFiles != null;
-        startTimeMillis = System.currentTimeMillis();
-        for (File file : listOfFiles) {
-            if (file.isFile() && file.getName().endsWith(".txt")) {
-                String fileName = file.getName();
-                if (fileName.contains("key")) {
-                    continue;
-                }
-                handleEncrypt(fileName, file, algo, key);
-            }
-        }
+        help(algo, key, new File(dirPath), encryptDir, true);
 
         new EventHandler(algo.getClass()).encrypt(false, false);
-        calculateTime("encrypt");
     }
 
     @Override
     public final void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        addDirSafe(decryptDir);
-        File[] listOfFiles = encryptDir.listFiles();
+        help(algo, key, encryptDir, decryptDir, false);
 
+        new EventHandler(algo.getClass()).decrypt(false, false);
+    }
+
+    private void help(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException {
+        addDirSafe(outputFolder);
+        File[] listOfFiles = inputFolder.listFiles();
         assert listOfFiles != null;
         startTimeMillis = System.currentTimeMillis();
+
         for (File file : listOfFiles) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
                 String fileName = file.getName();
                 if (fileName.contains("key")) {
                     continue;
                 }
-                handleDecrypt(fileName, file, algo, key);
+                useAlgo(algo, key, fileName, outputFolder, file, isEncrypt);
             }
         }
-
-        new EventHandler(algo.getClass()).decrypt(false, false);
-        calculateTime("encrypt");
+        calculateTime(isEncrypt ? "encrypt" : "decrypt");
     }
 }

@@ -48,7 +48,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         return keyMaxRange;
     }
 
-    public void encrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void actualEncrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
         createFile(keyPathStr);
         deleteFile(outputPath);
@@ -60,7 +60,7 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPathStr, System.lineSeparator());
     }
 
-    public void decrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
+    public void actualDecrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 
