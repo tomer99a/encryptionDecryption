@@ -1,7 +1,7 @@
 package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
-import log.HandlerEvent;
+import handler.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     continue;
                 }
                 Runnable myThread = () -> {
-                    handelEncrypt(fileName, file, algo, key);
+                    handleEncrypt(fileName, file, algo, key);
                     Thread.currentThread().setName(fileName);
                 };
 
@@ -47,7 +47,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-        new HandlerEvent(algo.getClass()).encrypt(false, false);
+        new EventHandler(algo.getClass()).encrypt(false, false);
         calculateTime("encrypt");
     }
 
@@ -66,7 +66,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     continue;
                 }
                 Runnable myThread = () -> {
-                    handelDecrypt(fileName, file, algo, key);
+                    handleDecrypt(fileName, file, algo, key);
                     Thread.currentThread().setName(fileName);
                 };
 
@@ -83,7 +83,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 System.err.println(e.getMessage());
             }
         }
-        new HandlerEvent(algo.getClass()).decrypt(false, false);
+        new EventHandler(algo.getClass()).decrypt(false, false);
         calculateTime("decrypt");
     }
 }

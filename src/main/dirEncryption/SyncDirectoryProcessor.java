@@ -1,7 +1,7 @@
 package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
-import log.HandlerEvent;
+import handler.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,17 +26,17 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 if (fileName.contains("key")) {
                     continue;
                 }
-                handelEncrypt(fileName, file, algo, key);
+                handleEncrypt(fileName, file, algo, key);
             }
         }
 
-        new HandlerEvent(algo.getClass()).encrypt(false, false);
+        new EventHandler(algo.getClass()).encrypt(false, false);
         calculateTime("encrypt");
     }
 
     @Override
     public final void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        HandlerEvent handlerEvent = new HandlerEvent(algo.getClass());
+        EventHandler eventHandler = new EventHandler(algo.getClass());
         addDirSafe(decryptDir);
         File[] listOfFiles = encryptDir.listFiles();
 
@@ -48,11 +48,11 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 if (fileName.contains("key")) {
                     continue;
                 }
-                handelDecrypt(fileName, file, algo, key);
+                handleDecrypt(fileName, file, algo, key);
             }
         }
 
-        new HandlerEvent(algo.getClass()).decrypt(false, false);
+        new EventHandler(algo.getClass()).decrypt(false, false);
         calculateTime("encrypt");
     }
 }

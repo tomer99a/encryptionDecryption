@@ -1,7 +1,7 @@
 package log;
 
-public class EventEncrypt extends EventAbstract {
-    public EventEncrypt(Class<?> clazz) {
+public class EncryptEventLogger extends EventLoggerAbstract {
+    public EncryptEventLogger(Class<?> clazz) {
         super(clazz);
     }
 
@@ -11,11 +11,11 @@ public class EventEncrypt extends EventAbstract {
      * @param single say if the event occur on single thing or all of them
      */
     @Override
-    void writeMessage(boolean startStatus, boolean single) {
+    public void writeMessage(boolean startStatus, boolean single) {
         String message = startStatus ? "Start " : "End ";
         if (!single) {
             message = "All the files " + message.toLowerCase();
         }
-        writeMessage(message + "encrypt");
+        writeMessageToLog(message + "encrypt");
     }
 }

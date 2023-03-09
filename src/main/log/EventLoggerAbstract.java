@@ -1,13 +1,14 @@
 package log;
 
+import handler.Register;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public abstract class EventAbstract {
+public abstract class EventLoggerAbstract {
 
     private final Logger logger;
 
-    public EventAbstract(final Class<?> clazz) {
+    public EventLoggerAbstract(final Class<?> clazz) {
         logger = LogManager.getLogger(clazz);
     }
 
@@ -16,13 +17,13 @@ public abstract class EventAbstract {
      * @param startStatus say if the event start (true) or end (false)
      * @param single say if the event occur on single thing or all of them
      */
-    abstract void writeMessage(boolean startStatus, boolean single);
+    public abstract void writeMessage(boolean startStatus, boolean single);
 
     /**
      * write the message to the logger.
      * @param message message to write to the logger
      */
-    void writeMessage(String message) {
+    void writeMessageToLog(String message) {
         logger.info(message);
     }
 
