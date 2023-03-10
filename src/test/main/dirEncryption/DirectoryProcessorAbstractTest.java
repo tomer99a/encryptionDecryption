@@ -57,9 +57,10 @@ abstract class DirectoryProcessorAbstractTest {
     }
 
     private String buildBigText() {
+        final int numberCharPerFile = 1000000;
         StringBuilder str = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < numberCharPerFile; i++) {
             if (secureRandom.nextInt(6) == 3) {
                 str.append(" ");
                 continue;

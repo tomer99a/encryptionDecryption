@@ -6,8 +6,14 @@ import handler.EventHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
+    // Maximum number of threads in thread pool
+    static final int MAX_T = 5;
 
     public AsyncDirectoryProcessor(String dirPath) throws IOException {
         super(dirPath);
@@ -29,7 +35,9 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         addDirSafe(outputFolder);
         File[] listOfFiles = inputFolder.listFiles();
         assert listOfFiles != null;
-        ArrayList<Thread> threads = new ArrayList<>();
+        ArrayList<Future<?>> tasks = new ArrayList<>();
+
+        ExecutorService pool = Executors.newFixedThreadPool(MAX_T);
         startTimeMillis = System.currentTimeMillis();
 
         for (File file : listOfFiles) {
@@ -42,16 +50,16 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                     Thread.currentThread().setName(fileName);
                     useAlgo(algo, key, fileName, outputFolder, file, isEncrypt);
                 };
-                Thread run = new Thread(myThread);
-                threads.add(run);
-                run.start();
+                Future<?> future = pool.submit(myThread);
+                tasks.add(future);
             }
         }
+        pool.shutdown();
 
-        for (Thread thread : threads) {
+        for (Future<?> future : tasks) {
             try {
-                thread.join();
-            } catch (InterruptedException e) {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
                 System.err.println(e.getMessage());
             }
         }
