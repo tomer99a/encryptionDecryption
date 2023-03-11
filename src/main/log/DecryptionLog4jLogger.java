@@ -1,7 +1,7 @@
 package log;
 
-public class DecryptEventLogger extends Subscriber {
-    public DecryptEventLogger(Class<?> clazz) {
+public class DecryptionLog4jLogger extends SubscriberLog4jLogger {
+    public DecryptionLog4jLogger(Class<?> clazz) {
         super(clazz);
     }
 

@@ -1,15 +1,15 @@
 package handler;
 
-import log.DecryptEventLogger;
-import log.EncryptEventLogger;
+import log.DecryptionLog4jLogger;
+import log.EncryptionLog4jLogger;
 
 public class EventHandler {
     Register encryption = new Register();
     Register decryption = new Register();
 
     public EventHandler(Class<?> clazz) {
-        new EncryptEventLogger(clazz).subscribe(encryption);
-        new DecryptEventLogger(clazz).subscribe(decryption);
+        new EncryptionLog4jLogger(clazz).subscribe(encryption);
+        new DecryptionLog4jLogger(clazz).subscribe(decryption);
     }
 
     /**

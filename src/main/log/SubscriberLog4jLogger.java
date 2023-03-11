@@ -4,11 +4,11 @@ import handler.Register;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public abstract class Subscriber {
+public abstract class SubscriberLog4jLogger {
 
     private final Logger logger;
 
-    public Subscriber(final Class<?> clazz) {
+    public SubscriberLog4jLogger(final Class<?> clazz) {
         logger = LogManager.getLogger(clazz);
     }
 
