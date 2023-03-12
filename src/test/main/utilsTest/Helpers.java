@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class helpers {
+public class Helpers {
     public static boolean compareTwoFiles(String path1, String path2) {
         if (path1.equals(path2))
             return true;
@@ -28,5 +28,4 @@ public class helpers {
             return false;
         }
     }
-
 }

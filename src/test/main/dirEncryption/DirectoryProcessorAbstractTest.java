@@ -2,6 +2,7 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
+import log.ErrorLog4jLogger;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.writeToFile;
-import static utilsTest.helpers.compareTwoFiles;
+import static utilsTest.Helpers.compareTwoFiles;
 
 abstract class DirectoryProcessorAbstractTest {
     static protected File dataFile;
@@ -117,7 +118,7 @@ abstract class DirectoryProcessorAbstractTest {
             try {
                 thread.join();
             } catch (InterruptedException e) {
-                System.err.println(e.getMessage());
+                ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage());
             }
         }
     }

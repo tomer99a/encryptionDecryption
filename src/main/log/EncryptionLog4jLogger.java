@@ -16,6 +16,6 @@ public class EncryptionLog4jLogger extends SubscriberLog4jLogger {
         if (!single) {
             message = "All the files " + message.toLowerCase();
         }
-        writeMessageToLog(message + "encrypt");
+        writeInfoToLog(message + "encrypt");
     }
 }

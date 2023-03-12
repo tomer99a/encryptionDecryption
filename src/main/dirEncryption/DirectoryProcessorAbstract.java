@@ -2,7 +2,7 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import exceptions.invalidPathException;
-import handler.EventHandler;
+import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,31 +56,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
             }
         } catch (IOException e) {
             String action = isEncrypt ? "encryption" : "decryption";
-            System.err.println(e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
         }
-    }
-
-    protected void handleEncrypt(String fileName, File file, IEncryptionAlgorithm<T> algo, T key) {
-        EventHandler eventHandler = new EventHandler(algo.getClass());
-        eventHandler.encrypt(true, true);
-        String encryptPath = encryptDir.getPath() + File.separator + fileName;
-        try {
-            algo.encrypt(file.getPath(), encryptPath, key);
-        } catch (IOException e) {
-            System.err.println(e.getMessage() + "\nThe file " + fileName + " didn't encrypt");
-        }
-        eventHandler.encrypt(false, true);
-    }
-
-    protected void handleDecrypt(String fileName, File file, IEncryptionAlgorithm<T> algo, T key) {
-        EventHandler eventHandler = new EventHandler(algo.getClass());
-        eventHandler.decrypt(true, true);
-        String decryptPath = decryptDir.getPath() + File.separator + fileName;
-        try {
-            algo.decrypt(file.getPath(), decryptPath, key);
-        } catch (IOException e) {
-            System.err.println(e.getMessage() + "\nThe file " + fileName + " didn't decrypt");
-        }
-        eventHandler.decrypt(false, true);
     }
 }

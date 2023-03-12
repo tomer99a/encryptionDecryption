@@ -5,6 +5,7 @@ import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
 import keys.DoubleKey;
 import keys.NormalKey;
+import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
         algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey2()));
 
         if (!(new File(tmpPath).delete())) {
-            System.err.println("The tmp file didn't auto delete");
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
         }
     }
 
@@ -45,7 +46,7 @@ public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
         algo.decrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey1()));
 
         if (!(new File(tmpPath).delete())) {
-            System.err.println("The tmp file didn't auto delete");
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
         }
     }
 }

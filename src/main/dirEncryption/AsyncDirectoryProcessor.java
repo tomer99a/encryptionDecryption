@@ -2,6 +2,7 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import handler.EventHandler;
+import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
-                System.err.println(e.getMessage());
+                ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage());
             }
         }
         calculateTime(isEncrypt ? "encrypt" : "decrypt");

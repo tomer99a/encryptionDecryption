@@ -23,7 +23,7 @@ public abstract class SubscriberLog4jLogger {
      * write the message to the logger.
      * @param message message to write to the logger
      */
-    void writeMessageToLog(String message) {
+    protected void writeInfoToLog(String message) {
         logger.info(message);
     }
 

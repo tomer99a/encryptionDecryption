@@ -1,5 +1,6 @@
 import encryption.IEncryptionAlgorithm;
 import handler.EventHandler;
+import log.ErrorLog4jLogger;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class FileEncryptor<T> {
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
         }
         this.eventHandler.encrypt(false, true);
 
@@ -28,7 +29,7 @@ public class FileEncryptor<T> {
         try {
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage());
         }
         this.eventHandler.decrypt(false, true);
     }

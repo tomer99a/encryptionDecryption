@@ -5,7 +5,6 @@ import keys.NormalKey;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.SecureRandom;
@@ -13,7 +12,7 @@ import java.security.SecureRandom;
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.writeToFile;
-import static utilsTest.helpers.compareTwoFiles;
+import static utilsTest.Helpers.compareTwoFiles;
 
 public abstract class EncryptionAlgorithmAbstractTest {
     static protected String originalPath;
@@ -43,30 +42,6 @@ public abstract class EncryptionAlgorithmAbstractTest {
         for (String path : allPathToDelete) {
             if (!(new File(path).delete()))
                 System.err.println("the file " + path + " didn't deleted!!!");
-        }
-    }
-
-    public static boolean compareTwoFiles(String path1, String path2) {
-        if (path1.equals(path2))
-            return true;
-        File file1 = new File(path1);
-        File file2 = new File(path2);
-
-        try (FileInputStream in1 = new FileInputStream(file1); FileInputStream in2 = new FileInputStream(file2)) {
-            int tmpChar1, tmpChar2;
-
-            while ((tmpChar1 = in1.read()) != -1) {
-                tmpChar2 = in2.read();
-                if (tmpChar2 == -1)
-                    return false;
-                if (tmpChar1 != tmpChar2)
-                    return false;
-            }
-            tmpChar2 = in2.read();
-            return tmpChar2 == -1;
-        } catch (IOException e) {
-            System.err.println("fail at compare two files");
-            return false;
         }
     }
 

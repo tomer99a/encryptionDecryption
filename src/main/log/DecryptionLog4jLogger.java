@@ -11,6 +11,6 @@ public class DecryptionLog4jLogger extends SubscriberLog4jLogger {
         if (!single) {
             message = "All the files " + message.toLowerCase();
         }
-        writeMessageToLog(message + "decrypt");
+        writeInfoToLog(message + "decrypt");
     }
 }

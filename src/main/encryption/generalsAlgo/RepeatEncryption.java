@@ -4,6 +4,7 @@ import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
 import keys.NormalKey;
+import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +39,9 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(tmpPath)).delete())
-            System.err.println("The tmp file didn't auto delete");
+        if (!(new File(tmpPath)).delete()) {
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
+        }
     }
 
     @Override
@@ -53,7 +55,8 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(tmpPath)).delete())
-            System.err.println("The tmp file didn't auto delete");
+        if (!(new File(tmpPath)).delete()) {
+            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
+        }
     }
 }

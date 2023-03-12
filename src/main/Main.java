@@ -6,6 +6,7 @@ import encryption.charAlgo.ShiftUpEncryption;
 import encryption.generalsAlgo.DoubleEncryption;
 import keys.DoubleKey;
 import keys.NormalKey;
+import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class Main {
                     doneLoop = true;
                     break;
                 default:
-                    System.err.println(invalidChoiceErrorMessage);
+                    ErrorLog4jLogger.writeErrorToLog(iEncryptionAlgorithm.getClass(), invalidChoiceErrorMessage);
                     break;
             }
         }
