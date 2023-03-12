@@ -2,6 +2,7 @@ package encryption;
 
 import handler.EventHandler;
 
+import java.io.File;
 import java.io.IOException;
 
 public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgorithm<T> {
@@ -22,18 +23,20 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
 
     @Override
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
-        EventHandler eventHandler = new EventHandler(this.getClass());
-        eventHandler.encrypt(true, true);
+        File file = new File(originalPath);
+        EventHandler eventHandler = new EventHandler(this.getClass(), file.getName());
+        eventHandler.encrypt(true);
         this.actualEncrypt(originalPath, outputPath, keyPath);
-        eventHandler.encrypt(false, true);
+        eventHandler.encrypt(true);
     }
 
     @Override
     public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
-        EventHandler eventHandler = new EventHandler(this.getClass());
-        eventHandler.decrypt(true, true);
+        File file = new File(originalPath);
+        EventHandler eventHandler = new EventHandler(this.getClass(), file.getName());
+        eventHandler.decrypt(true);
         this.actualDecrypt(originalPath, outputPath, keyPath);
-        eventHandler.decrypt(false, true);
+        eventHandler.decrypt(true);
     }
 
     protected abstract void actualEncrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException;

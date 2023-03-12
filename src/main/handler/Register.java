@@ -13,12 +13,11 @@ public class Register {
     }
 
     /**
-     * @param startStatus say if the event start (true) or end (false)
      * @param single say if the event occur on single thing or all of them
      */
-    public void publish(boolean startStatus, boolean single) {
+    public void publish(boolean single) {
         for (SubscriberLog4jLogger subscriber : subscribers) {
-            subscriber.eventAction(startStatus, single);
+            subscriber.eventAction(single);
         }
     }
 }
