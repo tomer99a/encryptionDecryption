@@ -46,8 +46,8 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
      * encrypt the original path to the output path.
      *
      * @param originalPath file to encrypt
-     * @param outputPath file for encrypted text
-     * @param keyPath file to save the key that the encryption use.
+     * @param outputPath   file for encrypted text
+     * @param keyPath      file to save the key that the encryption use.
      * @throws IOException IOException
      */
     protected abstract void encryption(final String originalPath, final String outputPath, final T keyPath) throws IOException;
@@ -56,8 +56,8 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
      * decrypt the original path to the output path.
      *
      * @param originalPath encrypt file path
-     * @param outputPath file for decrypted text
-     * @param keyPath file with the key to use the decryption
+     * @param outputPath   file for decrypted text
+     * @param keyPath      file with the key to use the decryption
      * @throws IOException IOException
      */
     protected abstract void decryption(final String originalPath, final String outputPath, final T keyPath) throws IOException;

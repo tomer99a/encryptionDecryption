@@ -2,7 +2,6 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import exceptions.invalidPathException;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

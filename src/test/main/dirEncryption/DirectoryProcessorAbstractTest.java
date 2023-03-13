@@ -2,6 +2,8 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
@@ -9,9 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.writeToFile;

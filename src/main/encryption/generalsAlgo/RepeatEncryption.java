@@ -4,6 +4,7 @@ import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
 import keys.NormalKey;
+
 import java.io.IOException;
 import java.nio.file.Files;
 

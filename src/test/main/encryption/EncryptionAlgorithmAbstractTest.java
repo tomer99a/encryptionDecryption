@@ -18,11 +18,11 @@ import static utilsTest.Helpers.buildBigText;
 import static utilsTest.Helpers.compareTwoFiles;
 
 public abstract class EncryptionAlgorithmAbstractTest {
-    protected final Logger logger = LogManager.getLogger(this.getClass());
     static protected String originalPath;
     static protected String encryptedPath;
     static protected String decryptedPath;
     static protected NormalKey keyPath;
+    protected final Logger logger = LogManager.getLogger(this.getClass());
 
     public EncryptionAlgorithmAbstractTest() throws IOException {
         originalPath = Files.createTempFile("input_text", ".txt").toString();

@@ -3,7 +3,6 @@ package encryption.charAlgo;
 import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
 import keys.NormalKey;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -12,12 +11,12 @@ import java.io.IOException;
 import static utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
-    protected final Logger logger = LogManager.getLogger(this.getClass());
     final static protected char SMALL_A = 'a';
     final static protected char SMALL_Z = 'z';
     final static protected char BIG_A = 'A';
     final static protected char BIG_Z = 'Z';
     final static protected int BOUND_RANDOM_NUMBER = 1000;
+    protected final Logger logger = LogManager.getLogger(this.getClass());
     protected int key;
     protected int keyMaxRange;
 
