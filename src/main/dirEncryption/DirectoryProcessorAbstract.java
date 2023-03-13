@@ -30,9 +30,9 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         long end = System.currentTimeMillis();
         float msec = end - startTimeMillis;
         // converting it into seconds
-        float sec= msec/1000F;
+        float sec = msec / 1000F;
         // converting it into minutes
-        float minutes=sec/60F;
+        float minutes = sec / 60F;
         System.out.printf("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec);
     }
 

@@ -2,7 +2,6 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import handler.EventHandler;
-import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
