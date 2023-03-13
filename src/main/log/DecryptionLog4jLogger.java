@@ -11,6 +11,6 @@ public class DecryptionLog4jLogger extends SubscriberLog4jLogger {
         if (data.getStartTime() == 0) {
             data.setStartTime(System.currentTimeMillis());
         }
-        writeInfoToLog(message + "decrypt");
+        writeInfoToLog(message);
     }
 }

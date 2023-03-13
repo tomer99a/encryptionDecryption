@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 
 public class Helpers {
-    public static String buildBigText() {
-        final int numberCharPerFile = 1000000;
+    public static String buildBigText(int numberCharPerFile) {
         StringBuilder str = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
         for (int i = 0; i < numberCharPerFile; i++) {

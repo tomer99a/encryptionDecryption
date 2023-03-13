@@ -17,26 +17,19 @@ public class FileEncryptor<T> {
 
     public final void encrypt(final String originalPath, final String outputPath, final T keyPath) {
         File file = new File(originalPath);
-        EventHandler eventHandler = new EventHandler(encryptionAlgo.getClass(), file.getName());
-        eventHandler.encrypt(true);
         try {
             encryptionAlgo.encrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
-        eventHandler.encrypt(true);
-
     }
 
     public final void decrypt(final String originalPath, final String outputPath, final T keyPath) {
         File file = new File(originalPath);
-        EventHandler eventHandler = new EventHandler(encryptionAlgo.getClass(), file.getName());
-        eventHandler.encrypt(true);
         try {
             encryptionAlgo.decrypt(originalPath, outputPath, keyPath);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
-        eventHandler.decrypt(true);
     }
 }

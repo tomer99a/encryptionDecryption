@@ -33,8 +33,9 @@ public abstract class SubscriberLog4jLogger {
         String name = data.getFileName().equals("") ? "" : ("for file " + data.getFileName() + " ");
         structure = structure.replace("XXXX", name);
 
-        if (data.getStartTime() > 0) {
-            structure += " took " + data.getTimeTook() + " milliseconds";
+        float timeTook = data.getTimeTook();
+        if (timeTook > 0.1) {
+            structure += " took " + timeTook + " milliseconds";
         } else {
             structure += "is starting";
         }

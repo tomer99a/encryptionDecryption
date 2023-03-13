@@ -31,7 +31,7 @@ public abstract class EncryptionAlgorithmAbstractTest {
         keyPath = new NormalKey(Files.createTempFile("key", ".txt").toString());
 
         createFile(originalPath, logger);
-        writeToFile(originalPath, buildBigText(), logger);
+        writeToFile(originalPath, buildBigText(100000), logger);
     }
 
     @AfterAll

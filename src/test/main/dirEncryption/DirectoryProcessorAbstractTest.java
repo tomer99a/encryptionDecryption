@@ -31,7 +31,7 @@ abstract class DirectoryProcessorAbstractTest {
         for (int i = 1; i <= numberFiles; i++) {
             File file = new File(dataFile, "file" + i + ".txt");
             if (file.createNewFile()) {
-                writeToFile(file.getPath(), buildBigText(), logger);
+                writeToFile(file.getPath(), buildBigText(1000000), logger);
             }
         }
         logger.debug("Run auto test at temp folder: " + dataFile.getAbsolutePath());

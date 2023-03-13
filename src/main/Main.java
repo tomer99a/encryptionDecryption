@@ -118,7 +118,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        dirEncrypt();
+        menu();
+//        dirEncrypt();
         System.out.println("Done program");
     }
 }
