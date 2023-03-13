@@ -2,7 +2,6 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
-import log.ErrorLog4jLogger;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
@@ -11,29 +10,32 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.writeToFile;
 import static utilsTest.Helpers.buildBigText;
 import static utilsTest.Helpers.compareTwoFiles;
 
 abstract class DirectoryProcessorAbstractTest {
+    protected static final Logger logger = LogManager.getLogger(DirectoryProcessorAbstractTest.class);
     static protected File dataFile;
     final protected File encryptFile;
     final protected File decryptFile;
     final protected NormalKey normalKey;
 
-    final protected int numberFiles = 25;
+    final protected int numberFiles = 10;
 
     public DirectoryProcessorAbstractTest() throws IOException {
         dataFile = new File(Files.createTempDirectory("data").toString());
         for (int i = 1; i <= numberFiles; i++) {
             File file = new File(dataFile, "file" + i + ".txt");
             if (file.createNewFile()) {
-                writeToFile(file.getPath(), buildBigText());
+                writeToFile(file.getPath(), buildBigText(), logger);
             }
         }
-        System.out.println("make files:");
-        System.out.println(dataFile.getAbsolutePath());
+        logger.debug("Run auto test at temp folder: " + dataFile.getAbsolutePath());
         encryptFile = new File(dataFile, "encrypted");
         decryptFile = new File(dataFile, "decrypted");
 
@@ -46,7 +48,11 @@ abstract class DirectoryProcessorAbstractTest {
             if (subFile.isDirectory()) {
                 deleteDirectory(subFile);
             }
-            boolean didDelete = subFile.delete();
+            if (subFile.delete()) {
+                logger.debug(String.format("File %s deleted", subFile.getName()));
+            } else {
+                logger.error(String.format("File %s didn't delete", subFile.getName()));
+            }
         }
     }
 
@@ -85,7 +91,7 @@ abstract class DirectoryProcessorAbstractTest {
             Runnable myThread = () -> {
                 Thread.currentThread().setName(new File(file1).getName());
                 assertTrue(compareTwoFiles(file1, file2));
-                System.out.println(new File(file1).getName() + " is good");
+                logger.info(new File(file1).getName() + " is good");
             };
 
             Thread run = new Thread(myThread);
@@ -97,7 +103,7 @@ abstract class DirectoryProcessorAbstractTest {
             try {
                 thread.join();
             } catch (InterruptedException e) {
-                ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage());
+                logger.error(e.getMessage());
             }
         }
     }

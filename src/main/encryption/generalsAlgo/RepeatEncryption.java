@@ -4,13 +4,11 @@ import encryption.EncryptionAlgorithmAbstract;
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import encryption.charAlgo.ShiftUpEncryption;
 import keys.NormalKey;
-import log.ErrorLog4jLogger;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 import static utils.IOMethods.copyFile;
+import static utils.IOMethods.deleteFile;
 
 
 public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
@@ -29,7 +27,7 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
     }
 
     @Override
-    public void actualEncrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void encryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
@@ -39,13 +37,11 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(tmpPath)).delete()) {
-            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
-        }
+        deleteFile(tmpPath, logger);
     }
 
     @Override
-    public void actualDecrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void decryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("RepeatTmp", ".txt").toString();
 
@@ -55,8 +51,6 @@ public class RepeatEncryption extends EncryptionAlgorithmAbstract<NormalKey> {
             copyFile(outputPath, tmpPath);
         }
 
-        if (!(new File(tmpPath)).delete()) {
-            ErrorLog4jLogger.writeErrorToLog(this.getClass(), "The tmp file didn't auto delete");
-        }
+        deleteFile(tmpPath, logger);
     }
 }

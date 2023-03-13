@@ -2,6 +2,8 @@ package encryption;
 
 import exceptions.invalidPathException;
 import keys.NormalKey;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 
 import java.io.File;
@@ -16,6 +18,7 @@ import static utilsTest.Helpers.buildBigText;
 import static utilsTest.Helpers.compareTwoFiles;
 
 public abstract class EncryptionAlgorithmAbstractTest {
+    protected final Logger logger = LogManager.getLogger(this.getClass());
     static protected String originalPath;
     static protected String encryptedPath;
     static protected String decryptedPath;
@@ -27,8 +30,8 @@ public abstract class EncryptionAlgorithmAbstractTest {
         decryptedPath = Files.createTempFile("input_text_decrypted", ".txt").toString();
         keyPath = new NormalKey(Files.createTempFile("key", ".txt").toString());
 
-        createFile(originalPath);
-        writeToFile(originalPath, buildBigText());
+        createFile(originalPath, logger);
+        writeToFile(originalPath, buildBigText(), logger);
     }
 
     @AfterAll

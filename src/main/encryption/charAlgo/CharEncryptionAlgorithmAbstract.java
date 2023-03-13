@@ -4,11 +4,15 @@ import encryption.EncryptionAlgorithmAbstract;
 import exceptions.InvalidEncryptionKeyException;
 import keys.NormalKey;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 import static utils.IOMethods.*;
 
 public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
+    protected final Logger logger = LogManager.getLogger(this.getClass());
     final static protected char SMALL_A = 'a';
     final static protected char SMALL_Z = 'z';
     final static protected char BIG_A = 'A';
@@ -48,26 +52,23 @@ public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorith
         return keyMaxRange;
     }
 
-    public void actualEncrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+    public void encryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
         String keyPathStr = keyPath.getKey();
-        createFile(keyPathStr);
-        deleteFile(outputPath);
-        createFile(outputPath);
+        createFile(keyPathStr, logger);
+        deleteFile(outputPath, logger);
+        createFile(outputPath, logger);
 
-        scanAndSubmitFile(true, originalPath, outputPath, this, key);
-        writeToFile(keyPathStr, Integer.toString(key));
-
-        System.out.printf("Location of the files are -\nencrypted - %s\nkey - %s%s", outputPath, keyPathStr, System.lineSeparator());
+        scanAndSubmitFile(true, originalPath, outputPath, this, key, logger);
+        writeToFile(keyPathStr, Integer.toString(key), logger);
     }
 
-    public void actualDecrypt(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
+    public void decryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
         final int decryptKey;
         decryptKey = getKeyFromFile(keyPath.getKey());
 
-        deleteFile(outputPath);
-        createFile(outputPath);
-        scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey);
-        System.out.println("Location of the decrypted file is - " + outputPath);
+        deleteFile(outputPath, logger);
+        createFile(outputPath, logger);
+        scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey, logger);
     }
 
     /**

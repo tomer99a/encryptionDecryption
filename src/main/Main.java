@@ -6,14 +6,18 @@ import encryption.charAlgo.ShiftUpEncryption;
 import encryption.generalsAlgo.DoubleEncryption;
 import keys.DoubleKey;
 import keys.NormalKey;
-import log.ErrorLog4jLogger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    static final Logger logger = LogManager.getLogger(Main.class);
+
     private static void menu() {
+
         String fileName = "input_text";
         String basePath = "src" + File.separator + "main" + File.separator + "data" + File.separator;
         String originalPath = basePath + fileName + ".txt";
@@ -52,7 +56,7 @@ public class Main {
                     doneLoop = true;
                     break;
                 default:
-                    ErrorLog4jLogger.writeErrorToLog(iEncryptionAlgorithm.getClass(), invalidChoiceErrorMessage);
+                    logger.info(invalidChoiceErrorMessage);
                     break;
             }
         }
@@ -108,7 +112,7 @@ public class Main {
                         break;
                 }
             } catch (IOException | InterruptedException e) {
-                System.err.println(e.getMessage());
+                logger.error(e.getMessage());
             }
         }
     }

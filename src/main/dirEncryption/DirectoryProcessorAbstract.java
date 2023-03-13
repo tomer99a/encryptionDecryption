@@ -2,13 +2,16 @@ package dirEncryption;
 
 import encryption.IEncryptionAlgorithm;
 import exceptions.invalidPathException;
-import log.ErrorLog4jLogger;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcessor<T> {
+    protected final Logger logger = LogManager.getLogger(this.getClass());
     protected final String dirPath;
     protected final File encryptDir;
     protected final File decryptDir;
@@ -33,7 +36,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         float sec = msec / 1000F;
         // converting it into minutes
         float minutes = sec / 60F;
-        System.out.printf("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec);
+        logger.info(String.format("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec));
     }
 
     protected void addDirSafe(File file) throws IOException {
@@ -56,7 +59,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
             }
         } catch (IOException e) {
             String action = isEncrypt ? "encryption" : "decryption";
-            ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
+            logger.error(e.getMessage() + "\nThe " + action + " on " + fileName + "didn't work");
         }
     }
 }

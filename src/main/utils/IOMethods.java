@@ -2,7 +2,7 @@ package utils;
 
 import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
 import exceptions.invalidPathException;
-import keys.NormalKey;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.Scanner;
@@ -16,18 +16,25 @@ public class IOMethods {
      * @param encryptsDecrypt interface with the function to change the line
      * @param key             key to usr to encrypt/decrypt
      */
-    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key) throws IOException {
+    public static void scanAndSubmitFile(boolean encrypt, String inputPath, String outputPath, CharEncryptionAlgorithmAbstract encryptsDecrypt, int key, Logger logger) throws IOException {
         Scanner sc = new Scanner(new FileInputStream(inputPath));
+        int j = 0;
+        int numLineToAddDebug = 100;
         while (sc.hasNextLine()) {
             StringBuilder lineToWrite = new StringBuilder();
             String line = sc.nextLine();
-            for (int i = 0; i < line.length(); i++)
+            for (int i = 0; i < line.length(); i++) {
                 if (encrypt)
                     lineToWrite.append(encryptsDecrypt.encryptChar(line.charAt(i), key));
                 else
                     lineToWrite.append(encryptsDecrypt.decryptChar(line.charAt(i), key));
+            }
             if (sc.hasNextLine())
                 lineToWrite.append(System.lineSeparator());
+            j++;
+            if (j % numLineToAddDebug == numLineToAddDebug-1)  {
+                logger.debug("write 100 lines to file " + outputPath);
+            }
             writeLine(outputPath, lineToWrite.toString());
         }
 
@@ -57,12 +64,16 @@ public class IOMethods {
      *
      * @param path file path and name
      */
-    public static void createFile(String path) throws IOException {
+    public static void createFile(String path, Logger logger) throws IOException {
         final File myObj = new File(path);
         if (!myObj.getParentFile().exists())
             throw new invalidPathException("The path given is invalid");
         if (!myObj.exists()) {
-            boolean didCreat = myObj.createNewFile();
+            if (myObj.createNewFile()) {
+                logger.debug(String.format("The file %s created", myObj.getName()));
+            } else {
+                logger.error(String.format("File %s didn't created", myObj.getName()));
+            }
         }
     }
 
@@ -71,12 +82,16 @@ public class IOMethods {
      *
      * @param path file path and name
      */
-    public static void deleteFile(String path) throws IOException {
+    public static void deleteFile(String path, Logger logger) throws IOException {
         final File myObj = new File(path);
         if (!myObj.getParentFile().exists())
             throw new invalidPathException("The path given is invalid");
         if (myObj.exists()) {
-            boolean didCreat = myObj.delete();
+            if (myObj.delete()) {
+                logger.debug(String.format("File %s deleted", myObj.getName()));
+            } else {
+                logger.error(String.format("File %s didn't delete", myObj.getName()));
+            }
         }
     }
 
@@ -86,12 +101,14 @@ public class IOMethods {
      * @param path    file path and name
      * @param message message to write into path
      */
-    public static void writeToFile(String path, String message) throws IOException {
-        if (!new File(path).exists())
+    public static void writeToFile(String path, String message, Logger logger) throws IOException {
+        File file = new File(path);
+        if (!file.exists())
             throw new invalidPathException("The path given is invalid");
         FileWriter myWriter = new FileWriter(path);
         myWriter.write(message);
         myWriter.close();
+        logger.debug(String.format("File %s hase been written", file.getName()));
     }
 
     /**
