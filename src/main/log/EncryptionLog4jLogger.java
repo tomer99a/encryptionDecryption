@@ -7,6 +7,7 @@ public class EncryptionLog4jLogger extends SubscriberLog4jLogger {
 
     /**
      * build good message depend on the param
+     *
      * @param single say if the event occur on single thing or all of them
      */
     @Override

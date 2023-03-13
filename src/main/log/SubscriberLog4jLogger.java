@@ -11,14 +11,14 @@ public abstract class SubscriberLog4jLogger {
 
     public SubscriberLog4jLogger(final Class<?> clazz, String fileName) {
         logger = LogManager.getLogger(clazz);
-        String algoName = clazz.getName().substring(clazz.getName().lastIndexOf(".")+1);
+        String algoName = clazz.getName().substring(clazz.getName().lastIndexOf(".") + 1);
         data = new EncryptionLogEventArgs(fileName, algoName);
     }
 
     /**
      * build good message depend on the param
      *
-     * @param single      say if the event occur on single thing or all of them
+     * @param single say if the event occur on single thing or all of them
      */
     public abstract void eventAction(boolean single);
 
