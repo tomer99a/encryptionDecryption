@@ -10,6 +10,6 @@ public class EncryptionLog4jLogger extends SubscriberLog4jLogger {
      */
     @Override
     public void eventAction() {
-        writeInfoToLog("The encryption ");
+        writeInfoToLog("encryption");
     }
 }

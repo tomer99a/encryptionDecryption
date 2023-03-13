@@ -26,13 +26,10 @@ public abstract class SubscriberLog4jLogger {
     /**
      * write the message to the logger.
      *
-     * @param startMessage start of the message to write to the logger
+     * @param action decryption or encryption??
      */
-    protected void writeInfoToLog(String startMessage) {
-        String structure = String.format("%sXXXXwith algorithm %s", startMessage, data.getAlgo());
-
-        String name = data.getFileName().equals("") ? "" : ("for file " + data.getFileName() + " ");
-        structure = structure.replace("XXXX", name);
+    protected void writeInfoToLog(String action) {
+        String structure = String.format("The %s with algorithm %s", action, data.getAlgo());
 
         if (data.getStartTime() != 0) {
             structure += " took " + data.getTimeTook() + " milliseconds";
