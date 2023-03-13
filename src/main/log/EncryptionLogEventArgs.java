@@ -37,7 +37,7 @@ public class EncryptionLogEventArgs {
         this.startTime = startTime;
     }
 
-    public long getTimeTook() {
+    public float getTimeTook() {
         return System.currentTimeMillis() - startTime;
     }
 

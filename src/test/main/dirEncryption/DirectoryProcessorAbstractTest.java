@@ -39,8 +39,6 @@ abstract class DirectoryProcessorAbstractTest {
 
         String keyPath = dataFile.getPath() + File.separator + "key.txt";
         normalKey = new NormalKey(keyPath);
-
-        //TODO: add after all that delete all the tmp files.
     }
 
     public static void deleteDirectory(File file) {

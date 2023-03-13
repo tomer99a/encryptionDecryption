@@ -14,19 +14,19 @@ public class SyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
 
     @Override
     public final void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        help(algo, key, new File(dirPath), encryptDir, true);
+        encryptDecryptBody(algo, key, new File(dirPath), encryptDir, true);
 
         new EventHandler(algo.getClass(), "").encrypt(false);
     }
 
     @Override
     public final void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        help(algo, key, encryptDir, decryptDir, false);
+        encryptDecryptBody(algo, key, encryptDir, decryptDir, false);
 
         new EventHandler(algo.getClass(), "").decrypt(false);
     }
 
-    private void help(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException {
+    private void encryptDecryptBody(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException {
         addDirSafe(outputFolder);
         File[] listOfFiles = inputFolder.listFiles();
         assert listOfFiles != null;

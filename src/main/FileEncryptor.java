@@ -8,6 +8,7 @@ import java.io.IOException;
 public class FileEncryptor<T> {
     final private IEncryptionAlgorithm<T> encryptionAlgo;
 
+
     public FileEncryptor(final IEncryptionAlgorithm<T> encryptionAlgo) {
         this.encryptionAlgo = encryptionAlgo;
     }

@@ -11,7 +11,8 @@ public abstract class SubscriberLog4jLogger {
 
     public SubscriberLog4jLogger(final Class<?> clazz, String fileName) {
         logger = LogManager.getLogger(clazz);
-        data = new EncryptionLogEventArgs(fileName, clazz.getName());
+        String algoName = clazz.getName().substring(clazz.getName().lastIndexOf(".")+1);
+        data = new EncryptionLogEventArgs(fileName, algoName);
     }
 
     /**
@@ -32,15 +33,13 @@ public abstract class SubscriberLog4jLogger {
         String name = data.getFileName().equals("") ? "" : ("for file " + data.getFileName() + " ");
         structure = structure.replace("XXXX", name);
 
-        long time = data.getStartTime();
-        if (time > 0) {
-            structure += " took " + time + " milliseconds";
+        if (data.getStartTime() > 0) {
+            structure += " took " + data.getTimeTook() + " milliseconds";
         } else {
             structure += "is starting";
         }
 
         logger.info(structure);
-
     }
 
     public void subscribe(Register register) {
