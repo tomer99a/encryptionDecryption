@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.createFile;
 import static utils.IOMethods.writeToFile;
+import static utilsTest.Helpers.buildBigText;
 import static utilsTest.Helpers.compareTwoFiles;
 
 public abstract class EncryptionAlgorithmAbstractTest {
@@ -27,13 +28,7 @@ public abstract class EncryptionAlgorithmAbstractTest {
         keyPath = new NormalKey(Files.createTempFile("key", ".txt").toString());
 
         createFile(originalPath);
-        String message = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + System.lineSeparator() +
-                "abcdefghijklmnopqrstuvwxyz" + System.lineSeparator() +
-                "Fuck AngularJS" + System.lineSeparator() +
-                "$#@^%$&^*$#@!" + System.lineSeparator() +
-                "the text to Encryption!!!" + System.lineSeparator() +
-                "@#$$%^&^*&*^(*&(*&&^(%&)*)%&*)_+_-809-7087956845463";
-        writeToFile(originalPath, message);
+        writeToFile(originalPath, buildBigText());
     }
 
     @AfterAll

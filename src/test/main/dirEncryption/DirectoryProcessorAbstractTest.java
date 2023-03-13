@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static utils.IOMethods.writeToFile;
+import static utilsTest.Helpers.buildBigText;
 import static utilsTest.Helpers.compareTwoFiles;
 
 abstract class DirectoryProcessorAbstractTest {
@@ -55,29 +56,10 @@ abstract class DirectoryProcessorAbstractTest {
         deleteDirectory(dataFile);
     }
 
-    private String buildBigText() {
-        final int numberCharPerFile = 1000000;
-        StringBuilder str = new StringBuilder();
-        SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i < numberCharPerFile; i++) {
-            if (secureRandom.nextInt(6) == 3) {
-                str.append(" ");
-                continue;
-            }
-            if (secureRandom.nextInt(20) == 3) {
-                str.append(System.lineSeparator());
-                continue;
-            }
-            str.append((char) (secureRandom.nextInt(94) + 33));
-        }
-        str.append("TOMER!!!");
-        return str.toString();
-    }
-
     protected void encryptDirTest(IDirectoryProcessor<NormalKey> directoryProcessor, IEncryptionAlgorithm<NormalKey> encryptionAlgorithm) {
         try {
             directoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             String message = String.format("The folder encryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(),
                     e.getMessage());
             fail(message);
@@ -92,7 +74,7 @@ abstract class DirectoryProcessorAbstractTest {
     protected void decryptDirTest(IDirectoryProcessor<NormalKey> directoryProcessor, IEncryptionAlgorithm<NormalKey> encryptionAlgorithm) {
         try {
             directoryProcessor.decryptDir(encryptionAlgorithm, normalKey);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             String message = String.format("The folder decryption failed\nAlgo - %s\nError message - %s", encryptionAlgorithm.getEncryptionMethod(),
                     e.getMessage());
             fail(message);

@@ -6,37 +6,35 @@ import log.ErrorLog4jLogger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
-    // Maximum number of threads in thread pool
-    static final int MAX_T = 5;
+    // Maximum number of threads in thread pool is the number of CPU at the computer.
+    static final int MAX_T = Runtime.getRuntime().availableProcessors();
 
     public AsyncDirectoryProcessor(String dirPath) throws IOException {
         super(dirPath);
     }
 
     @Override
-    public void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        help(algo, key, new File(dirPath), encryptDir, true);
+    public void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException, InterruptedException {
+        encryptDecryptBody(algo, key, new File(dirPath), encryptDir, true);
         new EventHandler(algo.getClass(), "").encrypt(false);
     }
 
     @Override
-    public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException {
-        help(algo, key, encryptDir, decryptDir, false);
+    public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException, InterruptedException {
+        encryptDecryptBody(algo, key, encryptDir, decryptDir, false);
         new EventHandler(algo.getClass(), "").decrypt(false);
     }
 
-    private void help(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException {
+    private void encryptDecryptBody(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException,
+            InterruptedException {
         addDirSafe(outputFolder);
         File[] listOfFiles = inputFolder.listFiles();
         assert listOfFiles != null;
-        ArrayList<Future<?>> tasks = new ArrayList<>();
 
         ExecutorService pool = Executors.newFixedThreadPool(MAX_T);
         startTimeMillis = System.currentTimeMillis();
@@ -47,22 +45,16 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
                 if (fileName.contains("key")) {
                     continue;
                 }
-                Runnable myThread = () -> {
+                pool.submit(() -> {
                     Thread.currentThread().setName(fileName);
                     useAlgo(algo, key, fileName, outputFolder, file, isEncrypt);
-                };
-                Future<?> future = pool.submit(myThread);
-                tasks.add(future);
+                });
             }
         }
-        pool.shutdown();
 
-        for (Future<?> future : tasks) {
-            try {
-                future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                ErrorLog4jLogger.writeErrorToLog(this.getClass(), e.getMessage());
-            }
+        pool.shutdown();
+        if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+            throw new RuntimeException();
         }
         calculateTime(isEncrypt ? "encrypt" : "decrypt");
     }

@@ -107,7 +107,7 @@ public class Main {
                         System.err.println(invalidChoiceErrorMessage);
                         break;
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 System.err.println(e.getMessage());
             }
         }

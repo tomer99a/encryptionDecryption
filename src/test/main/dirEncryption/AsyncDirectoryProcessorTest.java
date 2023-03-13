@@ -61,7 +61,7 @@ class AsyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new XorEncryption();
             asyncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(asyncDirectoryProcessor, encryptionAlgorithm);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             String message = String.format("The async folder decryption failed\nAlgo - Xor\nError message - %s", e.getMessage());
             fail(message);
         }
@@ -75,7 +75,7 @@ class AsyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new ShiftUpEncryption();
             asyncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(asyncDirectoryProcessor, encryptionAlgorithm);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             String message = String.format("The async folder decryption failed\nAlgo - Plus\nError message - %s", e.getMessage());
             fail(message);
         }
@@ -89,7 +89,7 @@ class AsyncDirectoryProcessorTest extends DirectoryProcessorAbstractTest {
             IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = new ShiftMultiplyEncryption();
             asyncDirectoryProcessor.encryptDir(encryptionAlgorithm, normalKey);
             decryptDirTest(asyncDirectoryProcessor, encryptionAlgorithm);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             String message = String.format("The async folder decryption failed\nAlgo - Multi\nError message - %s", e.getMessage());
             fail(message);
         }

@@ -3,8 +3,28 @@ package utilsTest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.SecureRandom;
 
 public class Helpers {
+    public static String buildBigText() {
+        final int numberCharPerFile = 1000000;
+        StringBuilder str = new StringBuilder();
+        SecureRandom secureRandom = new SecureRandom();
+        for (int i = 0; i < numberCharPerFile; i++) {
+            if (secureRandom.nextInt(6) == 3) {
+                str.append(" ");
+                continue;
+            }
+            if (secureRandom.nextInt(20) == 3) {
+                str.append(System.lineSeparator());
+                continue;
+            }
+            str.append((char) (secureRandom.nextInt(94) + 33));
+        }
+        str.append("TOMER!!!");
+        return str.toString();
+    }
+
     public static boolean compareTwoFiles(String path1, String path2) {
         if (path1.equals(path2))
             return true;
