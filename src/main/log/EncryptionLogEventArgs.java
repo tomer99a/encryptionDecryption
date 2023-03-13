@@ -33,8 +33,8 @@ public class EncryptionLogEventArgs {
         return startTime;
     }
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
+    public void setStartTime() {
+        this.startTime = System.currentTimeMillis();
     }
 
     public float getTimeTook() {

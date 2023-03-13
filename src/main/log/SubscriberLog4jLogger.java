@@ -1,8 +1,11 @@
 package log;
 
+import dirEncryption.AsyncDirectoryProcessor;
 import handler.Register;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class SubscriberLog4jLogger {
 
@@ -17,10 +20,8 @@ public abstract class SubscriberLog4jLogger {
 
     /**
      * build good message depend on the param
-     *
-     * @param single say if the event occur on single thing or all of them
      */
-    public abstract void eventAction(boolean single);
+    public abstract void eventAction();
 
     /**
      * write the message to the logger.
@@ -33,14 +34,17 @@ public abstract class SubscriberLog4jLogger {
         String name = data.getFileName().equals("") ? "" : ("for file " + data.getFileName() + " ");
         structure = structure.replace("XXXX", name);
 
-        float timeTook = data.getTimeTook();
-        if (timeTook > 0.1) {
-            structure += " took " + timeTook + " milliseconds";
+        if (data.getStartTime() != 0) {
+            structure += " took " + data.getTimeTook() + " milliseconds";
         } else {
+            data.setStartTime();
             structure += "is starting";
         }
 
+        ReentrantLock lock = AsyncDirectoryProcessor.getLOCK();
+        lock.lock();
         logger.info(structure);
+        lock.unlock();
     }
 
     public void subscribe(Register register) {

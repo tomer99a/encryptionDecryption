@@ -35,7 +35,7 @@ public abstract class DirectoryProcessorAbstract<T> implements IDirectoryProcess
         float sec = msec / 1000F;
         // converting it into minutes
         float minutes = sec / 60F;
-        logger.info(String.format("The %s action took %.3f minutes (%.0f seconds)%n", action, minutes, sec));
+        logger.info(String.format("The %s action took %.3f minutes (%.0f seconds)", action, minutes, sec));
     }
 
     protected void addDirSafe(File file) throws IOException {

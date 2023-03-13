@@ -8,25 +8,29 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
     // Maximum number of threads in thread pool is the number of CPU at the computer.
     static final int MAX_T = Runtime.getRuntime().availableProcessors();
+    static final private ReentrantLock LOCK = new ReentrantLock();
 
     public AsyncDirectoryProcessor(String dirPath) throws IOException {
         super(dirPath);
     }
 
+    public static ReentrantLock getLOCK() {
+        return LOCK;
+    }
+
     @Override
     public void encryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException, InterruptedException {
         encryptDecryptBody(algo, key, new File(dirPath), encryptDir, true);
-        new EventHandler(algo.getClass(), "").encrypt(false);
     }
 
     @Override
     public void decryptDir(IEncryptionAlgorithm<T> algo, T key) throws IOException, InterruptedException {
         encryptDecryptBody(algo, key, encryptDir, decryptDir, false);
-        new EventHandler(algo.getClass(), "").decrypt(false);
     }
 
     private void encryptDecryptBody(IEncryptionAlgorithm<T> algo, T key, File inputFolder, File outputFolder, boolean isEncrypt) throws IOException,

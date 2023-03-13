@@ -14,19 +14,15 @@ public class EventHandler {
 
     /**
      * build good message depend on the param
-     *
-     * @param single say if the event occur on single thing or all of them
      */
-    public void encrypt(boolean single) {
-        encryption.publish(single);
+    public void encrypt() {
+        encryption.publish();
     }
 
     /**
      * build good message depend on the param
-     *
-     * @param single say if the event occur on single thing or all of them
      */
-    public void decrypt(boolean single) {
-        decryption.publish(single);
+    public void decrypt() {
+        decryption.publish();
     }
 }

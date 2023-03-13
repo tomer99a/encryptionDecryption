@@ -12,12 +12,9 @@ public class Register {
         subscribers.add(subscriber);
     }
 
-    /**
-     * @param single say if the event occur on single thing or all of them
-     */
-    public void publish(boolean single) {
+    public void publish() {
         for (SubscriberLog4jLogger subscriber : subscribers) {
-            subscriber.eventAction(single);
+            subscriber.eventAction();
         }
     }
 }

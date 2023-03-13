@@ -7,15 +7,9 @@ public class EncryptionLog4jLogger extends SubscriberLog4jLogger {
 
     /**
      * build good message depend on the param
-     *
-     * @param single say if the event occur on single thing or all of them
      */
     @Override
-    public void eventAction(boolean single) {
-        String message = single ? "The encryption " : "All the files encrypt ";
-        if (data.getStartTime() == 0) {
-            data.setStartTime(System.currentTimeMillis());
-        }
-        writeInfoToLog(message);
+    public void eventAction() {
+        writeInfoToLog("The encryption ");
     }
 }

@@ -28,18 +28,18 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
     public void encrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         File file = new File(originalPath);
         EventHandler eventHandler = new EventHandler(this.getClass(), file.getName());
-        eventHandler.encrypt(true);
+        eventHandler.encrypt();
         encryption(originalPath, outputPath, keyPath);
-        eventHandler.encrypt(true);
+        eventHandler.encrypt();
     }
 
     @Override
     public void decrypt(final String originalPath, final String outputPath, final T keyPath) throws IOException {
         File file = new File(originalPath);
         EventHandler eventHandler = new EventHandler(this.getClass(), file.getName());
-        eventHandler.decrypt(true);
+        eventHandler.decrypt();
         decryption(originalPath, outputPath, keyPath);
-        eventHandler.decrypt(true);
+        eventHandler.decrypt();
     }
 
     /**
