@@ -8,9 +8,14 @@ import keys.DoubleKey;
 import keys.NormalKey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import pojo.ProcessSettings;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -117,9 +122,28 @@ public class Main {
         }
     }
 
+    private static void useSchema() {
+        try {
+            File file = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.xml")));
+            JAXBContext jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
+
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            ProcessSettings process = (ProcessSettings) jaxbUnmarshaller.unmarshal(file);
+
+            process.encrypt();
+            process.decrypt();
+
+        } catch (JAXBException | IOException | InterruptedException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
 //        menu();
-        dirEncrypt();
+//        dirEncrypt();
+        useSchema();
+
+
         System.out.println("Done program");
     }
 }
