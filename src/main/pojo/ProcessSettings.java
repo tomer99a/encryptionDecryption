@@ -66,6 +66,16 @@ public class ProcessSettings {
         this.sourceFileName = sourceFileName;
     }
 
+    @Override
+    public String toString() {
+        return "ProcessSettings{" +
+                "algorithm='" + algorithm + '\'' +
+                ", keyPath='" + keyPath + '\'' +
+                ", sourceDirectory='" + sourceDirectory + '\'' +
+                ", sourceFileName='" + sourceFileName + '\'' +
+                '}';
+    }
+
     private IEncryptionAlgorithm<NormalKey> choseAlgo() {
         IEncryptionAlgorithm<NormalKey> encryptionAlgorithm;
         if (algorithm.equals("ShiftMultiply")) {

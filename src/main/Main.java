@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dirEncryption.AsyncDirectoryProcessor;
 import dirEncryption.SyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
@@ -8,13 +9,18 @@ import keys.DoubleKey;
 import keys.NormalKey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 import pojo.ProcessSettings;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -122,7 +128,7 @@ public class Main {
         }
     }
 
-    private static void useSchema() {
+    private static void useSchemaXML() {
         try {
             File file = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.xml")));
             JAXBContext jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
@@ -138,12 +144,50 @@ public class Main {
         }
     }
 
+    private static void jaxbXmlFileToObject() {
+        File xmlFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.xml")));
+        File jsonFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.json")));
+        File xsdFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "schema.xsd")));
+        JAXBContext jaxbContext;
+
+        try {
+            //Get JAXBContext
+            jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
+
+            //Create Unmarshaller
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+            //Setup schema validator
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema processSchema = sf.newSchema(xsdFile);
+            jaxbUnmarshaller.setSchema(processSchema);
+
+            //Unmarshal xml file
+            ProcessSettings processSettings = (ProcessSettings) jaxbUnmarshaller.unmarshal(xmlFile);
+
+            processSettings.encrypt();
+            processSettings.decrypt();
+        } catch (JAXBException | SAXException | InterruptedException | IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private static void useSchemaJSON() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            Path jsonPath = Paths.get("src", "main", "pojo", "data.json");
+            File jsonFile = new File(jsonPath.toString());
+            ProcessSettings process = objectMapper.readValue(jsonFile, ProcessSettings.class);
+            process.encrypt();
+            process.decrypt();
+        } catch (IOException | InterruptedException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
-//        menu();
-//        dirEncrypt();
-        useSchema();
-
-
+        useSchemaJSON();
         System.out.println("Done program");
     }
 }
