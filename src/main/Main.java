@@ -10,7 +10,7 @@ import keys.NormalKey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
-import pojo.ProcessSettings;
+import schema.ProcessSettings;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -128,9 +128,9 @@ public class Main {
         }
     }
 
-    private static void useSchemaXML() {
+    private static void useXML() {
         try {
-            File file = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.xml")));
+            File file = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
             JAXBContext jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -144,10 +144,9 @@ public class Main {
         }
     }
 
-    private static void jaxbXmlFileToObject() {
-        File xmlFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.xml")));
-        File jsonFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "data.json")));
-        File xsdFile = new File(String.valueOf(Paths.get("src", "main", "pojo", "schema.xsd")));
+    private static void validatorXML() {
+        File xmlFile = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
+        File xsdFile = new File(String.valueOf(Paths.get("src", "main", "schema", "schema.xsd")));
         JAXBContext jaxbContext;
 
         try {
@@ -165,6 +164,7 @@ public class Main {
             //Unmarshal xml file
             ProcessSettings processSettings = (ProcessSettings) jaxbUnmarshaller.unmarshal(xmlFile);
 
+            System.out.println(processSettings);
             processSettings.encrypt();
             processSettings.decrypt();
         } catch (JAXBException | SAXException | InterruptedException | IOException e) {
@@ -176,17 +176,19 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            Path jsonPath = Paths.get("src", "main", "pojo", "data.json");
+            Path jsonPath = Paths.get("src", "main", "schema", "data.json");
             File jsonFile = new File(jsonPath.toString());
             ProcessSettings process = objectMapper.readValue(jsonFile, ProcessSettings.class);
+
             process.encrypt();
-            process.decrypt();
+//            process.decrypt();
         } catch (IOException | InterruptedException e) {
             System.err.println(e.getMessage());
         }
     }
 
     public static void main(String[] args) {
+        validatorXML();
         useSchemaJSON();
         System.out.println("Done program");
     }

@@ -1,4 +1,4 @@
-package pojo;
+package schema;
 
 import dirEncryption.AsyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
