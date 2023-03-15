@@ -2,44 +2,56 @@ package encryption.charAlgo;
 
 import java.security.SecureRandom;
 
-import static utils.GeneralMethods.myIsUpperCase;
-
 public class XorEncryption extends CharEncryptionAlgorithmAbstract {
+    private static final int NUMBERS_NORMAL_ASCII_CHARS = 255;
+
     public XorEncryption() {
         super("Xor");
     }
 
-    public void generateKey() {
-        key = new SecureRandom().nextInt(1000);
+    /**
+     * Generate new key for the encryption.
+     */
+    protected void generateKey() {
+        key = new SecureRandom().nextInt(keyMaxRange);
+    }
+
+    @Override
+    protected void setKeyMaxRange() {
+        keyMaxRange = BOUND_RANDOM_NUMBER * 10;
     }
 
     /**
-     * Encrypt the char by key
-     * @param c char to encrypt
+     * Encrypt the char by key.
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the encryption char that you're looking for
      */
     @Override
-    public char encryptChar(char c, int key){
-        if(myIsUpperCase(c) == -1)
+    public char encryptChar(final char c, final int key) {
+        if (!Character.isLetter(c)) {
             return c;
+        }
 
-        return (char) ((c ^ key) + 255);
+        return (char) ((c ^ key) + NUMBERS_NORMAL_ASCII_CHARS);
     }
 
     /**
-     * decrypt the char by key
-     * @param c char to encrypt
+     * Decrypt the char by key.
+     *
+     * @param c   char to encrypt
      * @param key key to use for encrypt
      * @return the decryption char that you're looking for
      */
     @Override
-    public char decryptChar(char c, int key){
+    public char decryptChar(final char c, final int key) {
         // the xor encrypt chars to ascii code bigger than 127
         // so if I get char smaller than 255 it should return as is.
-        if(c < 255)
+        if (c < NUMBERS_NORMAL_ASCII_CHARS) {
             return c;
+        }
 
-        return (char) ((c - 255) ^ key);
+        return (char) ((c - NUMBERS_NORMAL_ASCII_CHARS) ^ key);
     }
 }

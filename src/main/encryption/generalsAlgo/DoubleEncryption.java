@@ -1,58 +1,48 @@
 package encryption.generalsAlgo;
 
 import encryption.EncryptionAlgorithmAbstract;
-import encryption.charAlgo.CharEncryptionAlgorithmInterface;
+import encryption.charAlgo.CharEncryptionAlgorithmAbstract;
+import encryption.charAlgo.ShiftUpEncryption;
+import keys.DoubleKey;
+import keys.NormalKey;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class DoubleEncryption extends EncryptionAlgorithmAbstract {
-    final private CharEncryptionAlgorithmInterface algo;
+import static utils.IOMethods.deleteFile;
 
-    public DoubleEncryption(CharEncryptionAlgorithmInterface algo) {
+public class DoubleEncryption extends EncryptionAlgorithmAbstract<DoubleKey> {
+    final private CharEncryptionAlgorithmAbstract algo;
+
+    public DoubleEncryption(CharEncryptionAlgorithmAbstract algo) {
         super("Double" + algo.getEncryptionMethod());
+        if (algo.getEncryptionMethod().equals("ShiftUp")) {
+            int halfNumberLetters = ((int) 'Z' - 'A' + 1) / 2;
+            while ((algo.getKey() % halfNumberLetters == 0))
+                algo = new ShiftUpEncryption();
+        }
         this.algo = algo;
-    }
-    /**
-     * Add suffix only to the file name from the full path
-     * @param path original path
-     * @param suffix thing to add at the end of the file name
-     * @return path with changed name
-     */
-    private String addSuffixToFileNameAtPath(String path, String suffix){
-        File file = new File(path);
-        String fileName = file.getName();
-        return file.getParent() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + suffix + fileName.substring(fileName.lastIndexOf("."));
     }
 
     @Override
-    public void encrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
-
+    public void encryption(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputEncrypt", ".txt").toString();
 
-        algo.encrypt(originalPath, tmpPath, keyPath1);
-        algo.encrypt(tmpPath, outputPath, keyPath2);
-        
-        if(!(new File(tmpPath).delete()))
-            System.err.println("The tmp file didn't auto delete");
+        algo.encrypt(originalPath, tmpPath, new NormalKey(keyPath.getKey1()));
+        algo.encrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey2()));
+
+        deleteFile(tmpPath, logger);
     }
 
     @Override
-    public void decrypt(String originalPath, String outputPath, String keyPath) throws IOException {
-        final String keyPath1 = addSuffixToFileNameAtPath(keyPath, "1");
-        final String keyPath2 = addSuffixToFileNameAtPath(keyPath, "2");
-
+    public void decryption(final String originalPath, final String outputPath, final DoubleKey keyPath) throws IOException {
         // Create a temporary file
         final String tmpPath = Files.createTempFile("firstOutputDecrypt", ".txt").toString();
 
-        algo.decrypt(originalPath, tmpPath, keyPath2);
-        algo.decrypt(tmpPath, outputPath, keyPath1);
+        algo.decrypt(originalPath, tmpPath, new NormalKey(keyPath.getKey2()));
+        algo.decrypt(tmpPath, outputPath, new NormalKey(keyPath.getKey1()));
 
-        if(!(new File(tmpPath).delete()))
-            System.err.println("The tmp file didn't auto delete");
+        deleteFile(tmpPath, logger);
     }
 }
