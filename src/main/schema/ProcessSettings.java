@@ -22,14 +22,6 @@ public class ProcessSettings {
 
     }
 
-    public ProcessSettings(String algorithm, String keyPath, String sourceDirectory, String sourceFileName) {
-        super();
-        this.algorithm = algorithm;
-        this.keyPath = keyPath;
-        this.sourceDirectory = sourceDirectory;
-        this.sourceFileName = sourceFileName;
-    }
-
     @XmlElement
     public String getAlgorithm() {
         return algorithm;
