@@ -1,0 +1,95 @@
+package encryption.charAlgo;
+
+import encryption.EncryptionAlgorithmAbstract;
+import exceptions.InvalidEncryptionKeyException;
+import keys.NormalKey;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+
+import static utils.IOMethods.*;
+
+public abstract class CharEncryptionAlgorithmAbstract extends EncryptionAlgorithmAbstract<NormalKey> {
+    final static protected char SMALL_A = 'a';
+    final static protected char SMALL_Z = 'z';
+    final static protected char BIG_A = 'A';
+    final static protected char BIG_Z = 'Z';
+    final static protected int BOUND_RANDOM_NUMBER = 1000;
+    protected final Logger logger = LogManager.getLogger(this.getClass());
+    protected int key;
+    protected int keyMaxRange;
+
+    public CharEncryptionAlgorithmAbstract(final String encryptionMethod) {
+        super(encryptionMethod);
+        setKeyMaxRange();
+        generateKey();
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    abstract public char encryptChar(char c, int key);
+
+    abstract public char decryptChar(char c, int key);
+
+    abstract protected void generateKey();
+
+    abstract protected void setKeyMaxRange();
+
+    /**
+     * Get the key strength - maximal length (number of digits) of the encryption methods.
+     *
+     * @return key strength
+     */
+    public int getKeyStrength() {
+        return Integer.toString(keyMaxRange).length() - 1;
+    }
+
+    public int getKeyMaxRange() {
+        return keyMaxRange;
+    }
+
+    public void encryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException {
+        String keyPathStr = keyPath.getKey();
+        createFile(keyPathStr, logger);
+        deleteFile(outputPath, logger);
+        createFile(outputPath, logger);
+
+        scanAndSubmitFile(true, originalPath, outputPath, this, key, logger);
+        writeToFile(keyPathStr, Integer.toString(key), logger);
+    }
+
+    public void decryption(final String originalPath, final String outputPath, final NormalKey keyPath) throws IOException, InvalidEncryptionKeyException {
+        final int decryptKey;
+        decryptKey = getKeyFromFile(keyPath.getKey());
+
+        deleteFile(outputPath, logger);
+        createFile(outputPath, logger);
+        scanAndSubmitFile(false, originalPath, outputPath, this, decryptKey, logger);
+    }
+
+    /**
+     * Extract key value from file.
+     *
+     * @param keyPath the path to the file key
+     * @return key value
+     */
+    private int getKeyFromFile(final String keyPath) throws IOException, InvalidEncryptionKeyException {
+        String keyStr = readFile(keyPath);
+        if (keyStr.indexOf('\n') != -1) {
+            keyStr = keyStr.substring(0, keyStr.indexOf(System.lineSeparator()));
+        }
+        int myKey;
+        try {
+            myKey = Integer.parseInt(keyStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidEncryptionKeyException("The key file doesn't contain number");
+        }
+        if (0 >= myKey || myKey >= this.getKeyMaxRange()) {
+            throw new InvalidEncryptionKeyException("The key not in the correct range that suppose to be");
+        }
+        return myKey;
+    }
+}

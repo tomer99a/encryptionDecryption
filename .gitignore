@@ -1,6 +1,12 @@
-/src/main/Data
-/666.iml
+/src/main/data/key*.txt
+/src/main/data/encrypted
+/src/main/data/decrypted
+/*.iml
 /.idea
 /target/
+/out/
 java tutorial.pdf
 apache-log4j-2.20.0-bin
+apache-log4j-1.2.17
+/logs.log
+*.png
