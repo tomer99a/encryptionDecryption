@@ -76,10 +76,13 @@ public class Main {
     private static void dirEncrypt() {
         String basePath = "src" + File.separator + "main" + File.separator + "data";
         String keyPath = basePath + File.separator + "key.txt";
+        NormalKey normalKey = new NormalKey(keyPath);
+
+        /*
         String keyPath1 = basePath + File.separator + "key1.txt";
         String keyPath2 = basePath + File.separator + "key2.txt";
-        NormalKey normalKey = new NormalKey(keyPath);
         DoubleKey doubleKey = new DoubleKey(keyPath1, keyPath2);
+         */
 
         String invalidChoiceErrorMessage = "You should write only number between 1 to 5!!!";
         boolean doneLoop = false;
@@ -128,6 +131,60 @@ public class Main {
         }
     }
 
+    private static void EncryptDecryptWithDataClass(ProcessSettings processData) {
+        try {
+            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).encryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
+            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).decryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
+        } catch (IOException | InterruptedException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+    private static void jaxbAndJsonMenu() {
+        String invalidChoiceErrorMessage = "You should write only number between 1 to 3!!!";
+        Scanner myScanner = new Scanner(System.in);
+
+        while (true) {
+            int choice;
+
+            System.out.println("Hello user! please choose number:" +
+                    "\n1 - Encrypt decrypt with XML data" +
+                    "\n2 - Encrypt decrypt with JSON data" +
+                    "\n3 - Exit");
+
+            try {
+                choice = Integer.parseInt(myScanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println(invalidChoiceErrorMessage);
+                continue;
+            }
+
+            try {
+                ProcessSettings processData;
+
+                switch (choice) {
+                    case 1:
+                        processData = validatorXML();
+                        EncryptDecryptWithDataClass(processData);
+                        break;
+                    case 2:
+                        processData = useSchemaJSON();
+                        EncryptDecryptWithDataClass(processData);
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.err.println(invalidChoiceErrorMessage);
+                        break;
+                }
+            } catch (JAXBException | SAXException | IOException e) {
+                // Should go here only if the xml or json didn't work.
+                System.err.println("The data didn't loaded\nError message - " + e.getMessage());
+            }
+        }
+    }
+
     private static void useXML() {
         try {
             File file = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
@@ -144,52 +201,41 @@ public class Main {
         }
     }
 
-    private static void validatorXML() {
-        File xmlFile = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
-        File xsdFile = new File(String.valueOf(Paths.get("src", "main", "schema", "schema.xsd")));
+    private static ProcessSettings validatorXML() throws JAXBException, SAXException {
+        Path xmlPath = Paths.get("src", "main", "schema", "data.xml");
+        Path xsdPath = Paths.get("src", "main", "schema", "schema.xsd");
+        File xmlFile = new File(xmlPath.toString());
+        File xsdFile = new File(xsdPath.toString());
+
         JAXBContext jaxbContext;
 
-        try {
-            //Get JAXBContext
-            jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
+        //Get JAXBContext
+        jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
 
-            //Create Unmarshaller
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        //Create Unmarshaller
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-            //Setup schema validator
-            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema processSchema = sf.newSchema(xsdFile);
-            jaxbUnmarshaller.setSchema(processSchema);
+        //Setup schema validator
+        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema processSchema = sf.newSchema(xsdFile);
+        jaxbUnmarshaller.setSchema(processSchema);
 
-            //Unmarshal xml file
-            ProcessSettings processSettings = (ProcessSettings) jaxbUnmarshaller.unmarshal(xmlFile);
+        //Unmarshal xml file
 
-            System.out.println(processSettings);
-            processSettings.encrypt();
-            processSettings.decrypt();
-        } catch (JAXBException | SAXException | InterruptedException | IOException e) {
-            System.err.println(e.getMessage());
-        }
+        return (ProcessSettings) jaxbUnmarshaller.unmarshal(xmlFile);
     }
 
-    private static void useSchemaJSON() {
+    private static ProcessSettings useSchemaJSON() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        try {
-            Path jsonPath = Paths.get("src", "main", "schema", "data.json");
-            File jsonFile = new File(jsonPath.toString());
-            ProcessSettings process = objectMapper.readValue(jsonFile, ProcessSettings.class);
+        Path jsonPath = Paths.get("src", "main", "schema", "data.json");
+        File jsonFile = new File(jsonPath.toString());
 
-            process.encrypt();
-//            process.decrypt();
-        } catch (IOException | InterruptedException e) {
-            System.err.println(e.getMessage());
-        }
+        return objectMapper.readValue(jsonFile, ProcessSettings.class);
     }
 
     public static void main(String[] args) {
-        validatorXML();
-        useSchemaJSON();
+        jaxbAndJsonMenu();
         System.out.println("Done program");
     }
 }

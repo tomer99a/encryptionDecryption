@@ -68,7 +68,7 @@ public class ProcessSettings {
                 '}';
     }
 
-    private IEncryptionAlgorithm<NormalKey> choseAlgo() {
+    public IEncryptionAlgorithm<NormalKey> choseAlgo() {
         IEncryptionAlgorithm<NormalKey> encryptionAlgorithm;
         if (algorithm.equals("ShiftMultiply")) {
             encryptionAlgorithm = new ShiftMultiplyEncryption();
