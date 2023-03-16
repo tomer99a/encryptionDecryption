@@ -133,9 +133,12 @@ public class Main {
 
     private static void EncryptDecryptWithDataClass(ProcessData processData) {
         try {
-            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).encryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
-            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).decryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
+            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).encryptDir(processData.getAlgorithm(),
+                    new NormalKey(processData.getKeyPath()));
+            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).decryptDir(processData.getAlgorithm(),
+                    new NormalKey(processData.getKeyPath()));
         } catch (IOException | InterruptedException e) {
+            logger.warn("The encryption or decryption fails.");
             System.err.println(e.getMessage());
         }
 
@@ -154,6 +157,7 @@ public class Main {
                     "\n3 - Exit");
 
             try {
+//                choice = 1;
                 choice = Integer.parseInt(myScanner.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println(invalidChoiceErrorMessage);
@@ -178,10 +182,10 @@ public class Main {
                         System.err.println(invalidChoiceErrorMessage);
                         break;
                 }
-            } catch (JAXBException | SAXException | IOException e) {
-                // Should go here only if the xml or json didn't work.
-                System.err.println("The data didn't loaded\nError message - " + e.getMessage());
+            } catch (IOException | JAXBException | SAXException e) {
+                logger.error("The data didn't loaded. Error message - " + e.getMessage());
             }
+            break;
         }
     }
 
@@ -205,21 +209,17 @@ public class Main {
         File xmlFile = new File(xmlPath.toString());
         File xsdFile = new File(xsdPath.toString());
 
-        JAXBContext jaxbContext;
-
-        //Get JAXBContext
-        jaxbContext = JAXBContext.newInstance(ProcessData.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(ProcessData.class);
 
         //Create Unmarshaller
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
         //Setup schema validator
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema processSchema = sf.newSchema(xsdFile);
-        jaxbUnmarshaller.setSchema(processSchema);
+        Schema schema = sf.newSchema(xsdFile);
+        jaxbUnmarshaller.setSchema(schema);
 
-        //Unmarshal xml file
-
+        //Unmarshal xml file and return the data class
         return (ProcessData) jaxbUnmarshaller.unmarshal(xmlFile);
     }
 

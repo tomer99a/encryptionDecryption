@@ -1,36 +1,31 @@
 package schema;
 
 import encryption.IEncryptionAlgorithm;
-import encryption.charAlgo.ShiftMultiplyEncryption;
-import encryption.charAlgo.ShiftUpEncryption;
-import encryption.charAlgo.XorEncryption;
 import keys.NormalKey;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Objects;
 
 @XmlRootElement
 public class ProcessData {
-    private String algorithm;
+    private IEncryptionAlgorithm<NormalKey> algorithm;
     private String keyPath;
     private String sourceDirectory;
     private String sourceFileName;
 
-    public ProcessData() {
-
-    }
-
-    @XmlElement
-    public String getAlgorithm() {
+    @XmlJavaTypeAdapter(AlgoAdapter.class)
+    @XmlElement(name = "algorithm", required = true)
+    public IEncryptionAlgorithm<NormalKey> getAlgorithm() {
         return algorithm;
     }
 
-    public void setAlgorithm(String algorithm) {
+    public void setAlgorithm(IEncryptionAlgorithm<NormalKey> algorithm) {
         this.algorithm = algorithm;
     }
 
-    @XmlElement
+    @XmlElement(name = "keyPath", required = true)
     public String getKeyPath() {
         return keyPath;
     }
@@ -39,7 +34,7 @@ public class ProcessData {
         this.keyPath = keyPath;
     }
 
-    @XmlElement
+    @XmlElement(name = "sourceDirectory", required = true)
     public String getSourceDirectory() {
         return sourceDirectory;
     }
@@ -48,7 +43,7 @@ public class ProcessData {
         this.sourceDirectory = sourceDirectory;
     }
 
-    @XmlElement
+    @XmlElement(name = "sourceFileName", required = true)
     public String getSourceFileName() {
         return sourceFileName;
     }
@@ -78,17 +73,5 @@ public class ProcessData {
     @Override
     public int hashCode() {
         return Objects.hash(algorithm, keyPath, sourceDirectory, sourceFileName);
-    }
-
-    public IEncryptionAlgorithm<NormalKey> choseAlgo() {
-        IEncryptionAlgorithm<NormalKey> encryptionAlgorithm;
-        if (algorithm.equals("ShiftMultiply")) {
-            encryptionAlgorithm = new ShiftMultiplyEncryption();
-        } else if (algorithm.equals("ShiftUp")) {
-            encryptionAlgorithm = new ShiftUpEncryption();
-        } else {
-            encryptionAlgorithm = new XorEncryption();
-        }
-        return encryptionAlgorithm;
     }
 }
