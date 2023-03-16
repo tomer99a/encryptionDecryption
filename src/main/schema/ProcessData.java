@@ -1,6 +1,5 @@
 package schema;
 
-import dirEncryption.AsyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.ShiftUpEncryption;
@@ -9,16 +8,16 @@ import keys.NormalKey;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.IOException;
+import java.util.Objects;
 
 @XmlRootElement
-public class ProcessSettings {
+public class ProcessData {
     private String algorithm;
     private String keyPath;
     private String sourceDirectory;
     private String sourceFileName;
 
-    public ProcessSettings() {
+    public ProcessData() {
 
     }
 
@@ -60,12 +59,25 @@ public class ProcessSettings {
 
     @Override
     public String toString() {
-        return "ProcessSettings{" +
+        return "ProcessData{" +
                 "algorithm='" + algorithm + '\'' +
                 ", keyPath='" + keyPath + '\'' +
                 ", sourceDirectory='" + sourceDirectory + '\'' +
                 ", sourceFileName='" + sourceFileName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProcessData)) return false;
+        ProcessData that = (ProcessData) o;
+        return algorithm.equals(that.algorithm) && keyPath.equals(that.keyPath) && sourceDirectory.equals(that.sourceDirectory) && sourceFileName.equals(that.sourceFileName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(algorithm, keyPath, sourceDirectory, sourceFileName);
     }
 
     public IEncryptionAlgorithm<NormalKey> choseAlgo() {
@@ -78,16 +90,5 @@ public class ProcessSettings {
             encryptionAlgorithm = new XorEncryption();
         }
         return encryptionAlgorithm;
-    }
-
-    public void encrypt() throws IOException, InterruptedException {
-        IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = choseAlgo();
-        new AsyncDirectoryProcessor<NormalKey>(sourceDirectory).encryptDir(encryptionAlgorithm, new NormalKey(keyPath));
-    }
-
-    public void decrypt() throws IOException, InterruptedException {
-        IEncryptionAlgorithm<NormalKey> encryptionAlgorithm = choseAlgo();
-        new AsyncDirectoryProcessor<NormalKey>(sourceDirectory).decryptDir(encryptionAlgorithm, new NormalKey(keyPath));
-
     }
 }

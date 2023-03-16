@@ -10,7 +10,7 @@ import keys.NormalKey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
-import schema.ProcessSettings;
+import schema.ProcessData;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -131,7 +131,7 @@ public class Main {
         }
     }
 
-    private static void EncryptDecryptWithDataClass(ProcessSettings processData) {
+    private static void EncryptDecryptWithDataClass(ProcessData processData) {
         try {
             new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).encryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
             new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).decryptDir(processData.choseAlgo(), new NormalKey(processData.getKeyPath()));
@@ -161,7 +161,7 @@ public class Main {
             }
 
             try {
-                ProcessSettings processData;
+                ProcessData processData;
 
                 switch (choice) {
                     case 1:
@@ -188,20 +188,18 @@ public class Main {
     private static void useXML() {
         try {
             File file = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
-            JAXBContext jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(ProcessData.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            ProcessSettings process = (ProcessSettings) jaxbUnmarshaller.unmarshal(file);
+            ProcessData processData = (ProcessData) jaxbUnmarshaller.unmarshal(file);
 
-            process.encrypt();
-            process.decrypt();
 
-        } catch (JAXBException | IOException | InterruptedException e) {
+        } catch (JAXBException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    private static ProcessSettings validatorXML() throws JAXBException, SAXException {
+    private static ProcessData validatorXML() throws JAXBException, SAXException {
         Path xmlPath = Paths.get("src", "main", "schema", "data.xml");
         Path xsdPath = Paths.get("src", "main", "schema", "schema.xsd");
         File xmlFile = new File(xmlPath.toString());
@@ -210,7 +208,7 @@ public class Main {
         JAXBContext jaxbContext;
 
         //Get JAXBContext
-        jaxbContext = JAXBContext.newInstance(ProcessSettings.class);
+        jaxbContext = JAXBContext.newInstance(ProcessData.class);
 
         //Create Unmarshaller
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -222,16 +220,16 @@ public class Main {
 
         //Unmarshal xml file
 
-        return (ProcessSettings) jaxbUnmarshaller.unmarshal(xmlFile);
+        return (ProcessData) jaxbUnmarshaller.unmarshal(xmlFile);
     }
 
-    private static ProcessSettings useSchemaJSON() throws IOException {
+    private static ProcessData useSchemaJSON() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Path jsonPath = Paths.get("src", "main", "schema", "data.json");
         File jsonFile = new File(jsonPath.toString());
 
-        return objectMapper.readValue(jsonFile, ProcessSettings.class);
+        return objectMapper.readValue(jsonFile, ProcessData.class);
     }
 
     public static void main(String[] args) {

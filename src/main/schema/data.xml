@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<processSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation ="schema.xsd">
+
+<processData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:noNamespaceSchemaLocation="schema.xsd">
     <algorithm>ShiftMultiply</algorithm>
     <keyPath>src\main\data\key.txt</keyPath>
     <sourceDirectory>src\main\data</sourceDirectory>
     <sourceFileName>src\main\data</sourceFileName>
-</processSettings>
+</processData>
