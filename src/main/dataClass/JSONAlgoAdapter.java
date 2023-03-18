@@ -1,10 +1,10 @@
-package schema;
+package dataClass;
 
 import com.fasterxml.jackson.databind.util.StdConverter;
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
 
-import static schema.AdapterUtils.stringToEncrypt;
+import static dataClass.AdapterUtils.stringToEncrypt;
 
 public class JSONAlgoAdapter extends StdConverter<String, IEncryptionAlgorithm<NormalKey>> {
     @Override

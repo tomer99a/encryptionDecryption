@@ -1,4 +1,4 @@
-package schema;
+package dataClass;
 
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;

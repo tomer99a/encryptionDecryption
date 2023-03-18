@@ -15,7 +15,7 @@ import keys.NormalKey;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
-import schema.ProcessData;
+import dataClass.ProcessData;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;

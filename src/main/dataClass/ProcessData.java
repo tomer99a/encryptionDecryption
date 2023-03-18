@@ -1,4 +1,4 @@
-package schema;
+package dataClass;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import encryption.IEncryptionAlgorithm;

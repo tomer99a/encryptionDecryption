@@ -1,4 +1,4 @@
-package schema;
+package dataClass;
 
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
@@ -8,7 +8,7 @@ import keys.NormalKey;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import static schema.AdapterUtils.stringToEncrypt;
+import static dataClass.AdapterUtils.stringToEncrypt;
 
 public class XMLAlgoAdapter extends XmlAdapter<String, IEncryptionAlgorithm<NormalKey>> {
     @Override
