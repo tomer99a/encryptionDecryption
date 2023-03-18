@@ -165,7 +165,6 @@ public class Main {
                     "\n3 - Exit");
 
             try {
-//                choice = 1;
                 choice = Integer.parseInt(myScanner.nextLine());
             } catch (NumberFormatException e) {
                 System.err.println(invalidChoiceErrorMessage);
@@ -200,8 +199,8 @@ public class Main {
     }
 
     private static ProcessData validatorXML() throws JAXBException, SAXException {
-        Path xmlPath = Paths.get("src", "main", "schema", "data.xml");
-        Path xsdPath = Paths.get("src", "main", "schema", "schema.xsd");
+        Path xmlPath = Paths.get("src", "main", "resources", "data.xml");
+        Path xsdPath = Paths.get("src", "main", "resources", "schema.xsd");
         File xmlFile = new File(xmlPath.toString());
         File xsdFile = new File(xsdPath.toString());
 
@@ -219,15 +218,6 @@ public class Main {
         return (ProcessData) jaxbUnmarshaller.unmarshal(xmlFile);
     }
 
-    private static ProcessData useJSON() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        Path jsonPath = Paths.get("src", "main", "schema", "data.json");
-        File jsonFile = new File(jsonPath.toString());
-
-        return objectMapper.readValue(jsonFile, ProcessData.class);
-    }
-
     private static ProcessData useJSONSchema() throws IOException {
         // create instance of the ObjectMapper class
         ObjectMapper mapper = new ObjectMapper();
@@ -236,15 +226,14 @@ public class Main {
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
 
         // store the JSON data in InputStream
-        Path jsonPath = Paths.get("src", "main", "schema", "data.json");
-        Path schemaPath = Paths.get("src", "main", "schema", "schema.json");
-
-        InputStream schemaStream = new FileInputStream(schemaPath.toString());
+        Path jsonPath = Paths.get("src", "main", "resources", "data.json");
+        Path schemaPath = Paths.get("src", "main", "resources", "schema.json");
 
         // read data from the stream and store it into JsonNode
         JsonNode jsonNode = mapper.readTree(new File(jsonPath.toString()));
 
         // get schema from the schemaStream and store it into JsonSchema
+        InputStream schemaStream = new FileInputStream(schemaPath.toString());
         JsonSchema jsonSchema = schemaFactory.getSchema(schemaStream);
         schemaStream.close();
 
@@ -253,7 +242,6 @@ public class Main {
 
         // show the validation errors
         if (validationResult.isEmpty()) {
-
             // show custom message if there is no validation error
             return mapper.treeToValue(jsonNode, ProcessData.class);
 
@@ -265,11 +253,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        try {
-//            useJSONSchema();
-//        } catch (IOException e) {
-//            System.err.println(e.getMessage());
-//        }
         jaxbAndJsonMenu();
         System.out.println("Done program");
     }

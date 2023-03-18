@@ -1,15 +1,13 @@
 package schema;
 
-import com.fasterxml.jackson.databind.util.StdConverter;
 import encryption.IEncryptionAlgorithm;
 import encryption.charAlgo.ShiftMultiplyEncryption;
 import encryption.charAlgo.ShiftUpEncryption;
 import encryption.charAlgo.XorEncryption;
 import keys.NormalKey;
 
-public class StringToAlgo extends StdConverter<String, IEncryptionAlgorithm<NormalKey>> {
-    @Override
-    public IEncryptionAlgorithm<NormalKey> convert(String algoName) {
+public class AdapterUtils {
+    public static IEncryptionAlgorithm<NormalKey> stringToEncrypt(String algoName) {
         switch (algoName) {
             case "ShiftMultiply":
                 return new ShiftMultiplyEncryption();

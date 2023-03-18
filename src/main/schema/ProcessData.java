@@ -17,8 +17,8 @@ public class ProcessData {
     private String sourceFileName;
 
     @XmlJavaTypeAdapter(XMLAlgoAdapter.class)
-    @JsonDeserialize(converter = StringToAlgo.class)
     @XmlElement(name = "algorithm", required = true)
+    @JsonDeserialize(converter = JSONAlgoAdapter.class)
     public IEncryptionAlgorithm<NormalKey> getAlgorithm() {
         return algorithm;
     }
