@@ -1,5 +1,6 @@
 package schema;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
 
@@ -15,7 +16,8 @@ public class ProcessData {
     private String sourceDirectory;
     private String sourceFileName;
 
-    @XmlJavaTypeAdapter(AlgoAdapter.class)
+    @XmlJavaTypeAdapter(XMLAlgoAdapter.class)
+    @JsonDeserialize(converter = StringToAlgo.class)
     @XmlElement(name = "algorithm", required = true)
     public IEncryptionAlgorithm<NormalKey> getAlgorithm() {
         return algorithm;

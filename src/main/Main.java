@@ -1,4 +1,9 @@
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import dirEncryption.AsyncDirectoryProcessor;
 import dirEncryption.SyncDirectoryProcessor;
 import encryption.IEncryptionAlgorithm;
@@ -19,10 +24,13 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     static final Logger logger = LogManager.getLogger(Main.class);
@@ -132,11 +140,11 @@ public class Main {
     }
 
     private static void EncryptDecryptWithDataClass(ProcessData processData) {
+        NormalKey normalKey = new NormalKey(processData.getKeyPath());
+        String path = processData.getSourceDirectory();
         try {
-            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).encryptDir(processData.getAlgorithm(),
-                    new NormalKey(processData.getKeyPath()));
-            new AsyncDirectoryProcessor<NormalKey>(processData.getSourceDirectory()).decryptDir(processData.getAlgorithm(),
-                    new NormalKey(processData.getKeyPath()));
+            new AsyncDirectoryProcessor<NormalKey>(path).encryptDir(processData.getAlgorithm(), normalKey);
+            new AsyncDirectoryProcessor<NormalKey>(path).decryptDir(processData.getAlgorithm(), normalKey);
         } catch (IOException | InterruptedException e) {
             logger.warn("The encryption or decryption fails.");
             System.err.println(e.getMessage());
@@ -173,7 +181,7 @@ public class Main {
                         EncryptDecryptWithDataClass(processData);
                         break;
                     case 2:
-                        processData = useSchemaJSON();
+                        processData = useJSONSchema();
                         EncryptDecryptWithDataClass(processData);
                         break;
                     case 3:
@@ -182,24 +190,12 @@ public class Main {
                         System.err.println(invalidChoiceErrorMessage);
                         break;
                 }
-            } catch (IOException | JAXBException | SAXException e) {
-                logger.error("The data didn't loaded. Error message - " + e.getMessage());
+            } catch (IOException | JAXBException e) {
+                logger.error("The data didn't loaded. Error message -\n" + e.getMessage());
+            } catch (SAXException e) {
+                logger.error("The given schema isn't good. Error message -\n" + e.getMessage());
             }
             break;
-        }
-    }
-
-    private static void useXML() {
-        try {
-            File file = new File(String.valueOf(Paths.get("src", "main", "schema", "data.xml")));
-            JAXBContext jaxbContext = JAXBContext.newInstance(ProcessData.class);
-
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            ProcessData processData = (ProcessData) jaxbUnmarshaller.unmarshal(file);
-
-
-        } catch (JAXBException e) {
-            System.err.println(e.getMessage());
         }
     }
 
@@ -223,7 +219,7 @@ public class Main {
         return (ProcessData) jaxbUnmarshaller.unmarshal(xmlFile);
     }
 
-    private static ProcessData useSchemaJSON() throws IOException {
+    private static ProcessData useJSON() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Path jsonPath = Paths.get("src", "main", "schema", "data.json");
@@ -232,7 +228,48 @@ public class Main {
         return objectMapper.readValue(jsonFile, ProcessData.class);
     }
 
+    private static ProcessData useJSONSchema() throws IOException {
+        // create instance of the ObjectMapper class
+        ObjectMapper mapper = new ObjectMapper();
+
+        // create an instance of the JsonSchemaFactory using version flag
+        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
+
+        // store the JSON data in InputStream
+        Path jsonPath = Paths.get("src", "main", "schema", "data.json");
+        Path schemaPath = Paths.get("src", "main", "schema", "schema.json");
+
+        InputStream schemaStream = new FileInputStream(schemaPath.toString());
+
+        // read data from the stream and store it into JsonNode
+        JsonNode jsonNode = mapper.readTree(new File(jsonPath.toString()));
+
+        // get schema from the schemaStream and store it into JsonSchema
+        JsonSchema jsonSchema = schemaFactory.getSchema(schemaStream);
+        schemaStream.close();
+
+        // create set of validation message and store result in it
+        Set<ValidationMessage> validationResult = jsonSchema.validate(jsonNode);
+
+        // show the validation errors
+        if (validationResult.isEmpty()) {
+
+            // show custom message if there is no validation error
+            return mapper.treeToValue(jsonNode, ProcessData.class);
+
+        } else {
+            // show all the validation error
+            validationResult.forEach(vm -> logger.error(vm.getMessage()));
+            throw new IOException("The json didn't fit to his schema");
+        }
+    }
+
     public static void main(String[] args) {
+//        try {
+//            useJSONSchema();
+//        } catch (IOException e) {
+//            System.err.println(e.getMessage());
+//        }
         jaxbAndJsonMenu();
         System.out.println("Done program");
     }

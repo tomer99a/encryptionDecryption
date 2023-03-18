@@ -8,7 +8,7 @@ import keys.NormalKey;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class AlgoAdapter extends XmlAdapter<String, IEncryptionAlgorithm<NormalKey>> {
+public class XMLAlgoAdapter extends XmlAdapter<String, IEncryptionAlgorithm<NormalKey>> {
     @Override
     public IEncryptionAlgorithm<NormalKey> unmarshal(String algoName) throws IllegalArgumentException {
         switch (algoName) {
