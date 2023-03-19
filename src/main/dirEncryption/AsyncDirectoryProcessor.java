@@ -56,7 +56,7 @@ public class AsyncDirectoryProcessor<T> extends DirectoryProcessorAbstract<T> {
         }
 
         pool.shutdown();
-        if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+        if (!pool.awaitTermination(5, TimeUnit.MINUTES)) {
             throw new RuntimeException();
         }
         calculateTime(isEncrypt ? "encrypt" : "decrypt");

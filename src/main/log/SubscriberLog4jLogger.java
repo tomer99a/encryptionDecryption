@@ -35,7 +35,7 @@ public abstract class SubscriberLog4jLogger {
             structure += " took " + data.getTimeTook() + " milliseconds";
         } else {
             data.setStartTime();
-            structure += "is starting";
+            structure += " is starting";
         }
 
         ReentrantLock lock = AsyncDirectoryProcessor.getLOCK();

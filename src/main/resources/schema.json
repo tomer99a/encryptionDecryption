@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "default": {},
+  "title": "ProcessData Schema",
+  "required": [
+    "algorithm",
+    "keyPath",
+    "sourceDirectory",
+    "sourceFileName"
+  ],
+  "properties": {
+    "algorithm": {
+      "type": "string",
+      "default": "",
+      "title": "The algorithm Schema"
+    },
+    "keyPath": {
+      "type": "string",
+      "default": "",
+      "title": "The keyPath Schema"
+    },
+    "sourceDirectory": {
+      "type": "string",
+      "default": "",
+      "title": "The sourceDirectory Schema"
+    },
+    "sourceFileName": {
+      "type": "string",
+      "default": "",
+      "title": "The sourceFileName Schema"
+    }
+  }
+}

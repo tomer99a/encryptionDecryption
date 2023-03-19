@@ -1,0 +1,6 @@
+{
+  "algorithm": "ShiftMultiply",
+  "keyPath": "src\\main\\data\\key.txt",
+  "sourceDirectory": "src\\main\\data",
+  "sourceFileName": "src\\main\\data"
+}
