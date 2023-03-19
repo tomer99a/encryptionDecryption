@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgorithm<T> {
     protected final Logger logger = LogManager.getLogger(this.getClass());
@@ -17,11 +18,6 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
 
     public String getEncryptionMethod() {
         return encryptionMethod;
-    }
-
-    @Override
-    public String toString() {
-        return this.getEncryptionMethod();
     }
 
     @Override
@@ -61,4 +57,24 @@ public abstract class EncryptionAlgorithmAbstract<T> implements IEncryptionAlgor
      * @throws IOException IOException
      */
     protected abstract void decryption(final String originalPath, final String outputPath, final T keyPath) throws IOException;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EncryptionAlgorithmAbstract)) return false;
+        EncryptionAlgorithmAbstract<?> that = (EncryptionAlgorithmAbstract<?>) o;
+        return encryptionMethod.equals(that.encryptionMethod);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(encryptionMethod);
+    }
+
+    @Override
+    public String toString() {
+        return "EncryptionAlgorithmAbstract{" +
+                "encryptionMethod='" + encryptionMethod + '\'' +
+                '}';
+    }
 }

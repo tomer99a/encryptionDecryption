@@ -1,6 +1,7 @@
 package dataClass;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import encryption.IEncryptionAlgorithm;
 import keys.NormalKey;
 
@@ -16,13 +17,24 @@ public class ProcessData {
     private String sourceDirectory;
     private String sourceFileName;
 
+    public ProcessData(IEncryptionAlgorithm<NormalKey> algorithm, String keyPath, String sourceDirectory, String sourceFileName) {
+        this.algorithm = algorithm;
+        this.keyPath = keyPath;
+        this.sourceDirectory = sourceDirectory;
+        this.sourceFileName = sourceFileName;
+    }
+
+    public ProcessData() {
+    }
+
     @XmlJavaTypeAdapter(XMLAlgoAdapter.class)
     @XmlElement(name = "algorithm", required = true)
-    @JsonDeserialize(converter = JSONAlgoAdapter.class)
+    @JsonDeserialize(converter = JSONStrToAlgo.class)
     public IEncryptionAlgorithm<NormalKey> getAlgorithm() {
         return algorithm;
     }
 
+    @JsonSerialize(converter = JSONAlgoToStr.class)
     public void setAlgorithm(IEncryptionAlgorithm<NormalKey> algorithm) {
         this.algorithm = algorithm;
     }
